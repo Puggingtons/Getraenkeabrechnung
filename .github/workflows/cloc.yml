@@ -26,8 +26,11 @@ jobs:
         with:
           options: --md --include-lang=java --out=cloc.md
 
-      - name: Archive code coverage results
+      - name: Save Cloc Report
         uses: actions/upload-artifact@v4
         with:
-          name: cloc-report
+          name: cloc.md
           path: cloc.md
+
+      - name: Output Report
+        run: cat cloc.md >> $GITHUB_STEP_SUMMARY
