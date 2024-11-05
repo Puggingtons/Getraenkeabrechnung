@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.watchlist;
+package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 public class Main {
     public static void main(String[] args) {

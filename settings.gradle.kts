@@ -1,2 +1,2 @@
-rootProject.name = "Watchlist"
+rootProject.name = "Getränkeabrechnung"
 
