@@ -24,4 +24,10 @@ jobs:
       - name: Count Lines of Code (cloc)
         uses: djdefi/cloc-action@6
         with:
-          options: --md --include-lang=java --report-file=cloc.md
+          options: --md --include-lang=java --out=cloc.md
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v4
+        with:
+          name: cloc-report
+          path: output/cloc.md
