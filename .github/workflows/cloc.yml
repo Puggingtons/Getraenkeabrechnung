@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: cloc-report
-          path: output/cloc.md
+          path: cloc.md
