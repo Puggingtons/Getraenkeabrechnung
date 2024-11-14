@@ -1,18 +1,16 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.cli;
 
-import java.util.Optional;
-
 public interface Cli {
 
-    void print(String msg);
+    String DEFAULT_PROMPT_PREFIX = "> ";
 
-    void printLine(String msg);
+    void setPromptPrefix(String prefix);
 
-    Optional<String> getInput();
+    void printMessage(String message);
 
-    Optional<String> getInput(String msg);
+    void printError(String message);
 
-    Optional<Integer> getNumberInput();
+    String promptInput(String message);
 
-    Optional<Integer> getNumberInput(String msg);
+    int promtIntInput(String message);
 }
