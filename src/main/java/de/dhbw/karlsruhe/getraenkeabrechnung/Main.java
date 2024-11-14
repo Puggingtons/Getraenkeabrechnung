@@ -6,7 +6,8 @@ public class Main {
     public static void main(String[] args) {
         StdCli cli = new StdCli(System.out, System.in);
 
+        Getraenkeabrechnung getraenkeabrechnung = new Getraenkeabrechnung(cli);
 
-        cli.print("Hallo Welt :)");
+        getraenkeabrechnung.start();
     }
 }
