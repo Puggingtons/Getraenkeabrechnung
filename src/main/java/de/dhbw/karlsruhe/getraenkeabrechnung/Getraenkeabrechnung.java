@@ -1,13 +1,25 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.commands.CommandRegistry;
+import de.dhbw.karlsruhe.getraenkeabrechnung.commands.HelpCommand;
+import de.dhbw.karlsruhe.getraenkeabrechnung.commands.LoginCommand;
+import de.dhbw.karlsruhe.getraenkeabrechnung.commands.LogoutCommand;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.cli.Cli;
 
 public class Getraenkeabrechnung {
 
     private final Cli cli;
+    private CommandRegistry commandRegistry;
+
+    private User user;
 
     public Getraenkeabrechnung(Cli cli) {
         this.cli = cli;
+
+        this.commandRegistry = new CommandRegistry();
+        commandRegistry.registerCommand(new HelpCommand(commandRegistry));
+        commandRegistry.registerCommand(new LoginCommand(cli, this));
+        commandRegistry.registerCommand(new LogoutCommand(this));
 
         greet();
     }
@@ -25,20 +37,7 @@ public class Getraenkeabrechnung {
         while (true) {
             String input = cli.promptInput("What do you want to do?");
 
-            switch (input) {
-                case "login":
-                    login();
-                    break;
-                case "logout":
-                    logout();
-                    break;
-                case "exit":
-                    return;
-                case "help":
-                default:
-                    printHelp();
-                    break;
-            }
+            cli.printMessage(commandRegistry.execute(input));
         }
     }
 
@@ -52,14 +51,25 @@ public class Getraenkeabrechnung {
                 """);
     }
 
-    private void login() {
-        String username = cli.promptInput("please enter your username:");
-        String password = cli.promptInput("please enter your password:");
-        cli.printMessage("Hello " + username + " !");
-        cli.setPromptPrefix("[" + username + "]" + Cli.DEFAULT_PROMPT_PREFIX);
+    public void login(User user) {
+        this.user = user;
+        updatePromptPrefix();
     }
 
-    private void logout() {
-        cli.setPromptPrefix(Cli.DEFAULT_PROMPT_PREFIX);
+    public void logout() {
+        user = null;
+        updatePromptPrefix();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    private void updatePromptPrefix() {
+        if (user == null) {
+            cli.setPromptPrefix(Cli.DEFAULT_PROMPT_PREFIX);
+        } else {
+            cli.setPromptPrefix("[" + user.getUsername() + "]" + Cli.DEFAULT_PROMPT_PREFIX);
+        }
     }
 }
