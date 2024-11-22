@@ -1,3 +1,3 @@
 # Getränkeabrechnung
 
-Der aktuelle Code-Count ist: <!-- COUNT_PLACEHOLDER -->git-
+Der aktuelle Code-Count ist: <!-- COUNT_PLACEHOLDER --> 
