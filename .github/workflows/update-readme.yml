@@ -22,7 +22,7 @@ jobs:
 
       - name: Update README
         run: |
-          sed -i "s|<!-- COUNT_PLACEHOLDER -->|$GITHUB_STEP_SUMMARY|g" README.md
+          sed -i "s|Der aktuelle Code-Count ist: [0-9]*|Der aktuelle Code-Count ist: $GITHUB_STEP_SUMMARY|g" README.md
 
       - name: Commit and push changes
         run: |
