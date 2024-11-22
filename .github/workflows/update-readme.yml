@@ -18,13 +18,11 @@ jobs:
       - name: Run your script
         id: calculate
         run: |
-          echo "Result: $((RANDOM % 100))" > result.txt
-          COUNT=$((RANDOM % 100))
-          echo "COUNT=$COUNT" >> $GITHUB_ENV
+          cat $GITHUB_STEP_SUMMARY
 
       - name: Update README
         run: |
-          sed -i "s|<!-- COUNT_PLACEHOLDER -->|$COUNT|g" README.md
+          sed -i "s|Der aktuelle Code-Count ist: [0-9]*|Der aktuelle Code-Count ist: $GITHUB_STEP_SUMMARY|g" README.md
 
       - name: Commit and push changes
         run: |
