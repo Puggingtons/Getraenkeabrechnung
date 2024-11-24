@@ -4,9 +4,9 @@ name: Count Lines of Code
 # events but only for the main branch
 on:
   push:
-    branches: [ main ]
+    branches: [ ci, main ]
   pull_request:
-    branches: [ main ]
+    branches: [ ci, main ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -34,3 +34,22 @@ jobs:
 
       - name: Output Report
         run: cat cloc.md >> $GITHUB_STEP_SUMMARY
+  
+      # Update README with latest count
+      # Uses the markers in the README to replace the content
+      - name: Update README
+        run: |
+          sed -i '/<!-- CLOC-REPORT-START -->/,/<!-- CLOC-REPORT-END -->/{//!d;}' README.md
+          sed -i '/<!-- CLOC-REPORT-START -->/r cloc.md' README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update README with latest count"
+          git push
+
+
+
+      
