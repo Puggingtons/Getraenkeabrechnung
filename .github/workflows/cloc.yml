@@ -39,6 +39,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+
       - name: Update README
         run: |
           sed -i "s|Der aktuelle Code-Count ist: [0-9]*|Der aktuelle Code-Count ist: $GITHUB_STEP_SUMMARY|g" README.md
