@@ -34,7 +34,9 @@ jobs:
 
       - name: Output Report
         run: cat cloc.md >> $GITHUB_STEP_SUMMARY
-
+  
+      # Update README with latest count
+      # Uses the markers in the README to replace the content
       - name: Update README
         run: |
           sed -i '/<!-- CLOC-REPORT-START -->/,/<!-- CLOC-REPORT-END -->/{//!d;}' README.md
