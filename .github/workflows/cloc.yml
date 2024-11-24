@@ -37,7 +37,8 @@ jobs:
 
       - name: Update README
         run: |
-          sed -i "s|Der aktuelle Code-Count ist: [0-9]*|Der aktuelle Code-Count ist: $GITHUB_STEP_SUMMARY|g" README.md
+          echo -e "\n cloc Ausgabe: \n" >> README.md
+          cat cloc.md >> README.md
 
       - name: Commit and push changes
         run: |
