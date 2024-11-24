@@ -34,3 +34,19 @@ jobs:
 
       - name: Output Report
         run: cat cloc.md >> $GITHUB_STEP_SUMMARY
+
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Update README
+        run: |
+          sed -i "s|Der aktuelle Code-Count ist: [0-9]*|Der aktuelle Code-Count ist: $GITHUB_STEP_SUMMARY|g" README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Update README with latest count"
+          git push
