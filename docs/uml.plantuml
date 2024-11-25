@@ -1,0 +1,156 @@
+@startuml
+class Benutzer {
+  Realname realname
+  Username username
+  Passwort passwort
+  Email email
+  Konto konto
+  Getränkeautomat? getränkeautomat
+---
+  kann sich einloggen
+  lesender Zugriff auf eigenen Kontostand
+  kann Geld auf das Konto aufladen
+  kann sich selbst belasten
+}
+
+class Konto {
+  Kontostand kontostand
+  History????
+  void belasten(Betrag betrag)
+  void aufladen(Betrag betrag)
+}
+
+class Admin {
+---
+  kann sich einloggen
+  kann Benutzer anlegen
+  kann Benutzer löschen
+  kann Benutzer bearbeiten
+  kann Abrechner anlegen
+  kann Abrechner löschen
+  kann Abrechner bearbeiten
+}
+
+class Abrechner {
+  Abrechnung erstelleAbrechnung(Benutzer benutzer, Position[] positionen)
+---
+  kann Abrechnungen durchführen (Einen/Mehrere andere/n Benutzer belasten)
+}
+
+Admin --> Benutzer
+Abrechner --> Benutzer
+
+class Getränkeklasse {
+  Farbe farbe
+  Preis preis
+}
+
+class Position {
+  Getränkeklasse getränkeklasse
+  Menge menge
+}
+
+class Abrechnung {
+  Position[] positionen
+  Benutzer benutzer
+}
+
+class ThirstyCalc {
+  -Benutzer[] benutzer
+  -Getränkeklasse[] getränkeklassen
+  void abrechnen(Abrechnung abrechnung)
+  void getränkeklasseHinzufügen(Getränkeklasse getränkeklasse) # darf nur admin
+  void geldEinzahlen(Benutzer benutzer, Betrag betrag)
+  void benutzerAnlegen(Benutzer benutzer)
+}
+
+class Getränkeautomat {
+  Session? session
+  void login(String eingabe)
+  void abrechnen(String eingabe)
+  void selbstBelasten(String eingabe)
+}
+
+class Session {
+  Benutzer benutzer
+}
+
+class Befehl
+class LoginBefehl
+LoginBefehl --> Befehl
+
+class Befehlsverwaltung
+Befehlsverwaltung *-- Befehl
+
+note "Wollen wir die Möglichkeit behalten,\ndie Getränkesorte auch mit bei der Abrechnung zu erfassen?" as N1
+
+class Realname {
+  String realname
+---
+darf keine Zahlen enthalten
+}
+
+class Username {
+  String username
+---
+  darf keine Leerzeichen enthalten
+}
+
+class Passwort {
+  String passwort
+---
+darf nicht gelesen werden
+}
+
+class Email {
+  String email
+---
+muss "@" enthalten --> https://emailregex.com/ --> Java
+}
+
+class Kontostand {
+  double kontostand
+}
+
+class Betrag {
+  double betrag
+}
+
+class Farbe {
+  String farbe
+}
+
+class Preis {
+  double preis
+}
+
+class Menge {
+  int menge
+---
+darf nicht 0 oder weniger sein
+und muss 1 oder mehr sein
+beachte Integer Overflows :) --> Obergrenze bei Abrechnung beachten
+}
+
+interface PasswortRegel {
+  {abstract} boolean erfüllt(Passwort passwort)
+}
+
+class PasswortMindestlänge {
+  boolean erfüllt(Passwort passwort) # passwort ist mindestens 8 Zeichen lang
+}
+
+class PasswortHatSonderzeichen {
+  boolean erfüllt(Passwort passwort) # passwort hat Sonderzeichen
+}
+
+PasswortMindestlänge --> PasswortRegel
+PasswortHatSonderzeichen --> PasswortRegel
+
+class PasswortPrüfer {
+  PasswortRegel[] passwortRegeln
+  boolean istPasswortRegelkonform(Passwort passwort)
+}
+
+PasswortRegel --* PasswortPrüfer
+@enduml
