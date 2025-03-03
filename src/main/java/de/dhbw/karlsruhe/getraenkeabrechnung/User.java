@@ -5,8 +5,8 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
     // 2. Klassen für Feld Passwort erstellen
 
 public class User {
-    private String username;
-    private String password;
+    private Username username;
+    private Password password;
     private String realFirstName;
     private String realLastName;
     private String realName;
@@ -14,7 +14,7 @@ public class User {
     private Konto konto;
     private GetraenkeAutomat getraenkeAutomat;
 
-    public User(String username, String password, String realFirstName, String realLastName,
+    public User(Username username, Password password, String realFirstName, String realLastName,
         String realName, String email, Konto konto, GetraenkeAutomat getraenkeAutomat) {
 
         this.username = username;
@@ -27,16 +27,16 @@ public class User {
     }
 
     // Constructor for class LoginCommand
-    public User(String username, String password) {
+    public User(Username username, Password password) {
         this.username = username;
         this.password = password;
     }
 
-    public String getUsername() {
+    public Username getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(Username username) {
         if (UsernameValidator.isValidUsername(username)) {
             this.username = username;
         } else {
@@ -44,11 +44,11 @@ public class User {
         }
     }
 
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Password password) {
         if (PasswordValidator.isValidPassword(password)) {
             this.password = password;
         } else {
