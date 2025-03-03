@@ -1,0 +1,164 @@
+@startuml
+class Benutzer {
+  Realname realname
+  Username username
+  Passwort passwort
+  Email email
+  Konto konto
+  Rights rights
+  Getränkeautomat? getränkeautomat
+---
+  kann sich einloggen
+  lesender Zugriff auf eigenen Kontostand
+  kann Geld auf das Konto aufladen
+  kann sich selbst belasten
+}
+
+interface Rights {
+  boolean darfSichSelbstAbrechnenUSERRIGHTS
+  boolean darfAndereAbrechnenABRECHNERRIGHTS
+  boolean darfAdminSachenMachenADMINRIGHTS
+}
+
+Benutzer --> Rights
+Rights <|-- Admin
+Rights <|-- Abrechner
+
+class Konto {
+  Kontostand kontostand
+  x: History????
+  void belasten(Betrag betrag)
+  void aufladen(Betrag betrag)
+}
+
+class Admin {
+---
+  kann sich einloggen
+  kann Benutzer anlegen
+  kann Benutzer löschen
+  kann Benutzer bearbeiten
+  kann Abrechner anlegen
+  kann Abrechner löschen
+  kann Abrechner bearbeiten
+}
+
+class Abrechner {
+  Abrechnung erstelleAbrechnung(Benutzer benutzer, Position[] positionen)
+---
+  kann Abrechnungen durchführen (Einen/Mehrere andere/n Benutzer belasten)
+}
+
+UsernameValidator --> Username
+PasswordValidator --> Password
+
+class Getränkeklasse/DrinkCategory {
+  String drinkName
+  Color color
+}
+
+class Color {
+   String ColorName
+   double colorPrice 
+}
+
+class Position {
+  DrinkCategory drinkCategory
+  int amount
+}
+
+class Abrechnung {
+  Position[] positionen
+  Benutzer benutzer
+}
+
+class ThirstyCalc {
+  -Benutzer[] benutzer
+  -Getränkeklasse[] getränkeklassen
+  void abrechnen(Abrechnung abrechnung)
+  void getränkeklasseHinzufügen(Getränkeklasse getränkeklasse) # darf nur admin
+  void geldEinzahlen(Benutzer benutzer, Betrag betrag)
+  void benutzerAnlegen(Benutzer benutzer)
+}
+
+class Getränkeautomat {
+  Session? session
+  void login(String eingabe)
+  void abrechnen(String eingabe)
+  void selbstBelasten(String eingabe)
+}
+
+class Session {
+  Benutzer benutzer
+}
+
+class Befehl
+class LoginBefehl
+LoginBefehl --> Befehl
+
+class Befehlsverwaltung
+Befehlsverwaltung *-- Befehl
+
+note "Wollen wir die Möglichkeit behalten,\ndie Getränkesorte auch mit bei der Abrechnung zu erfassen?" as N1
+
+class Realname {
+  String realname
+---
+darf keine Zahlen enthalten
+}
+
+class Username {
+  String username
+---
+  darf keine Leerzeichen enthalten
+}
+
+class Passwort {
+  String passwort
+---
+darf nicht gelesen werden
+}
+
+class Email {
+  String email
+---
+muss "@" enthalten --> https://emailregex.com/ --> Java
+}
+
+class Kontostand {
+  double kontostand
+}
+
+class Menge {
+  int menge
+---
+darf nicht 0 oder weniger sein
+und muss 1 oder mehr sein
+beachte Integer Overflows :) --> Obergrenze bei Abrechnung beachten
+}
+
+
+class PasswordValidator{
+  String PASSWORD_PATTERN
+  boolean isValidPassword(String password)
+---
+a digit must occur at least once
+a lower case letter must occur at least once
+an upper case letter must occur at least once
+a special character must occur at least once
+no whitespace allowed in the entire string
+anything, at least eight places though
+}
+
+
+class UsernameValidator{
+    String USERNAME_PATTERN
+    boolean isValidUsername(String username)
+---
+Username consists of alphanumeric characters (a-zA-Z0-9), lowercase, or uppercase.
+Username allowed of the dot (.), underscore (_), and hyphen (-).
+The dot (.), underscore (_), or hyphen (-) must not be the first or last character.
+The dot (.), underscore (_), or hyphen (-) does not appear consecutively, e.g., java..regex
+The number of characters must be between 5 to 20.
+}
+
+@enduml

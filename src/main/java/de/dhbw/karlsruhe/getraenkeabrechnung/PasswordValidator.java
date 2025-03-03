@@ -20,12 +20,12 @@ public class PasswordValidator {
 
     private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 
-    public static boolean isValidPassword(String password) {
+    public static boolean isValidPassword(Password password) {
         if (password == null) {
             throw new IllegalArgumentException("Password is null");
         }
 
-        boolean isMatch = pattern.matcher(password).matches();
+        boolean isMatch = pattern.matcher(password.toString()).matches();
 
         if (!isMatch) {
             System.out.println("Password does not match pattern! The password must be 8 characters long, contain a number, an upper and lower case letter and a special character (@#$%^&+=).");
@@ -41,7 +41,7 @@ public class PasswordValidator {
         };
 
         for (String password : testPasswords) {
-            System.out.println("Test: " +  password + " → " + isValidPassword(password));
+            System.out.println("Test: " +  password + " → " + isValidPassword(new Password(password)));
         }
     }
 

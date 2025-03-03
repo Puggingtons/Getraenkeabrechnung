@@ -19,12 +19,12 @@ public class UsernameValidator {
 
     private static final Pattern pattern = Pattern.compile(USERNAME_PATTERN);
 
-    public static boolean isValidUsername(String username) {
+    public static boolean isValidUsername(Username username) {
         if (username == null) {
             return false;
         }
 
-        boolean isValidUsernameMatch = pattern.matcher(username).matches();
+        boolean isValidUsernameMatch = pattern.matcher(username.toString()).matches();
 
         if (!isValidUsernameMatch) {
             System.out.println("Username does not match pattern! The username must be between 5 and 20 characters long, contain only alphanumeric characters (a-zA-Z0-9), lowercase, or uppercase, and may contain dots (.), underscores (_), or hyphens (-). The dot (.), underscore (_), or hyphen (-) must not be the first or last character and must not appear consecutively.");
@@ -39,7 +39,7 @@ public class UsernameValidator {
         };
 
         for (String username : testUsernames) {
-            System.out.println("Test: " + username + " → " + isValidUsername(username));
+            System.out.println("Test: " + username + " → " + isValidUsername(new Username(username)));
         }
     }
 }
