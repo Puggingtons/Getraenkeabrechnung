@@ -5,6 +5,6 @@ public class Username {
     public Username(String username) {
         //TODO Auto-generated constructor stub
     }
-    
+
 }
 

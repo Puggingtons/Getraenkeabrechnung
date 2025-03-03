@@ -13,9 +13,10 @@ public class User {
     private String email;
     private Konto konto;
     private GetraenkeAutomat getraenkeAutomat;
+    private Rights rights;
 
     public User(Username username, Password password, String realFirstName, String realLastName,
-        String realName, String email, Konto konto, GetraenkeAutomat getraenkeAutomat) {
+        String realName, String email, Konto konto, GetraenkeAutomat getraenkeAutomat, Rights rights) {
 
         this.username = username;
         this.password = password;
@@ -24,6 +25,7 @@ public class User {
         this.getraenkeAutomat = new GetraenkeAutomat();
         this.konto = new Konto();
         konto.setAccountCredit(0);
+        this.rights = rights;
     }
 
     // Constructor for class LoginCommand
@@ -103,6 +105,14 @@ public class User {
 
     public void addCreditAmount(double credit) {
         konto.addAccountCredit(credit);
+    }
+
+    public Rights getRights() {
+        return rights;
+    }
+
+    public void setRights(Rights rights) {
+        this.rights = rights;
     }
 
     public void removeCreditAmount(double credit) {
