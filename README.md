@@ -3,7 +3,7 @@
 ## cloc Ausgabe: 
 
 <!-- CLOC-REPORT-START -->
-cloc|github.com/AlDanial/cloc v 1.96  T=0.07 s (303.4 files/s, 10468.0 lines/s)
+cloc|github.com/AlDanial/cloc v 1.96  T=0.06 s (333.8 files/s, 11514.6 lines/s)
 --- | ---
 
 Language|files|blank|comment|code
