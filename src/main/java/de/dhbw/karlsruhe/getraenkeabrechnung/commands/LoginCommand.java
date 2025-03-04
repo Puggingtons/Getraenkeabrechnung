@@ -1,7 +1,9 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.commands;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.Getraenkeabrechnung;
+import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.cli.Cli;
 
 public class LoginCommand implements Command {
@@ -33,7 +35,7 @@ public class LoginCommand implements Command {
         String username = cli.promptInput("please enter your username:");
         String password = cli.promptInput("please enter your password:");
 
-        User user = new User(username, password);
+        User user = new User(new Username(username), new Password(password));
         getraenkeabrechnung.login(user);
 
         return "Welcome " + username + "!\n";
