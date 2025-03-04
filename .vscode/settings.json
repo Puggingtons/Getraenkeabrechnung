@@ -1,0 +1,6 @@
+{
+  "plantuml.exportOutDir": ".",
+  "plantuml.commandArgs": [
+    "-DPLANTUML_LIMIT_SIZE=8192"
+  ]
+}
