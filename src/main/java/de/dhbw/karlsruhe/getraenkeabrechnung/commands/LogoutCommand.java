@@ -26,7 +26,7 @@ public class LogoutCommand implements Command {
 
     @Override
     public String execute() {
-        String username = getraenkeabrechnung.getUser().getUsername();
+        String username = getraenkeabrechnung.getUser().getUsername().toString();
         getraenkeabrechnung.logout();
         return "Logged out " + username + " successfully!";
     }
