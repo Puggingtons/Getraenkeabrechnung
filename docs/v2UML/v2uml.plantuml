@@ -1,11 +1,11 @@
 @startuml
 class Benutzer {
   Realname realname
-  Username username
-  Passwort passwort
+  Username Username
+  Password password
   Email email
   Konto konto
-  Rights rights
+  Right[] rights
   Getränkeautomat? getränkeautomat
 ---
   kann sich einloggen
@@ -14,24 +14,21 @@ class Benutzer {
   kann sich selbst belasten
 }
 
-interface Rights {
+interface Right {
+}
+
+class SelfServiceRight {
   boolean darfSichSelbstAbrechnenUSERRIGHTS
+}
+
+class OtherServiceRight {
   boolean darfAndereAbrechnenABRECHNERRIGHTS
+---
+  kann Abrechnungen durchführen (Einen/Mehrere andere/n Benutzer belasten)
+}
+
+class AdministrativeRight {
   boolean darfAdminSachenMachenADMINRIGHTS
-}
-
-Benutzer --> Rights
-Rights <|-- Admin
-Rights <|-- Abrechner
-
-class Konto {
-  Kontostand kontostand
-  x: History????
-  void belasten(Betrag betrag)
-  void aufladen(Betrag betrag)
-}
-
-class Admin {
 ---
   kann sich einloggen
   kann Benutzer anlegen
@@ -42,53 +39,60 @@ class Admin {
   kann Abrechner bearbeiten
 }
 
-class Abrechner {
-  Abrechnung erstelleAbrechnung(Benutzer benutzer, Position[] positionen)
----
-  kann Abrechnungen durchführen (Einen/Mehrere andere/n Benutzer belasten)
+SelfServiceRight --> Right
+OtherServiceRight --> Right
+AdministrativeRight --> Right
+
+Benutzer *-- Right
+
+class Konto {
+  Kontostand kontostand
+  x: History????
+  void belasten(Betrag betrag)
+  void aufladen(Betrag betrag)
 }
 
-UsernameValidator --> Username
-PasswordValidator --> Password
+UsernameValidator *-- Username
+PasswordValidator *-- Password
 
-class Getränkeklasse/DrinkCategory {
-  String drinkName
-  Color color
+class Drink {
+  String name
+  Category category
 }
 
-class Color {
-   String ColorName
-   double colorPrice 
+class Category {
+   String name
+   double price 
 }
 
 class Position {
-  DrinkCategory drinkCategory
-  int amount
+  Drink drink
+  Menge amount
 }
+
+Drink *-- Category
+Position *-- Drink
+Position *-- Menge
 
 class Abrechnung {
   Position[] positionen
   Benutzer benutzer
 }
 
+Abrechnung *-- Position
+Abrechnung *-- Benutzer
+Abrechnung --* ThirstyCalc
+
 class ThirstyCalc {
   -Benutzer[] benutzer
-  -Getränkeklasse[] getränkeklassen
+  -Categorry[] categories
+---
   void abrechnen(Abrechnung abrechnung)
   void getränkeklasseHinzufügen(Getränkeklasse getränkeklasse) # darf nur admin
   void geldEinzahlen(Benutzer benutzer, Betrag betrag)
   void benutzerAnlegen(Benutzer benutzer)
-}
-
-class Getränkeautomat {
-  Session? session
+  Abrechnung erstelleAbrechnung(Benutzer benutzer, Position[] positionen)
   void login(String eingabe)
-  void abrechnen(String eingabe)
-  void selbstBelasten(String eingabe)
-}
-
-class Session {
-  Benutzer benutzer
 }
 
 class Befehl
@@ -98,12 +102,16 @@ LoginBefehl --> Befehl
 class Befehlsverwaltung
 Befehlsverwaltung *-- Befehl
 
-note "Wollen wir die Möglichkeit behalten,\ndie Getränkesorte auch mit bei der Abrechnung zu erfassen?" as N1
-
 class Realname {
-  String realname
+  String title
+  String[] firstName
+  String lastName
 ---
+  String getName()
 darf keine Zahlen enthalten
+}
+
+interface ValidatableString {
 }
 
 class Username {
@@ -112,8 +120,8 @@ class Username {
   darf keine Leerzeichen enthalten
 }
 
-class Passwort {
-  String passwort
+class Password {
+  String password
 ---
 darf nicht gelesen werden
 }
@@ -124,9 +132,21 @@ class Email {
 muss "@" enthalten --> https://emailregex.com/ --> Java
 }
 
+Username --> ValidatableString
+Password --> ValidatableString
+Email --> ValidatableString
+
+Benutzer *-- Username
+Benutzer *-- Password
+Benutzer *-- Email
+Benutzer *-- Konto
+Benutzer *-- Realname
+
 class Kontostand {
   double kontostand
 }
+
+Kontostand --* Konto
 
 class Menge {
   int menge
@@ -136,11 +156,14 @@ und muss 1 oder mehr sein
 beachte Integer Overflows :) --> Obergrenze bei Abrechnung beachten
 }
 
+interface StringValidator {
+  ~boolean isValid(ValidatableString string) //abstract
+}
 
 class PasswordValidator{
   String PASSWORD_PATTERN
-  boolean isValidPassword(String password)
 ---
+  boolean isValid(Password password)
 a digit must occur at least once
 a lower case letter must occur at least once
 an upper case letter must occur at least once
@@ -152,13 +175,28 @@ anything, at least eight places though
 
 class UsernameValidator{
     String USERNAME_PATTERN
-    boolean isValidUsername(String username)
 ---
+    boolean isValid(Username username)
 Username consists of alphanumeric characters (a-zA-Z0-9), lowercase, or uppercase.
 Username allowed of the dot (.), underscore (_), and hyphen (-).
 The dot (.), underscore (_), or hyphen (-) must not be the first or last character.
 The dot (.), underscore (_), or hyphen (-) does not appear consecutively, e.g., java..regex
 The number of characters must be between 5 to 20.
 }
+
+class EmailValidator {
+  ---
+  boolean isValid(Email email)
+}
+
+Email --* EmailValidator
+
+PasswordValidator --> StringValidator
+UsernameValidator --> StringValidator
+EmailValidator --> StringValidator
+StringValidator *-- ValidatableString
+
+ThirstyCalc *-- Benutzer
+ThirstyCalc *-- Category
 
 @enduml
