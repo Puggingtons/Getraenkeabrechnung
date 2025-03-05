@@ -1,7 +1,9 @@
+package validators;
+
 import org.junit.jupiter.api.Test;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,7 +11,7 @@ class PasswordValidatorTest {
     
     @Test
     void isValidPasswordShouldReturnTrue() {
-        assertTrue(PasswordValidator.isValidPassword(new Password("GoodPassword1@")));
+        assertTrue(PasswordValidator.isValidPassword(new Password("goodPassword=1")));
     }
 
     @Test
@@ -18,7 +20,7 @@ class PasswordValidatorTest {
     }
 
     @Test
-    void isValidPasswordwithAtShouldReturnFalse() {
+    void isValidPasswordTooShortShouldReturnFalse() {
         assertFalse(PasswordValidator.isValidPassword(new Password("Short3@")));
     }
 
@@ -37,7 +39,4 @@ class PasswordValidatorTest {
         assertFalse(PasswordValidator.isValidPassword(new Password("noupper#2")));
     }
     
-
-
-
 }
