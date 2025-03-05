@@ -20,7 +20,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
         with:
-            ref: ${{ github.event.pull_request.head.sha }}
+          # For pull requests, fetch the PR's branch instead of the target branch
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
 
       # Runs djdefi/cloc-action
       - name: Count Lines of Code (cloc)
@@ -38,20 +40,22 @@ jobs:
         run: cat cloc.md >> $GITHUB_STEP_SUMMARY
   
       # Update README with latest count
-      # Uses the markers in the README to replace the content
+      # Only do this on pushes to main, not on pull requests
       - name: Update README
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           sed -i '/<!-- CLOC-REPORT-START -->/,/<!-- CLOC-REPORT-END -->/{//!d;}' README.md
           sed -i '/<!-- CLOC-REPORT-START -->/r cloc.md' README.md
 
       - name: Commit and push changes
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git commit -m "Update README with latest count"
+          git commit -m "Update README with latest count" || echo "No changes to commit"
           git push
 
 
 
-      
+
