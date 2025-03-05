@@ -17,8 +17,8 @@ public class Password {
             return false;
         }
 
-        Pattern compiledPattern = Pattern.compile(pattern.get());
+        Pattern compiledPasswordPattern = Pattern.compile(pattern.get());
 
-        return compiledPattern.matcher(this.passwordString).matches();
+        return compiledPasswordPattern.matcher(this.passwordString).matches();
     }
 }
