@@ -2,7 +2,7 @@ name: Count Lines of Code & Run Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, ci ]
 
 jobs:
   test:
