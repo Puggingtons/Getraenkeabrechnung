@@ -1,6 +1,6 @@
 # Getränkeabrechnung
 
-## cloc Ausgabe: 
+## cloc Ausgabe
 
 <!-- CLOC-REPORT-START -->
 cloc|github.com/AlDanial/cloc v 1.96  T=0.09 s (234.0 files/s, 8107.3 lines/s)
