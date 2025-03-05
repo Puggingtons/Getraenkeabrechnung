@@ -30,15 +30,4 @@ public class PasswordValidator {
         return validPassword;
     }
 
-    // Test policy of username according to regex rules
-    public static void main(String[] args) {
-        String[] testPasswords = {
-            "Short3@", "no!SpeChar1", "NOLOWER#1", "noupper#2", "noNumber#", "goodPassword=1"
-        };
-
-        for (String password : testPasswords) {
-            System.out.println("Test: " +  password + " → " + isValidPassword(new Password(password)));
-        }
-    }
-
 }
