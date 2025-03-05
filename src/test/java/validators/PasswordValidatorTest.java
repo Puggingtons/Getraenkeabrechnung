@@ -25,17 +25,17 @@ class PasswordValidatorTest {
     }
 
     @Test
-    void testi() {
+    void isValidPasswordNoSpecialCharShouldReturnFalse() {
         assertFalse(PasswordValidator.isValidPassword(new Password("no!SpeChar1")));
     }
 
     @Test
-    void testi2() {
+    void isValidPasswordNoLowerCharShouldReturnFalse() {
         assertFalse(PasswordValidator.isValidPassword(new Password("NOLOWER#1")));
     }
 
     @Test
-    void testi3() {
+    void isValidPasswordNoUpperCharShouldReturnFalse() {
         assertFalse(PasswordValidator.isValidPassword(new Password("noupper#2")));
     }
     
