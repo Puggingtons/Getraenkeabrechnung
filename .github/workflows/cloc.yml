@@ -1,30 +1,42 @@
-name: Count Lines of Code
+name: Count Lines of Code & Run Tests
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the main branch
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  cloc:
-    # The type of runner that the job will run on
+  test:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 23
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '23'
+
+      - name: Grant execute permission for Gradle
+        run: chmod +x gradlew
+
+      - name: Run Tests with Gradle
+        run: ./gradlew test
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: build/reports/tests/test
+  cloc:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
         with:
-          # For pull requests, fetch the PR's branch instead of the target branch
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           fetch-depth: 0
 
-      # Runs djdefi/cloc-action
       - name: Count Lines of Code (cloc)
         uses: djdefi/cloc-action@6
         with:
@@ -38,9 +50,7 @@ jobs:
 
       - name: Output Report
         run: cat cloc.md >> $GITHUB_STEP_SUMMARY
-  
-      # Update README with latest count
-      # Only do this on pushes to main, not on pull requests
+
       - name: Update README
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
@@ -54,8 +64,5 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
           git commit -m "Update README with latest count" || echo "No changes to commit"
-          git push
-
-
-
+          git push HEAD:main
 

@@ -1,156 +1,259 @@
-@startuml
-class Benutzer {
-  Realname realname
-  Username username
-  Passwort passwort
-  Email email
-  Konto konto
-  Getränkeautomat? getränkeautomat
----
-  kann sich einloggen
-  lesender Zugriff auf eigenen Kontostand
-  kann Geld auf das Konto aufladen
-  kann sich selbst belasten
-}
+@startuml uml
+/'
+Ein paar Plantuml-Beispiele, die der UML Norm nach Wikipedia entsprechen :)
+https://de.wikipedia.org/wiki/Klassendiagramm
 
-class Konto {
-  Kontostand kontostand
-  History????
-  void belasten(Betrag betrag)
-  void aufladen(Betrag betrag)
-}
+# Relationen:
 
-class Admin {
----
-  kann sich einloggen
-  kann Benutzer anlegen
-  kann Benutzer löschen
-  kann Benutzer bearbeiten
-  kann Abrechner anlegen
-  kann Abrechner löschen
-  kann Abrechner bearbeiten
-}
+Dings <|-- Bumms
+  Bumms implementiert das Interface Dings
 
-class Abrechner {
-  Abrechnung erstelleAbrechnung(Benutzer benutzer, Position[] positionen)
----
-  kann Abrechnungen durchführen (Einen/Mehrere andere/n Benutzer belasten)
-}
+Kunde <|.. Privatkunde
+  Privatkunde spezialisiert Kunde
 
-Admin --> Benutzer
-Abrechner --> Benutzer
+User *-- Right
+  Komposition: Right existiert nicht ohne User. User hat beliebig viele Rights
 
-class Getränkeklasse {
-  Farbe farbe
-  Preis preis
-}
+User o-- Right
+  Aggregation: Right existiert auch ohne User. User hat beliebig viele Rights
 
-class Position {
-  Getränkeklasse getränkeklasse
-  Menge menge
-}
+# Klassenattribute:
 
-class Abrechnung {
-  Position[] positionen
-  Benutzer benutzer
-}
+-String name
+  private String name
++String name
+  public String name
+#String name
+  protected String name
+~String name
+  package String name
+'/
+
+package rights {
+  interface Right {
+  }
+
+  class SelfServiceRight {
+    boolean darfSichSelbstAbrechnenUSERRIGHTS
+  }
+
+  class OtherServiceRight {
+    boolean darfAndereAbrechnenABRECHNERRIGHTS
+    ---
+    kann Abrechnungen durchführen (Einen/Mehrere andere/n User belasten)
+  }
+
+  class AdministrativeRight {
+    boolean darfAdminSachenMachenADMINRIGHTS
+    ---
+    kann sich einloggen
+    kann User anlegen
+    kann User löschen
+    kann User bearbeiten
+    kann Abrechner anlegen
+    kann Abrechner löschen
+    kann Abrechner bearbeiten
+  }
+
+  Right <|.. SelfServiceRight
+  Right <|.. OtherServiceRight
+  Right <|.. AdministrativeRight
+} /' end package: rights '/
+
+package validatableStrings {
+  package strings {
+    interface ValidatableString {
+    }
+
+    class Username {
+      -String username
+    ---
+
+    ---
+      darf keine Leerzeichen enthalten
+    }
+
+    class Password {
+      -String password
+    ---
+
+    ---
+    darf nicht gelesen werden
+    }
+
+    class Email {
+      -String email
+    ---
+
+    ---
+    muss "@" enthalten --> https://emailregex.com/ --> Java
+    }
+
+    class Realname {
+      String title
+      String[] firstName
+      String lastName
+      ---
+      String getName()
+      ---
+      darf keine Zahlen enthalten
+    }
+
+    ValidatableString <|-- Username
+    ValidatableString <|-- Password
+    ValidatableString <|-- Email
+    ValidatableString <|-- Realname
+  } /' end package: validatableStrings.strings '/
+
+  package validators {
+    interface StringValidator {
+      ---
+      {abstract} boolean isValid(ValidatableString string)
+    }
+
+    class PasswordValidator {
+      -String PASSWORD_PATTERN
+      ---
+      boolean isValid(Password password)
+      ---
+      a digit must occur at least once
+      a lower case letter must occur at least once
+      an upper case letter must occur at least once
+      a special character must occur at least once
+      no whitespace allowed in the entire string
+      anything, at least eight places though
+    }
+
+
+    class UsernameValidator {
+      -String USERNAME_PATTERN
+      ---
+      boolean isValid(Username username)
+      ---
+      Username consists of alphanumeric characters (a-zA-Z0-9), lowercase, or uppercase.
+      Username allowed of the dot (.), underscore (_), and hyphen (-).
+      The dot (.), underscore (_), or hyphen (-) must not be the first or last character.
+      The dot (.), underscore (_), or hyphen (-) does not appear consecutively, e.g., java..regex
+      The number of characters must be between 5 to 20.
+    }
+
+    class EmailValidator {
+      ---
+      boolean isValid(Email email)
+    }
+
+    StringValidator <|-- PasswordValidator
+    StringValidator <|-- UsernameValidator
+    StringValidator <|-- EmailValidator
+
+    ' StringValidator *-- ValidatableString
+  } /' end package: validatableStrings.validators '/
+
+  ' EmailValidator *-- Email
+  ' UsernameValidator *-- Username
+  ' PasswordValidator *-- Password
+} /' end package: validatableStrings '/
+
+package user {
+  class User {
+    ' Realname realname
+    ' Username Username
+    ' Password password
+    ' Email email
+    ' Account konto
+    ' Right[] rights
+    ---
+
+    ---
+    kann sich einloggen
+    lesender Zugriff auf eigenen Kontostand
+    kann Geld auf das Konto aufladen
+    kann sich selbst belasten
+  }
+} /' end package: user '/
+
+package banking {
+  package numbers {
+    interface Amount {
+
+    }
+    class MoneyAmount {
+
+    }
+
+    class PositionAmount {
+      int menge
+      ---
+      ---
+      darf nicht 0 oder weniger sein
+      und muss 1 oder mehr sein
+      beachte Integer Overflows :) --> Obergrenze bei Abrechnung beachtenas Objekt benutzt ein anderes Objekt
+    }
+
+    Amount <|-- MoneyAmount
+    Amount <|-- PositionAmount
+  } /' end package: banking.numbers '/
+
+  package invoicing {
+    class Drink {
+      String name
+      ' Category category
+    }
+
+    class Category {
+      String name
+      double price 
+    }
+
+    class Position {
+      ' Drink drink
+      ' Menge amount
+    }
+
+    Drink "1" o-- Category
+    Position "1" o-- Drink
+    Position "1" *-- PositionAmount
+
+    class Invoice {
+      ' Position[] positionen
+      ' User benutzer
+    }
+
+    Invoice "n" *-- Position
+    Invoice "1" *-- User
+  } /' end package: banking.invoicing '/
+
+  class Account {
+    x: History????
+    ---
+    void belasten(MoneyAmount amount)
+    void aufladen(MoneyAmount amount)
+  }
+
+  Account "1" *-- MoneyAmount : < balance
+} /' end package: banking '/
 
 class ThirstyCalc {
-  -Benutzer[] benutzer
-  -Getränkeklasse[] getränkeklassen
+  ' -User[] benutzer
+  ' -Category[] categories
+---
   void abrechnen(Abrechnung abrechnung)
   void getränkeklasseHinzufügen(Getränkeklasse getränkeklasse) # darf nur admin
-  void geldEinzahlen(Benutzer benutzer, Betrag betrag)
-  void benutzerAnlegen(Benutzer benutzer)
-}
-
-class Getränkeautomat {
-  Session? session
+  void geldEinzahlen(User benutzer, Betrag betrag)
+  void benutzerAnlegen(User benutzer)
+  Abrechnung erstelleAbrechnung(User benutzer, Position[] positionen)
   void login(String eingabe)
-  void abrechnen(String eingabe)
-  void selbstBelasten(String eingabe)
 }
 
-class Session {
-  Benutzer benutzer
-}
+User "n" *-- Right
+User "1" o-- Username
+User "1" o-- Password
+User "1" o-- Email
+User "1" o-- Account
+User "1" o-- Realname
 
-class Befehl
-class LoginBefehl
-LoginBefehl --> Befehl
+ThirstyCalc *-- Invoice
+ThirstyCalc "n" *-- User
+ThirstyCalc "n" *-- Category
 
-class Befehlsverwaltung
-Befehlsverwaltung *-- Befehl
-
-note "Wollen wir die Möglichkeit behalten,\ndie Getränkesorte auch mit bei der Abrechnung zu erfassen?" as N1
-
-class Realname {
-  String realname
----
-darf keine Zahlen enthalten
-}
-
-class Username {
-  String username
----
-  darf keine Leerzeichen enthalten
-}
-
-class Passwort {
-  String passwort
----
-darf nicht gelesen werden
-}
-
-class Email {
-  String email
----
-muss "@" enthalten --> https://emailregex.com/ --> Java
-}
-
-class Kontostand {
-  double kontostand
-}
-
-class Betrag {
-  double betrag
-}
-
-class Farbe {
-  String farbe
-}
-
-class Preis {
-  double preis
-}
-
-class Menge {
-  int menge
----
-darf nicht 0 oder weniger sein
-und muss 1 oder mehr sein
-beachte Integer Overflows :) --> Obergrenze bei Abrechnung beachten
-}
-
-interface PasswortRegel {
-  {abstract} boolean erfüllt(Passwort passwort)
-}
-
-class PasswortMindestlänge {
-  boolean erfüllt(Passwort passwort) # passwort ist mindestens 8 Zeichen lang
-}
-
-class PasswortHatSonderzeichen {
-  boolean erfüllt(Passwort passwort) # passwort hat Sonderzeichen
-}
-
-PasswortMindestlänge --> PasswortRegel
-PasswortHatSonderzeichen --> PasswortRegel
-
-class PasswortPrüfer {
-  PasswortRegel[] passwortRegeln
-  boolean istPasswortRegelkonform(Passwort passwort)
-}
-
-PasswortRegel --* PasswortPrüfer
 @enduml

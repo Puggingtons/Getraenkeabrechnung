@@ -26,8 +26,13 @@ public class LogoutCommand implements Command {
 
     @Override
     public String execute() {
+        try {
+            getraenkeabrechnung.getUser().getUsername().toString();
+        } catch (NullPointerException e) {
+            return "You are not logged in! \n";
+        }
         String username = getraenkeabrechnung.getUser().getUsername().toString();
         getraenkeabrechnung.logout();
-        return "Logged out " + username + " successfully!";
+        return "Logged out " + username + " successfully! \n";
     }
 }
