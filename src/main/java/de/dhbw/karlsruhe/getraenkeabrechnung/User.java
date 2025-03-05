@@ -1,6 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
 
 // Todo 
     // 1. login method (Session etc.)
