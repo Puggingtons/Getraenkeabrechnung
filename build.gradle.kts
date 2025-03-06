@@ -1,7 +1,15 @@
 plugins {
     id("java")
-    id("org.sonarqube") version "3.5.0.2730"
     id("jacoco")
+    id("org.sonarqube") version "6.0.1.5171"
+}
+
+sonar {
+  properties {
+    property("sonar.projectKey", "Puggingtons_Getraenkeabrechnung")
+    property("sonar.organization", "puggingtons")
+    property("sonar.host.url", "https://sonarcloud.io")
+  }
 }
 
 group = "org.example"
@@ -17,12 +25,13 @@ dependencies {
 }
 
 tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
     useJUnitPlatform()
 }
 
 tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
     reports {
-        // Setting xml.required to true to generate XML report for code coverage
         xml.required.set(true)
     }
 }
