@@ -1,0 +1,42 @@
+name: Count lines of code
+
+on:
+    push:
+        branches: [ main, ci ]
+
+jobs:
+    cloc:
+        name: Count lines of code
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Config cloc
+              uses: djdefi/cloc-action@6
+              with:
+                options: --md --include-lang=java --exclude-dir=test --out=cloc.md
+
+            - name: Save cloc report
+              uses: actions/upload-artifact@v4
+              with:
+                name: cloc.md
+                path: cloc.md
+
+            - name: Output report
+              run: cat cloc.md >> $GITHUB_STEP_SUMMARY
+
+            - name: Update README
+              if: github.event_name == 'push'
+              run: |
+                sed -i '/<!-- CLOC-REPORT-START -->/,/<!-- CLOC-REPORT-END -->/{//!d;}' README.md
+                sed -i '/<!-- CLOC-REPORT-START -->/r cloc.md' README.md
+
+            - name: Commit and push changes
+              if: github.event_name == 'push'
+              run: |
+                git config --global user.name "github-actions[bot]"
+                git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                git add README.md
+                git commit -m "Update README with latest count" || echo "No changes to commit"
+                git push
