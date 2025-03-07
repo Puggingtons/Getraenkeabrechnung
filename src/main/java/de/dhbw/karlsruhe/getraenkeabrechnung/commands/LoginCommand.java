@@ -32,12 +32,16 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute() {
-        String username = cli.promptInput("please enter your username:");
-        String password = cli.promptInput("please enter your password:");
+        if (getraenkeabrechnung.getUser() != null) {
+            return "You are already logged in! \n";
+        } else {
+            String username = cli.promptInput("please enter your username:");
+            String password = cli.promptInput("please enter your password:");
 
-        User user = new User(new Username(username), new Password(password));
-        getraenkeabrechnung.login(user);
+            User user = new User(new Username(username), new Password(password));
+            getraenkeabrechnung.login(user);
 
-        return "Welcome " + username + "!\n";
+            return "Welcome " + username + "!\n";
+        }
     }
 }
