@@ -81,13 +81,13 @@ jobs:
         run: cat cloc.md >> $GITHUB_STEP_SUMMARY
 
       - name: Update README
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push'
         run: |
           sed -i '/<!-- CLOC-REPORT-START -->/,/<!-- CLOC-REPORT-END -->/{//!d;}' README.md
           sed -i '/<!-- CLOC-REPORT-START -->/r cloc.md' README.md
 
       - name: Commit and push changes
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
