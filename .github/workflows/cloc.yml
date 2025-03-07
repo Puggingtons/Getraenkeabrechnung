@@ -12,7 +12,7 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v3
 
-            - name: Conig cloc
+            - name: Config cloc
               uses: djdefi/cloc-action@6
               with:
                 options: --md --include-lang=java --exclude-dir=src/test --out=cloc.md
@@ -21,7 +21,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: cloc.md
-                path: cloc.mad
+                path: cloc.md
 
             - name: Output report
               run: cat cloc.md >> $GITHUB_STEP_SUMMARY
