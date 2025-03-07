@@ -13,13 +13,13 @@ public class User {
     private String realFirstName;
     private String realLastName;
     private String realName;
-    private String email;
+    private Email email;
     private Konto konto;
     private GetraenkeAutomat getraenkeAutomat;
     private Rights rights;
 
     public User(Username username, Password password, String realFirstName, String realLastName,
-        String realName, String email, Konto konto, GetraenkeAutomat getraenkeAutomat, Rights rights) {
+        String realName, Email email, Konto konto, GetraenkeAutomat getraenkeAutomat, Rights rights) {
 
         this.username = username;
         this.password = password;
@@ -82,11 +82,11 @@ public class User {
         return realName;
     }
 
-        public String getEmail() {
+        public Email getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(Email email) {
         this.email = email;
     }
 
