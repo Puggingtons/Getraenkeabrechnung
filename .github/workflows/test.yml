@@ -2,7 +2,7 @@ name: Run Tests
 
 on:
   push:
-    branches: [ main, ci, sonar]
+    branches: [ main, ci, sonar, accountTests ]
 
 jobs:
   test:
