@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.io2;
+package de.dhbw.karlsruhe.getraenkeabrechnung.io2.reader;
 
 import java.io.InputStream;
 import java.util.Scanner;

@@ -1,6 +1,6 @@
 package io2.mocks;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.Reader;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.reader.Reader;
 
 public class InputReaderMock implements Reader {
 

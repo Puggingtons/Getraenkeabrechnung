@@ -1,6 +1,6 @@
 package io2.mocks;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.Writer;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.Writer;
 
 public class OutputWriterMock implements Writer {
     private String output;

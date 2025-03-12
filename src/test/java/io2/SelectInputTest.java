@@ -1,6 +1,6 @@
 package io2;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.SelectInput;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.SelectInput;
 import io2.mocks.InputReaderMock;
 import io2.mocks.OutputWriterMock;
 import org.junit.jupiter.api.BeforeEach;

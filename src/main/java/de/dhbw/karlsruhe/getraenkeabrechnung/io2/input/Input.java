@@ -1,4 +1,9 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.io2;
+package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
+
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.reader.InputReader;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.reader.Reader;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.OutputWriter;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.Writer;
 
 abstract class Input {
     private Reader reader;

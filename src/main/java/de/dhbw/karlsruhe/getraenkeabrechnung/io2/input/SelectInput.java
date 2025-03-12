@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.io2;
+package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
 
 public class SelectInput extends Input {
 
