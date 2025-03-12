@@ -50,5 +50,35 @@ public class NumberInputTest {
         assertEquals(in, res.getValue());
     }
 
+    @Test
+    public void itReturnsHelp() {
+        NumberInput input = new NumberInput("");
+
+        input.setReader(readerMock);
+        input.setWriter(writerMock);
+
+        readerMock.setNextInput("help");
+
+        Result<Integer> res = input.prompt();
+
+        assertTrue(readerMock.hasBeenRead());
+        assertTrue(res.isHelp());
+    }
+
+    @Test
+    public void itReturnsNoValue() {
+        NumberInput input = new NumberInput("");
+
+        input.setReader(readerMock);
+        input.setWriter(writerMock);
+
+        readerMock.setNextInput("asdasd");
+
+        Result<Integer> res = input.prompt();
+
+        assertTrue(readerMock.hasBeenRead());
+        assertTrue(res.isNone());
+    }
+
 //    todo: test unhappy paths
 }
