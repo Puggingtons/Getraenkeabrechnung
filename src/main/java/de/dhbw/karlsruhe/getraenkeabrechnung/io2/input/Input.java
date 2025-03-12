@@ -7,17 +7,22 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.OutputWriter;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.Writer;
 
 abstract class Input<T> {
+    private final String prompt;
     private Reader reader;
     private Writer writer;
 
     protected Input() {
-        this.reader = new InputReader();
-        this.writer = new OutputWriter();
+        this("");
     }
 
-    protected Input(InputReader reader, OutputWriter writer) {
+    protected Input(String prompt) {
+        this(new InputReader(), new OutputWriter(), prompt);
+    }
+
+    protected Input(InputReader reader, OutputWriter writer, String prompt) {
         this.reader = reader;
         this.writer = writer;
+        this.prompt = prompt;
     }
 
     public void setReader(Reader reader) {
@@ -44,5 +49,21 @@ abstract class Input<T> {
         writer.writeLine(str);
     }
 
-    abstract Result<T> prompt();
+    public Result<T> prompt() {
+        print(prompt);
+
+        String in = readInput();
+
+        if (isHelp(in)) {
+            return Result.help();
+        }
+
+        if (in.isBlank()) {
+            return Result.none();
+        }
+
+        return getResult(in);
+    }
+
+    abstract Result<T> getResult(String input);
 }

@@ -6,28 +6,14 @@ public class NumberInput extends Input<Integer> {
 
 //    todo: range? (min and max value)
 
-    private final String prompt;
-
     public NumberInput(String prompt) {
-        this.prompt = prompt;
+        super(prompt);
     }
 
     @Override
-    public Result<Integer> prompt() {
-        print(prompt);
-
-        String in = readInput();
-
-        if (isHelp(in)) {
-            return Result.help();
-        }
-
-        if (in.isEmpty()) {
-            return Result.none();
-        }
-
+    public Result<Integer> getResult(String input) {
         try {
-            Integer res = Integer.valueOf(in);
+            Integer res = Integer.valueOf(input);
             return Result.some(res);
         } catch (NumberFormatException e) {
             return Result.none();
