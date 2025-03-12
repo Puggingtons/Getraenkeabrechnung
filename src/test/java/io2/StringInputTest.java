@@ -6,7 +6,10 @@ import io2.mocks.OutputWriterMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StringInputTest {
 
@@ -43,9 +46,26 @@ public class StringInputTest {
 
         readerMock.setNextInput(in);
 
-        String res = input.prompt();
+        Optional<String> res = input.prompt();
 
-        assertEquals(in, res);
+        assertTrue(res.isPresent());
+        assertEquals(in, res.get());
+    }
+
+    @Test
+    public void itReturnsEmptyInput() {
+        String in = "";
+
+        StringInput input = new StringInput("");
+
+        input.setReader(readerMock);
+        input.setWriter(writerMock);
+
+        readerMock.setNextInput(in);
+
+        Optional<String> res = input.prompt();
+
+        assertTrue(res.isEmpty());
     }
 
 //    todo: test unhappy paths

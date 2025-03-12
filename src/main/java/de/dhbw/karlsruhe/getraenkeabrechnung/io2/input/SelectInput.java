@@ -1,6 +1,8 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
 
-public class SelectInput extends Input {
+import java.util.Optional;
+
+public class SelectInput extends Input<Integer> {
 
     private final String[] options;
 
@@ -10,9 +12,21 @@ public class SelectInput extends Input {
     }
 
     @Override
-    public String prompt() {
+    public Optional<Integer> prompt() {
         printOptions();
-        return readInput();
+
+        String in = readInput();
+
+        if (in.isEmpty()) {
+            return Optional.empty();
+        }
+
+        try {
+            Integer res = Integer.valueOf(in);
+            return Optional.of(res);
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
     }
 
     private void printOptions() {

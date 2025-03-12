@@ -1,6 +1,8 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
 
-public class StringInput extends Input {
+import java.util.Optional;
+
+public class StringInput extends Input<String> {
 
     private final String prompt;
 
@@ -10,9 +12,16 @@ public class StringInput extends Input {
     }
 
     @Override
-    public String prompt() {
+    public Optional<String> prompt() {
         println(prompt);
 
-        return readInput();
+        String res = readInput();
+
+// return an empty optional if the returned string is blank
+        if (res.isBlank()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(res);
     }
 }

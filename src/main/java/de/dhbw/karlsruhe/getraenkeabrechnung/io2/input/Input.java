@@ -5,7 +5,9 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io2.reader.Reader;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.OutputWriter;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.Writer;
 
-abstract class Input {
+import java.util.Optional;
+
+abstract class Input<T> {
     private Reader reader;
     private Writer writer;
 
@@ -39,5 +41,5 @@ abstract class Input {
         writer.writeLine(str);
     }
 
-    abstract String prompt();
+    abstract Optional<T> prompt();
 }
