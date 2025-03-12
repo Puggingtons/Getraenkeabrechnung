@@ -20,12 +20,13 @@ public class SelectInteraction implements Interaction {
 
     public void explain() {
         for (int i = 0; i < options.size(); i++) {
-            System.out.println("[" + i + "] " + options.get(i));
+            System.out.println("[ " + i + " ] " + options.get(i));
         }
+        System.out.println("Enter a number between 0 and " + (options.size() - 1));
     }
 
     public void run() {
-        NumberInput numberInput = new NumberInput("Enter a number between 0 and " + (options.size() - 1));
+        NumberInput numberInput = new NumberInput(DEFAULT_PROMPT);
 
         while (true) {
             Result<Integer> result = numberInput.prompt();
@@ -35,7 +36,7 @@ public class SelectInteraction implements Interaction {
                 return; // todo
             }
 
-            if(result.isHelp()) {
+            if (result.isHelp()) {
                 explain();
                 continue;
             }
