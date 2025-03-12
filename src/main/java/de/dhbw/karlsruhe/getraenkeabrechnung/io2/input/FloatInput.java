@@ -9,7 +9,7 @@ public class FloatInput extends Input<Float> {
     }
 
     @Override
-    protected Result<Float> getResult(String input) {
+    Result<Float> getResult(String input) {
         try {
             Float res = Float.parseFloat(input);
             return Result.some(res);

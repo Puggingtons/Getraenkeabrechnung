@@ -25,7 +25,6 @@ public class StringInputInteraction implements Interaction {
 
     @Override
     public void run() {
-
         StringInput input = new StringInput(prompt);
 
         while (true) {

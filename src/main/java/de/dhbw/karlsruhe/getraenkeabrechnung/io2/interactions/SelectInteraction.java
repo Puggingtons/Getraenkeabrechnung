@@ -9,9 +9,19 @@ import java.util.List;
 public class SelectInteraction implements Interaction {
 
     private final List<String> options;
+    private final String prompt;
 
     public SelectInteraction() {
-        this.options = new ArrayList<>();
+        this(new ArrayList<>());
+    }
+
+    public SelectInteraction(List<String> options) {
+        this(options, DEFAULT_PROMPT);
+    }
+
+    public SelectInteraction(List<String> options, String prompt) {
+        this.options = options;
+        this.prompt = prompt;
     }
 
     public void addOption(String option) {
@@ -26,7 +36,7 @@ public class SelectInteraction implements Interaction {
     }
 
     public void run() {
-        NumberInput numberInput = new NumberInput(DEFAULT_PROMPT);
+        NumberInput numberInput = new NumberInput(prompt);
 
         while (true) {
             Result<Integer> result = numberInput.prompt();

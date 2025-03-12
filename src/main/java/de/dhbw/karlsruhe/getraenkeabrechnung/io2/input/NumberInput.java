@@ -11,7 +11,7 @@ public class NumberInput extends Input<Integer> {
     }
 
     @Override
-    public Result<Integer> getResult(String input) {
+    Result<Integer> getResult(String input) {
         try {
             Integer res = Integer.valueOf(input);
             return Result.some(res);
