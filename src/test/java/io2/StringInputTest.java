@@ -1,5 +1,6 @@
 package io2;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import io2.mocks.InputReaderMock;
 import io2.mocks.OutputWriterMock;
@@ -46,10 +47,10 @@ public class StringInputTest {
 
         readerMock.setNextInput(in);
 
-        Optional<String> res = input.prompt();
+        Result<String> res = input.prompt();
 
-        assertTrue(res.isPresent());
-        assertEquals(in, res.get());
+        assertTrue(res.hasValue());
+        assertEquals(in, res.getValue());
     }
 
     @Test
@@ -63,9 +64,9 @@ public class StringInputTest {
 
         readerMock.setNextInput(in);
 
-        Optional<String> res = input.prompt();
+        Result<String> res = input.prompt();
 
-        assertTrue(res.isEmpty());
+        assertTrue(res.isNone());
     }
 
 //    todo: test unhappy paths

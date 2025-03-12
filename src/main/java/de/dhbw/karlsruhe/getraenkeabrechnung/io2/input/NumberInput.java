@@ -13,20 +13,24 @@ public class NumberInput extends Input<Integer> {
     }
 
     @Override
-    public Optional<Integer> prompt() {
+    public Result<Integer> prompt() {
         print(prompt);
 
         String in = readInput();
 
+        if (isHelp(in)) {
+            return Result.help();
+        }
+
         if (in.isEmpty()) {
-            return Optional.empty();
+            return Result.none();
         }
 
         try {
             Integer res = Integer.valueOf(in);
-            return Optional.of(res);
+            return Result.some(res);
         } catch (NumberFormatException e) {
-            return Optional.empty();
+            return Result.none();
         }
     }
 }

@@ -33,6 +33,10 @@ abstract class Input<T> {
         return this.reader.readLine();
     }
 
+    protected boolean isHelp(String str) {
+        return str.equals("help");
+    }
+
     protected void print(String str) {
         writer.write(str);
     }
@@ -41,5 +45,5 @@ abstract class Input<T> {
         writer.writeLine(str);
     }
 
-    abstract Optional<T> prompt();
+    abstract Result<T> prompt();
 }

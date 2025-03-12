@@ -1,6 +1,7 @@
 package io2;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.NumberInput;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.Result;
 import io2.mocks.InputReaderMock;
 import io2.mocks.OutputWriterMock;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,11 +45,11 @@ public class NumberInputTest {
 
         readerMock.setNextInput(String.valueOf(in));
 
-        Optional<Integer> res = input.prompt();
+        Result<Integer> res = input.prompt();
 
         assertTrue(readerMock.hasBeenRead());
-        assertTrue(res.isPresent());
-        assertEquals(in, res.get());
+        assertTrue(res.hasValue());
+        assertEquals(in, res.getValue());
     }
 
 //    todo: test unhappy paths
