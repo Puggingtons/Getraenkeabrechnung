@@ -13,7 +13,7 @@ public class StringInput extends Input<String> {
 
     @Override
     public Result<String> prompt() {
-        println(prompt);
+        print(prompt);
 
         String res = readInput();
 
