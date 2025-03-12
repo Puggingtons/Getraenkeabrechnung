@@ -1,7 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.NumberInput;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.Result;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
 
 import java.util.ArrayList;
 import java.util.List;

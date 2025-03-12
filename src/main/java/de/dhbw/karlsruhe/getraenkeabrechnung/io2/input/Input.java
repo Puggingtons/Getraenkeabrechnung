@@ -1,11 +1,10 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.reader.InputReader;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.reader.Reader;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.OutputWriter;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.writer.Writer;
-
-import java.util.Optional;
 
 abstract class Input<T> {
     private Reader reader;

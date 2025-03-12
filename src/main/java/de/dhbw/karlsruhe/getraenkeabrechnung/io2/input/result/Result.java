@@ -1,10 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
-
-enum ResultState {
-    Value,
-    Abort,
-    Help
-}
+package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result;
 
 public class Result<T> {
 

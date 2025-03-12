@@ -1,5 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
+
 public class StringInput extends Input<String> {
 
     private final String prompt;

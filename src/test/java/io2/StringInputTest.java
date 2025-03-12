@@ -1,13 +1,11 @@
 package io2;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.Result;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import io2.mocks.InputReaderMock;
 import io2.mocks.OutputWriterMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

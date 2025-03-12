@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.input;
 
-import java.util.Optional;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
 
 public class NumberInput extends Input<Integer> {
 
