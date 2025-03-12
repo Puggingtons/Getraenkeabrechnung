@@ -1,14 +1,17 @@
 package io2;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.SelectInput;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.NumberInput;
 import io2.mocks.InputReaderMock;
 import io2.mocks.OutputWriterMock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Optional;
 
-public class SelectInputTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class NumberInputTest {
     private InputReaderMock readerMock;
     private OutputWriterMock writerMock;
 
@@ -19,31 +22,33 @@ public class SelectInputTest {
     }
 
     @Test
-    public void itPrintsOption() {
-        String[] options = new String[]{"Prompt"};
-        SelectInput input = new SelectInput(options);
+    public void itPrintsPrompt() {
+        String prompt = "Prompt";
+        NumberInput input = new NumberInput(prompt);
 
         input.setReader(readerMock);
         input.setWriter(writerMock);
 
         input.prompt();
 
-        assertEquals("[0] " + options[0] + "\n", writerMock.getOutput());
+        assertEquals(prompt, writerMock.getOutput());
     }
 
     @Test
-    public void itPrintsAllOptions() {
-        String[] options = new String[]{"Prompt", "Prompt2", "Prompt3"};
-        SelectInput input = new SelectInput(options);
+    public void itReturnsNumber() {
+        int in = 1;
+        NumberInput input = new NumberInput("");
 
         input.setReader(readerMock);
         input.setWriter(writerMock);
 
-        input.prompt();
+        readerMock.setNextInput(String.valueOf(in));
 
-        String expectedOutput = "[0] " + options[0] + "\n[1] " + options[1] + "\n[2] " + options[2] + "\n";
+        Optional<Integer> res = input.prompt();
 
-        assertEquals(expectedOutput, writerMock.getOutput());
+        assertTrue(readerMock.hasBeenRead());
+        assertTrue(res.isPresent());
+        assertEquals(in, res.get());
     }
 
 //    todo: test unhappy paths
