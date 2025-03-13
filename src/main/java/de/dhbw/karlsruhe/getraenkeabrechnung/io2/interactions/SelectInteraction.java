@@ -1,49 +1,51 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.NumberInput;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-public class SelectInteraction implements Interaction {
+public class SelectInteraction implements Interaction<String> {
 
-    private final List<String> options;
+    private final Map<String, String> options;
     private final String prompt;
 
     public SelectInteraction() {
-        this(new ArrayList<>());
+        this(new HashMap<>());
     }
 
-    public SelectInteraction(List<String> options) {
+    public SelectInteraction(Map<String, String> options) {
         this(options, DEFAULT_PROMPT);
     }
 
-    public SelectInteraction(List<String> options, String prompt) {
+    public SelectInteraction(Map<String, String> options, String prompt) {
         this.options = options;
         this.prompt = prompt;
     }
 
-    public void addOption(String option) {
-        this.options.add(option);
+    // todo: move this functionality to a new class
+    public void pushOption(String option) {
+        this.options.put(String.valueOf(this.options.size()), option);
+    }
+
+    public void addOption(String key, String option) {
+        this.options.put(key, option);
     }
 
     public void explain() {
-        for (int i = 0; i < options.size(); i++) {
-            System.out.println("[ " + i + " ] " + options.get(i));
-        }
-        System.out.println("Enter a number between 0 and " + (options.size() - 1));
+        options.forEach((k, v) -> System.out.println("[ " + k + " ] " + v));
     }
 
-    public void run() {
-        NumberInput numberInput = new NumberInput(prompt);
+    public String run() {
+        StringInput input = new StringInput(prompt);
 
         while (true) {
-            Result<Integer> result = numberInput.prompt();
+            Result<String> result = input.prompt();
 
             if (result.isNone()) {
                 System.out.println("Invalid input!");
-                return; // todo
+                return ""; // todo
             }
 
             if (result.isHelp()) {
@@ -51,15 +53,14 @@ public class SelectInteraction implements Interaction {
                 continue;
             }
 
-            int number = result.getValue();
+            String key = result.getValue();
 
-            if (number < 0 || number >= options.size()) {
-                System.out.println("Number out of bounds!");
+            if (!options.containsKey(key)) {
+                System.out.println("Unknown option: " + key);
                 continue;
             }
 
-            System.out.println("[ " + number + " ] " + options.get(number));
-            return;
+            return key;
         }
 
 

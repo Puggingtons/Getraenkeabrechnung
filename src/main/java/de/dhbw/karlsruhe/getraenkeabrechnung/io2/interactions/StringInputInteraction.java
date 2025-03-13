@@ -3,7 +3,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
 
-public class StringInputInteraction implements Interaction {
+public class StringInputInteraction implements Interaction<String> {
 
     private final String message;
     private final String prompt;
@@ -24,7 +24,7 @@ public class StringInputInteraction implements Interaction {
     }
 
     @Override
-    public void run() {
+    public String run() {
         StringInput input = new StringInput(prompt);
 
         while (true) {
@@ -41,7 +41,7 @@ public class StringInputInteraction implements Interaction {
             }
 
             System.out.println("Your input: " + result.getValue());
-            return;
+            return result.getValue();
         }
     }
 }

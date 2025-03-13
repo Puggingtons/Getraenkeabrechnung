@@ -1,23 +1,24 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
 
-public class CreateUserInteraction implements Interaction {
+public class CreateUserInteraction implements Interaction<User> {
     @Override
     public void explain() {
         System.out.println("Please enter a username and a password.");
     }
 
     @Override
-    public void run() {
+    public User run() {
         StringInput usernameInput = new StringInput("Username: ");
         StringInput passwordInput = new StringInput("Password: ");
         StringInput passwordVerificationInput = new StringInput("Verify Password: ");
 
-        boolean success = false;
-
-        while (!success) {
+        while (true) {
             String username = getValidInput(usernameInput);
             String password = getValidInput(passwordInput);
             String passwordVerification = getValidInput(passwordVerificationInput);
@@ -34,8 +35,7 @@ public class CreateUserInteraction implements Interaction {
             }
 
             // todo: createUser in user database
-
-            success = true;
+            return new User(new Username(username), new Password(password));
         }
     }
 
