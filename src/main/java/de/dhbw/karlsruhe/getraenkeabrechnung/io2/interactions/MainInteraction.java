@@ -16,8 +16,8 @@ public class MainInteraction implements Interaction<Void> {
         addRegisterInteraction();
         addExampleSelectInteraction();
         addExampleStringInteraction();
-        // addLoginInteraction(); todo
-        // addLogoutInteraction(); todo
+        addLoginInteraction();
+        addLogoutInteraction();
     }
 
     public void addInteraction(String key, String description, Interaction interaction) {
@@ -58,24 +58,34 @@ public class MainInteraction implements Interaction<Void> {
     }
 
     private void addRegisterInteraction() {
-        CreateUserInteraction createUserInteraction = new CreateUserInteraction();
-        addInteraction("register", "Register a new user", createUserInteraction);
+        CreateUserInteraction interaction = new CreateUserInteraction();
+        addInteraction("register", "Register a new user", interaction);
+    }
+
+    private void addLoginInteraction() {
+        LoginInteraction interaction = new LoginInteraction();
+        addInteraction("login", "Login a user", interaction);
+    }
+
+    private void addLogoutInteraction() {
+        LogoutInteraction interaction = new LogoutInteraction();
+        addInteraction("logout", "Logout a user", interaction);
     }
 
     private void addExampleSelectInteraction() {
-        SelectInteraction selectInteraction = new SelectInteraction();
+        SelectInteraction interaction = new SelectInteraction();
 
-        selectInteraction.addOption("key", "Option 0");
-        selectInteraction.pushOption("Option 1");
-        selectInteraction.pushOption("Option 2");
-        selectInteraction.pushOption("Option 3");
+        interaction.addOption("key", "Option 0");
+        interaction.pushOption("Option 1");
+        interaction.pushOption("Option 2");
+        interaction.pushOption("Option 3");
 
-        addInteraction("select", "Select an option", selectInteraction);
+        addInteraction("select", "Select an option", interaction);
     }
 
     private void addExampleStringInteraction() {
-        StringInputInteraction stringInputInteraction = new StringInputInteraction("Please enter a valid String!", "> ");
+        StringInputInteraction interaction = new StringInputInteraction("Please enter a valid String!", "> ");
 
-        addInteraction("string", "Enter a valid string", stringInputInteraction);
+        addInteraction("string", "Enter a valid string", interaction);
     }
 }
