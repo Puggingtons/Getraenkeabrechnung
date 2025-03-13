@@ -1,14 +1,21 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.cli.StdCli;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions.MainInteraction;
 
 public class Main {
     public static void main(String[] args) {
-        StdCli cli = new StdCli(System.out, System.in);
+//        StdCli cli = new StdCli(System.out, System.in);
+//
+//        Getraenkeabrechnung getraenkeabrechnung = new Getraenkeabrechnung(cli);
+//
+//        getraenkeabrechnung.start();
 
-        Getraenkeabrechnung getraenkeabrechnung = new Getraenkeabrechnung(cli);
+        createMainInteraction();
+    }
 
-        getraenkeabrechnung.start();
+    private static void createMainInteraction() {
+        MainInteraction mainInteraction = new MainInteraction();
+        mainInteraction.run();
     }
 }
 
