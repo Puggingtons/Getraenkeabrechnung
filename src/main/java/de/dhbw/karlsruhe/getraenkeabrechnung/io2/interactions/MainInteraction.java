@@ -6,13 +6,18 @@ import java.util.Map;
 public class MainInteraction implements Interaction<Void> {
 
     private final Map<String, Interaction> interactions;
-    private SelectInteraction selectInteraction;
+    private final SelectInteraction selectInteraction;
 
     public MainInteraction() {
         this.interactions = new HashMap<>();
         this.selectInteraction = new SelectInteraction();
 
-        addInteraction("exit", "exits the program", null);
+        addExitInteraction();
+        addRegisterInteraction();
+        addExampleSelectInteraction();
+        addExampleStringInteraction();
+        // addLoginInteraction(); todo
+        // addLogoutInteraction(); todo
     }
 
     public void addInteraction(String key, String description, Interaction interaction) {
@@ -27,6 +32,7 @@ public class MainInteraction implements Interaction<Void> {
 
     @Override
     public Void run() {
+        explain();
         while (true) {
             String selection = this.selectInteraction.run();
 
@@ -45,5 +51,31 @@ public class MainInteraction implements Interaction<Void> {
             interaction.explain();
             interaction.run();
         }
+    }
+
+    private void addExitInteraction() {
+        addInteraction("exit", "exits the program", null);
+    }
+
+    private void addRegisterInteraction() {
+        CreateUserInteraction createUserInteraction = new CreateUserInteraction();
+        addInteraction("register", "Register a new user", createUserInteraction);
+    }
+
+    private void addExampleSelectInteraction() {
+        SelectInteraction selectInteraction = new SelectInteraction();
+
+        selectInteraction.addOption("key", "Option 0");
+        selectInteraction.pushOption("Option 1");
+        selectInteraction.pushOption("Option 2");
+        selectInteraction.pushOption("Option 3");
+
+        addInteraction("select", "Select an option", selectInteraction);
+    }
+
+    private void addExampleStringInteraction() {
+        StringInputInteraction stringInputInteraction = new StringInputInteraction("Please enter a valid String!", "> ");
+
+        addInteraction("string", "Enter a valid string", stringInputInteraction);
     }
 }
