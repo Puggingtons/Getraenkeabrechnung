@@ -5,8 +5,9 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions.event.InteractionEventSource;
 
-public class CreateUserInteraction implements Interaction<User> {
+public class CreateUserInteraction extends InteractionEventSource<User> implements Interaction<User> {
     @Override
     public void explain() {
         System.out.println("Please enter a username and a password.");
@@ -31,11 +32,15 @@ public class CreateUserInteraction implements Interaction<User> {
 
             if (!password.equals(passwordVerification)) {
                 System.out.println("Passwords do not match!");
+                failure();
                 continue;
             }
 
+            User user = new User(new Username(username), new Password(password));
+            success(user);
+
             // todo: createUser in user database
-            return new User(new Username(username), new Password(password));
+            return user;
         }
     }
 

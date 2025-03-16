@@ -2,8 +2,9 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions.event.InteractionEventSource;
 
-public class StringInputInteraction implements Interaction<String> {
+public class StringInputInteraction extends InteractionEventSource<String> implements Interaction<String> {
 
     private final String message;
     private final String prompt;
@@ -37,11 +38,16 @@ public class StringInputInteraction implements Interaction<String> {
 
             if (result.isNone()) {
                 System.out.println("Invalid input!");
+                failure();
                 continue;
             }
 
-            System.out.println("Your input: " + result.getValue());
-            return result.getValue();
+
+            String res = result.getValue();
+            success(res);
+
+            System.out.println("Your input: " + res);
+            return res;
         }
     }
 }

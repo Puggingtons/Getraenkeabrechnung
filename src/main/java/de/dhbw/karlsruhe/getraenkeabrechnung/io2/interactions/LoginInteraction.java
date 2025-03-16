@@ -5,8 +5,9 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions.event.InteractionEventSource;
 
-public class LoginInteraction implements Interaction<User> {
+public class LoginInteraction extends InteractionEventSource<User> implements Interaction<User> {
     @Override
     public void explain() {
 
@@ -34,7 +35,10 @@ public class LoginInteraction implements Interaction<User> {
                 continue;
             }
 
-            return new User(new Username(username), new Password(password));
+            User user = new User(new Username(username), new Password(password));
+            success(user);
+
+            return user;
         }
     }
 

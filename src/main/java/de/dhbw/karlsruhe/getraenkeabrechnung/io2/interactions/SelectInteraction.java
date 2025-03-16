@@ -2,11 +2,12 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io2.input.result.Result;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions.event.InteractionEventSource;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SelectInteraction implements Interaction<String> {
+public class SelectInteraction extends InteractionEventSource<String> implements Interaction<String> {
 
     private final Map<String, String> options;
     private final String prompt;
@@ -50,6 +51,7 @@ public class SelectInteraction implements Interaction<String> {
 
             if (result.isHelp()) {
                 explain();
+                failure();
                 continue;
             }
 
@@ -60,6 +62,7 @@ public class SelectInteraction implements Interaction<String> {
                 continue;
             }
 
+            success(key);
             return key;
         }
 
