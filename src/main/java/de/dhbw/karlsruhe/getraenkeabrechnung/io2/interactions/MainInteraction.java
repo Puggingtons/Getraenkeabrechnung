@@ -10,7 +10,6 @@ public class MainInteraction implements Interaction<Void> {
     private final Map<String, Interaction> interactions;
     private final SelectInteraction selectInteraction;
 
-    public MainInteraction() {
     private final Getraenkeabrechnung getraenkeabrechnung;
 
     public MainInteraction(Getraenkeabrechnung getraenkeabrechnung) {
@@ -71,11 +70,13 @@ public class MainInteraction implements Interaction<Void> {
 
     private void addLoginInteraction() {
         LoginInteraction interaction = new LoginInteraction();
+        interaction.onSuccess(getraenkeabrechnung::login);
         addInteraction("login", "Login a user", interaction);
     }
 
     private void addLogoutInteraction() {
         LogoutInteraction interaction = new LogoutInteraction();
+        interaction.onSuccess((_) -> getraenkeabrechnung.logout());
         addInteraction("logout", "Logout a user", interaction);
     }
 
