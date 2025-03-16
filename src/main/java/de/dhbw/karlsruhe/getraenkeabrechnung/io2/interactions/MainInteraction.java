@@ -1,5 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.Getraenkeabrechnung;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,8 +11,13 @@ public class MainInteraction implements Interaction<Void> {
     private final SelectInteraction selectInteraction;
 
     public MainInteraction() {
+    private final Getraenkeabrechnung getraenkeabrechnung;
+
+    public MainInteraction(Getraenkeabrechnung getraenkeabrechnung) {
         this.interactions = new HashMap<>();
         this.selectInteraction = new SelectInteraction();
+
+        this.getraenkeabrechnung = getraenkeabrechnung;
 
         addExitInteraction();
         addRegisterInteraction();
