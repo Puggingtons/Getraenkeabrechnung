@@ -22,5 +22,9 @@ public class Username {
         return compiledUsernamePattern.matcher(this.usernameString).matches();
     }
 
+    public String toString() {
+        return this.usernameString;
+    }
+
 }
 

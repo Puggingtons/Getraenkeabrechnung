@@ -126,4 +126,9 @@ public class User {
         return konto.getAccountCredit();
     }
 
+    @Override
+    public String toString() {
+        return "Username: " + this.getUsername().toString();
+    }
+
 }
