@@ -1,7 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions.Interaction;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io2.interactions.MainInteraction;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.Interaction;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.MainInteraction;
 
 public class Main {
     public static void main(String[] args) {
