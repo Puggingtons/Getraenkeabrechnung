@@ -1,11 +1,5 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.commands.CommandRegistry;
-import de.dhbw.karlsruhe.getraenkeabrechnung.commands.HelpCommand;
-import de.dhbw.karlsruhe.getraenkeabrechnung.commands.LoginCommand;
-import de.dhbw.karlsruhe.getraenkeabrechnung.commands.LogoutCommand;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.cli.Cli;
-
 public class Getraenkeabrechnung {
     private User user;
 
