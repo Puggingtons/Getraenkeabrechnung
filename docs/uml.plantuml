@@ -233,6 +233,156 @@ package banking {
   Account "1" *-- MoneyAmount : < balance
 } /' end package: banking '/
 
+package io {
+    package input {
+        package result {
+            +class Result<T> {
+                {static} Result<T> some(T value)
+                {static} Result<T> none()
+                {static} Result<T> help()
+                + T getValue()
+                + boolean hasValue()
+                + boolean isNone()
+                + boolean isHelp()
+                + boolean isAbort()
+            }
+
+            enum ResultState {
+                Value
+                Abort
+                Help
+            }
+
+            Result "1" *-- ResultState
+        } /' end package: io.input.result '/
+
+        abstract class Input<T> {
+            # Input(String prompt)
+            # Input(InputReader reader, OutputWriter writer, String prompt)
+            + void setReader(Reader reader)
+            + void setWriter(Writer writer)
+            # String readInput()
+            # boolean isHelp(String str)
+            # void print(String str)
+            # void println(String str)
+            # Result<T> prompt()
+            {abstract} Result<T> getResult(String input)
+        }
+
+        +class FloatInput extends Input<Float> {
+            + FloatInput(String prompt)
+            Result<Float> getResult(String input)
+        }
+
+        +class NumberInput extends Input<Integer> {
+            + NumberInput(String prompt)
+            Result<Integer> getResult(String input)
+        }
+
+        +class StringInput extends Input<String> {
+            + StringInput(String prompt)
+            Result<String> getResult(String input)
+        }
+    } /' end package: io.input '/
+
+    package interactions {
+        package event {
+            +class InteractionEventSource<T> {
+                + InteractionEventSource()
+                + void onSuccess(Consumer<T> onSuccess)
+                + void onFailure(Consumer<Void> onFailure)
+                # void success(T t)
+                # void failure()
+            }
+        } /' end: io.interactions.event '/
+
+        +interface Interaction<T> {
+            String DEFAULT_PROMPT
+            void explain()
+            T run()
+        }
+
+        +class CreateUserInteraction extends event.InteractionEventSource<User> implements Interaction<User> {
+            + void explain()
+            + User run()
+        }
+
+        +class LoginInteraction extends event.InteractionEventSource<User> implements Interaction<User> {
+            + void explain()
+            + User run()
+        }
+
+        +class LogoutInteraction extends event.InteractionEventSource<Void> implements Interaction<Void> {
+            + void explain()
+            + User run()
+        }
+
+        +class SelectInteraction extends event.InteractionEventSource<String> implements Interaction<String> {
+            + SelectInteraction()
+            + SelectInteraction(Map<String, String> options)
+            + SelectInteraction(Map<String, String> options, String prompt)
+            + void pushOption(String option)
+            + void addOption(String key, String option)
+            + void explain()
+            + String run()
+        }
+
+        +class StringInputInteraction extends event.InteractionEventSource<String> implements Interaction<String> {
+            + StringInputInteraction(String msg)
+            + StringInputInteraction(String msg, String prompt)
+            + void explain()
+            + String run()
+        }
+
+        +class MainInteraction implements Interaction<Void> {
+            + MainInteraction(Getraenkeabrechnung getraenkeabrechnung) /' todo: rename this to ThirstyCalc '/
+            + void addInteraction(String key, String description, Interaction interaction)
+            + void explain()
+            + Void run()
+        }
+
+        MainInteraction "*" o-- Interaction
+        MainInteraction "1" *-- SelectInteraction
+    } /' end package: io.interactions '/
+
+    package reader {
+        +interface Reader {
+            String readLine()
+        }
+
+        +class InputReader implements Reader {
+            + InputReader()
+            + InputReader(InputStream stream)
+            + String readLine()
+        }
+    } /' end package: io.reader '/
+
+    package writer {
+        +interface Writer {
+            void writeLine(String line)
+            void write(String str)
+        }
+
+        +class OutputWriter implements Writer {
+            + OutputWriter()
+            + OutputWriter(PrintStream out)
+            + void writeLine(String line)
+            + void write(String str)
+        }
+    } /' end package: io.writer '/
+
+    Input "1" o-- Reader
+    Input "1" o-- Writer
+    Input *-- Result
+
+    /' todo: don't know it these relations need to be in the uml '/
+    SelectInteraction "1" *-- StringInput
+    StringInputInteraction "1" *-- StringInput
+    LoginInteraction "2" *-- StringInput
+    CreateUserInteraction "3" *-- StringInput
+
+} /' end package: io '/
+
 class ThirstyCalc {
   ' -User[] benutzer
   ' -Category[] categories
