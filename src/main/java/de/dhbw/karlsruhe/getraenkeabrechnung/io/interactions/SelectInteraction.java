@@ -65,7 +65,5 @@ public class SelectInteraction extends InteractionEventSource<String> implements
             success(key);
             return key;
         }
-
-
     }
 }
