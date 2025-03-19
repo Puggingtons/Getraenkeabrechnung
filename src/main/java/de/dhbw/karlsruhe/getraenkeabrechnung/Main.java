@@ -5,13 +5,13 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.MainInteraction;
 
 public class Main {
     public static void main(String[] args) {
-        Getraenkeabrechnung getraenkeabrechnung = new Getraenkeabrechnung();
+        ThirstyCalc thirstycalc = new ThirstyCalc();
 
-        createMainInteraction(getraenkeabrechnung).run();
+        createMainInteraction(thirstycalc).run();
     }
 
-    private static Interaction<Void> createMainInteraction(Getraenkeabrechnung getraenkeabrechnung) {
-        return new MainInteraction(getraenkeabrechnung);
+    private static Interaction<Void> createMainInteraction(ThirstyCalc thirstycalc) {
+        return new MainInteraction(thirstycalc);
     }
 }
 

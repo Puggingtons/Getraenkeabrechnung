@@ -1,9 +1,9 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
-public class Getraenkeabrechnung {
+public class ThirstyCalc {
     private User user;
 
-    public Getraenkeabrechnung() {
+    public ThirstyCalc() {
         greet();
     }
 

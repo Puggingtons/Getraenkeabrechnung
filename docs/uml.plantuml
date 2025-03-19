@@ -406,4 +406,6 @@ ThirstyCalc *-- Invoice
 ThirstyCalc "n" *-- User
 ThirstyCalc "n" *-- Category
 
+MainInteraction "1" o-- ThirstyCalc
+
 @enduml
