@@ -1,5 +1,8 @@
 # Getränkeabrechnung
 
+## SonarQube Analyse
+https://sonarcloud.io/summary/overall?id=Puggingtons_Getraenkeabrechnung&branch=main
+
 ## cloc Ausgabe
 
 <!-- CLOC-REPORT-START -->
