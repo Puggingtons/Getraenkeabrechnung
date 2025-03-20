@@ -30,7 +30,7 @@ public class ThirstyCalc {
     public void login(User user) {
         if (!userDatabase.userExists(user.getUsername())) {
             // todo handle user does not exist
-            System.out.println("user does not exists");
+            System.out.println("user does not exist");
             return;
         }
 
