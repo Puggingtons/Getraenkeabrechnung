@@ -1,9 +1,15 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
-public class Getraenkeabrechnung {
-    private User user;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 
-    public Getraenkeabrechnung() {
+public class ThirstyCalc {
+    private User loggedInUser;
+
+    private UserDatabase userDatabase;
+
+    public ThirstyCalc() {
+        loggedInUser = null;
+        userDatabase = new UserDatabase();
         greet();
     }
 
@@ -22,14 +28,34 @@ public class Getraenkeabrechnung {
     }
 
     public void login(User user) {
-        this.user = user;
+        if (!userDatabase.userExists(user.getUsername())) {
+            // todo handle user does not exist
+            System.out.println("user does not exist");
+            return;
+        }
+
+        if (loggedInUser != null) {
+            // todo handle user is already logged in
+            System.out.println("user already logged in");
+            return;
+        }
+
+        this.loggedInUser = user;
     }
 
     public void logout() {
-        user = null;
+        loggedInUser = null;
+    }
+
+    public void createNewUser(User user) {
+        userDatabase.registerNewUser(user);
     }
 
     public User getUser() {
-        return user;
+        return loggedInUser;
+    }
+
+    UserDatabase getUserDatabase() {
+        return userDatabase;
     }
 }

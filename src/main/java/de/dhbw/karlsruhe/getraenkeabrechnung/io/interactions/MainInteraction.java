@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Getraenkeabrechnung;
+import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,13 +10,13 @@ public class MainInteraction implements Interaction<Void> {
     private final Map<String, Interaction> interactions;
     private final SelectInteraction selectInteraction;
 
-    private final Getraenkeabrechnung getraenkeabrechnung;
+    private final ThirstyCalc thirstycalc;
 
-    public MainInteraction(Getraenkeabrechnung getraenkeabrechnung) {
+    public MainInteraction(ThirstyCalc thirstycalc) {
         this.interactions = new HashMap<>();
         this.selectInteraction = new SelectInteraction();
 
-        this.getraenkeabrechnung = getraenkeabrechnung;
+        this.thirstycalc = thirstycalc;
 
         addExitInteraction();
         addRegisterInteraction();
@@ -65,18 +65,19 @@ public class MainInteraction implements Interaction<Void> {
 
     private void addRegisterInteraction() {
         CreateUserInteraction interaction = new CreateUserInteraction();
+        interaction.onSuccess(thirstycalc::createNewUser);
         addInteraction("register", "Register a new user", interaction);
     }
 
     private void addLoginInteraction() {
         LoginInteraction interaction = new LoginInteraction();
-        interaction.onSuccess(getraenkeabrechnung::login);
+        interaction.onSuccess(thirstycalc::login);
         addInteraction("login", "Login a user", interaction);
     }
 
     private void addLogoutInteraction() {
         LogoutInteraction interaction = new LogoutInteraction();
-        interaction.onSuccess((_) -> getraenkeabrechnung.logout());
+        interaction.onSuccess((_) -> thirstycalc.logout());
         addInteraction("logout", "Logout a user", interaction);
     }
 

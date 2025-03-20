@@ -154,6 +154,32 @@ package validatableStrings {
   ' PasswordValidator *-- Password
 } /' end package: validatableStrings '/
 
+package data {
+    +class Savable<T> {
+        - T t
+        + Savable(T t)
+        + T get()
+        + void load(String path, TypeToken<T> typeToken)
+        + void load(Path path, TypeToken<T> typeToken)
+        + void save(String path)
+        + void save(Path path)
+    }
+
+    +class UserDatabase {
+        + UserDatabase()
+        + User[] getUsers()
+        + void addUser()
+        + void registerUser()
+        + boolean userExists(Username username)
+        + void load(String path)
+        + void load(Path path)
+        + void save(String path)
+        + void save(Path path)
+    }
+
+    UserDatabase "1" *-- Savable : "List<User>"
+} /' end package: data '/
+
 package user {
   class User {
     ' Realname realname
@@ -387,12 +413,17 @@ class ThirstyCalc {
   ' -User[] benutzer
   ' -Category[] categories
 ---
-  void abrechnen(Abrechnung abrechnung)
-  void getränkeklasseHinzufügen(Getränkeklasse getränkeklasse) # darf nur admin
-  void geldEinzahlen(User benutzer, Betrag betrag)
-  void benutzerAnlegen(User benutzer)
-  Abrechnung erstelleAbrechnung(User benutzer, Position[] positionen)
-  void login(String eingabe)
+'  void abrechnen(Abrechnung abrechnung)
+'  void getränkeklasseHinzufügen(Getränkeklasse getränkeklasse) # darf nur admin
+'  void geldEinzahlen(User benutzer, Betrag betrag)
+'  void benutzerAnlegen(User benutzer)
+'  Abrechnung erstelleAbrechnung(User benutzer, Position[] positionen)
+    ThirstyCalc()
+    void login(String eingabe)
+    void logout()
+    void greet()
+    User getUser()
+    UserDatabase getUserDatabase()
 }
 
 User "n" *-- Right
@@ -405,5 +436,8 @@ User "1" o-- Realname
 ThirstyCalc *-- Invoice
 ThirstyCalc "n" *-- User
 ThirstyCalc "n" *-- Category
+ThirstyCalc "1" *-- UserDatabase
+
+MainInteraction "1" o-- ThirstyCalc
 
 @enduml
