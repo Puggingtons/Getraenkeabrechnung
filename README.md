@@ -3,12 +3,12 @@
 ## cloc Ausgabe
 
 <!-- CLOC-REPORT-START -->
-cloc|github.com/AlDanial/cloc v 1.96  T=0.07 s (494.9 files/s, 16946.1 lines/s)
+cloc|github.com/AlDanial/cloc v 1.96  T=0.06 s (576.9 files/s, 21049.4 lines/s)
 --- | ---
 
 Language|files|blank|comment|code
 :-------|-------:|-------:|-------:|-------:
-Java|33|292|32|806
+Java|35|324|43|910
 --------|--------|--------|--------|--------
-SUM:|33|292|32|806
+SUM:|35|324|43|910
 <!-- CLOC-REPORT-END -->
