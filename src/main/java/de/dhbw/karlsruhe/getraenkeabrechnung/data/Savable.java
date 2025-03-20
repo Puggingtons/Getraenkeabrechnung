@@ -29,7 +29,7 @@ public class Savable<T> {
      *
      * @param path      the path to the file
      * @param typeToken the type of the parsed data
-     * @throws IOException
+     * @throws IOException is thrown when the file cannot be read
      */
     public void load(Path path, TypeToken<T> typeToken) throws IOException {
         Gson gson = new Gson();
