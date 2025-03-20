@@ -17,13 +17,22 @@ public class Username {
             return false;
         }
 
-        Pattern compiledUsernamePattern = Pattern.compile(pattern.get()); 
+        Pattern compiledUsernamePattern = Pattern.compile(pattern.get());
 
         return compiledUsernamePattern.matcher(this.usernameString).matches();
     }
 
+    @Override
     public String toString() {
         return this.usernameString;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Username username = (Username) o;
+        return usernameString.equals(username.usernameString);
     }
 
 }

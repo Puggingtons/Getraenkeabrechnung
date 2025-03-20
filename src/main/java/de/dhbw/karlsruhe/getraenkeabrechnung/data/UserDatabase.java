@@ -3,6 +3,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.data;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +25,26 @@ public class UserDatabase {
 
     public void addUser(User user) {
         this.users.add(user);
+    }
+
+    public void registerNewUser(User user) {
+        for (User u : users) {
+            if (u.getUsername().equals(user.getUsername())) {
+                return;
+            }
+        }
+
+        users.add(user);
+    }
+
+    public boolean userExists(Username username) {
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void load() throws IOException {

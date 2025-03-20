@@ -65,6 +65,7 @@ public class MainInteraction implements Interaction<Void> {
 
     private void addRegisterInteraction() {
         CreateUserInteraction interaction = new CreateUserInteraction();
+        interaction.onSuccess(thirstycalc::createNewUser);
         addInteraction("register", "Register a new user", interaction);
     }
 
