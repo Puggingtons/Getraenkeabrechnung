@@ -1,28 +1,30 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 
 public class ThirstyCalc {
-    private User loggedInUser;
+    private final UserDatabase userDatabase;
 
-    private UserDatabase userDatabase;
+    private final ApplicationState applicationState;
 
     public ThirstyCalc() {
-        loggedInUser = null;
         userDatabase = new UserDatabase();
+        applicationState = new ApplicationState();
+
         greet();
     }
 
     private void greet() {
-        System.out.println("""
+        System.out.print("""
                 
-                  _____    _   _      ___      ____     ____     _____   __   __   ____     _       _        ____  
-                 |_ \" _|  |'| |'|    | \"_|  U |  _\"\\ u / __\"| u |_ \" _|  \\ \\ / /U /\"___|U  /\"\\  u  |\"|    U /\"___| 
-                   | |   /| |_| |\\    | |    \\| |_) |/<\\___ \\/    | |     \\ V / \\| | u   \\/ _ \\/ U | | u  \\| | u   
-                  /| |\\  U|  _  |u    | |     |  _ <   u___) |   /| |\\   U_|\"|_u | |/__  / ___ \\  \\| |/__  | |/__  
-                 u |_|U   |_| |_|   U/| |\\u   |_| \\_\\  |____/>> u |_|U     |_|    \\____|/_/   \\_\\  |_____|  \\____| 
-                 _// \\\\_  //   \\\\.-,_|___|_,-.//   \\\\_  )(  (__)_// \\\\_.-,//|(_  _// \\\\  \\\\    >>  //  \\\\  _// \\\\  
-                (__) (__)(_\" )(\"_)\\_)-' '-(_/(__)  (__)(__)    (__) (__)\\_) (__)(__)(__)(__)  (__)(_\" )(\"_)(__)(__) 
+                  _____    _   _      ___      ____     ____     _____   __   __   ____     _       _        ____
+                 |_ " _|  |'| |'|    | "_|  U |  _"\\ u / __"| u |_ " _|  \\ \\ / /U /"___|U  /"\\  u  |"|    U /"___|
+                   | |   /| |_| |\\    | |    \\| |_) |/<\\___ \\/    | |     \\ V / \\| | u   \\/ _ \\/ U | | u  \\| | u
+                  /| |\\  U|  _  |u    | |     |  _ <   u___) |   /| |\\   U_|"|_u | |/__  / ___ \\  \\| |/__  | |/__
+                 u |_|U   |_| |_|   U/| |\\u   |_| \\_\\  |____/>> u |_|U     |_|    \\____|/_/   \\_\\  |_____|  \\____|
+                 _// \\\\_  //   \\\\.-,_|___|_,-.//   \\\\_  )(  (__)_// \\\\_.-,//|(_  _// \\\\  \\\\    >>  //  \\\\  _// \\\\
+                (__) (__)(_" )("_)\\_)-' '-(_/(__)  (__)(__)    (__) (__)\\_) (__)(__)(__)(__)  (__)(_" )("_)(__)(__)
                 
                 """);
     }
@@ -34,28 +36,20 @@ public class ThirstyCalc {
             return;
         }
 
-        if (loggedInUser != null) {
+        if (applicationState.isLoggedIn()) {
             // todo handle user is already logged in
             System.out.println("user already logged in");
             return;
         }
 
-        this.loggedInUser = user;
+        applicationState.setLoggedInUser(user);
     }
 
     public void logout() {
-        loggedInUser = null;
+        applicationState.clearLoggedInUser();
     }
 
     public void createNewUser(User user) {
         userDatabase.registerNewUser(user);
-    }
-
-    public User getUser() {
-        return loggedInUser;
-    }
-
-    UserDatabase getUserDatabase() {
-        return userDatabase;
     }
 }
