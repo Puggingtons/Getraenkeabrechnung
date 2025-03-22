@@ -10,13 +10,13 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEv
 public class LoginInteraction extends InteractionEventSource<User> implements Interaction<User> {
     @Override
     public void explain() {
-
+        System.out.println("Please enter your username and password to login.");
     }
 
     @Override
     public User run() {
-        StringInput usernameInput = new StringInput("Username: ");
-        StringInput passwordInput = new StringInput("Password: ");
+        StringInput usernameInput = new StringInput("Username> ");
+        StringInput passwordInput = new StringInput("Password> ");
 
         while (true) {
             String username = getValidInput(usernameInput);
