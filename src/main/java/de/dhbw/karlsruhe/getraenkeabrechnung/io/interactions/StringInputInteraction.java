@@ -7,15 +7,17 @@ public class StringInputInteraction extends Interaction<String> {
 
     private final String message;
     private final String prompt;
+    private final StringInput input;
 
     public StringInputInteraction(String msg) {
-        this.message = msg;
-        this.prompt = DEFAULT_PROMPT;
+        this(msg, DEFAULT_PROMPT);
     }
 
     public StringInputInteraction(String msg, String prompt) {
         this.message = msg;
         this.prompt = prompt;
+
+        input = new StringInput(prompt);
     }
 
     @Override
@@ -24,29 +26,23 @@ public class StringInputInteraction extends Interaction<String> {
     }
 
     @Override
-    public String run() {
-        StringInput input = new StringInput(prompt);
+    public void execute() {
+        Result<String> result = input.prompt();
 
-        while (true) {
-            Result<String> result = input.prompt();
-
-            if (result.isHelp()) {
-                explain();
-                continue;
-            }
-
-            if (result.isNone()) {
-                System.out.println("Invalid input!");
-                failure();
-                continue;
-            }
-
-
-            String res = result.getValue();
-            success(res);
-
-            System.out.println("Your input: " + res);
-            return res;
+        if (result.isHelp()) {
+            explain();
+            return;
         }
+
+        if (result.isNone()) {
+            System.out.println("Invalid input!");
+            failure();
+            return;
+        }
+
+        String res = result.getValue();
+        System.out.println("Your input: " + res);
+
+        success(res);
     }
 }

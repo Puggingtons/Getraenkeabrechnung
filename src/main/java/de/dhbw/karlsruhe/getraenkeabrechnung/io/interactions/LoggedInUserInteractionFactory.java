@@ -30,7 +30,10 @@ public class LoggedInUserInteractionFactory {
 
     private void addLogoutInteraction() {
         LogoutInteraction interaction = new LogoutInteraction();
-        interaction.onSuccess((_) -> thirstyCalc.logout());
+        interaction.onSuccess((_) -> {
+            thirstyCalc.logout();
+            menuInteraction.stop();
+        });
         menuInteraction.addInteraction("logout", "Logout a user", interaction);
     }
 }

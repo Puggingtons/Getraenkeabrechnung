@@ -11,6 +11,7 @@ public class MenuInteraction extends Interaction<Void> {
     public MenuInteraction() {
         interactions = new HashMap<>();
         selectInteraction = new SelectInteraction();
+        selectInteraction.onSuccess(this::onSelect);
     }
 
     @Override
@@ -19,31 +20,31 @@ public class MenuInteraction extends Interaction<Void> {
     }
 
     @Override
-    public Void run() {
-        while (true) {
-            explain();
-            String selection = selectInteraction.run();
-
-            if (selection.equals("exit")) {
-                // https://stackoverflow.com/questions/5568409/java-generics-void-void-types
-                return null;
-            }
-
-            Interaction<?> interaction = interactions.get(selection);
-
-            if (interaction == null) {
-                System.out.println("unknown command: " + selection);
-                continue;
-            }
-
-            interaction.explain();
-            interaction.run();
-            System.out.println();
-        }
+    public void execute() {
+        explain();
+        selectInteraction.run();
     }
 
     public void addInteraction(String key, String description, Interaction<?> interaction) {
         interactions.put(key, interaction);
         selectInteraction.addOption(key, description);
+    }
+
+    private void onSelect(String selection) {
+        if (selection.equals("exit")) {
+            stop();
+            return;
+        }
+
+        Interaction<?> interaction = interactions.get(selection);
+
+        if (interaction == null) {
+            System.out.println("unknown command: " + selection);
+            return;
+        }
+
+        interaction.explain();
+        interaction.run();
+        System.out.println();
     }
 }
