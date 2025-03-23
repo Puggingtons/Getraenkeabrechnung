@@ -52,4 +52,8 @@ public class ThirstyCalc {
     public void createNewUser(User user) {
         userDatabase.registerNewUser(user);
     }
+
+    public ApplicationState getApplicationState() {
+        return applicationState;
+    }
 }
