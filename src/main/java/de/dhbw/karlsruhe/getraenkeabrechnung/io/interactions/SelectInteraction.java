@@ -2,12 +2,11 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEventSource;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SelectInteraction extends InteractionEventSource<String> implements Interaction<String> {
+public class SelectInteraction extends Interaction<String> {
 
     private final Map<String, String> options;
     private final String prompt;

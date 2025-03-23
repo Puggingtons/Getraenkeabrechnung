@@ -2,9 +2,8 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEventSource;
 
-public class StringInputInteraction extends InteractionEventSource<String> implements Interaction<String> {
+public class StringInputInteraction extends Interaction<String> {
 
     private final String message;
     private final String prompt;

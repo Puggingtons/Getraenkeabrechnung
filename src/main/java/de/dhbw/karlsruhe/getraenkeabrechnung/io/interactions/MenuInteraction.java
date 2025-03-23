@@ -3,7 +3,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MenuInteraction implements Interaction<Void> {
+public class MenuInteraction extends Interaction<Void> {
 
     private final Map<String, Interaction<?>> interactions;
     private final SelectInteraction selectInteraction;

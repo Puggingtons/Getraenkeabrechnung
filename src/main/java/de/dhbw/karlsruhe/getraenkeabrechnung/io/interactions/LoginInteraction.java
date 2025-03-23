@@ -5,9 +5,8 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEventSource;
 
-public class LoginInteraction extends InteractionEventSource<User> implements Interaction<User> {
+public class LoginInteraction extends Interaction<User> {
     @Override
     public void explain() {
         System.out.println("Please enter your username and password to login.");
