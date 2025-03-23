@@ -1,11 +1,16 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 // Todo 
-    // 1. login method (Session etc.)
-    // 2. Klassen für Feld Passwort erstellen
+// 1. login method (Session etc.)
+// 2. Klassen für Feld Passwort erstellen
 
 public class User {
     private Username username;
@@ -15,20 +20,20 @@ public class User {
     private String realName;
     private Email email;
     private Konto konto;
-    private GetraenkeAutomat getraenkeAutomat;
-    private Rights rights;
+
+    private Set<Right> rights;
 
     public User(Username username, Password password, String realFirstName, String realLastName,
-        String realName, Email email, Konto konto, GetraenkeAutomat getraenkeAutomat, Rights rights) {
+                String realName, Email email, Konto konto) {
 
         this.username = username;
         this.password = password;
         this.email = email;
         this.realName = realFirstName + " " + realLastName;
-        this.getraenkeAutomat = new GetraenkeAutomat();
         this.konto = new Konto();
         konto.setAccountCredit(0);
-        this.rights = rights;
+
+        this.rights = new HashSet<>();
     }
 
     // Constructor for class LoginCommand
@@ -82,7 +87,7 @@ public class User {
         return realName;
     }
 
-        public Email getEmail() {
+    public Email getEmail() {
         return email;
     }
 
@@ -98,24 +103,8 @@ public class User {
         this.konto = konto;
     }
 
-    public GetraenkeAutomat getGetraenkeAutomat() {
-        return getraenkeAutomat;
-    }
-
-    public void setGetraenkeAutomat(GetraenkeAutomat getraenkeAutomat) {
-        this.getraenkeAutomat = getraenkeAutomat;
-    }
-
     public void addCreditAmount(double credit) {
         konto.addAccountCredit(credit);
-    }
-
-    public Rights getRights() {
-        return rights;
-    }
-
-    public void setRights(Rights rights) {
-        this.rights = rights;
     }
 
     public void removeCreditAmount(double credit) {
@@ -124,6 +113,10 @@ public class User {
 
     public double getAccountCredit() {
         return konto.getAccountCredit();
+    }
+
+    public void addRights(Collection<Right> rights) {
+        this.rights.addAll(rights);
     }
 
     @Override
