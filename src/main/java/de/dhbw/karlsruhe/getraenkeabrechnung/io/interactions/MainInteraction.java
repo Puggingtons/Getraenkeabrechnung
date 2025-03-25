@@ -17,7 +17,9 @@ public class MainInteraction extends MenuInteraction {
     }
 
     private void addExitInteraction() {
-        addInteraction("exit", "exits the program", null);
+        ExitInteraction exitInteraction = new ExitInteraction();
+        exitInteraction.onSuccess((_) -> {this.onExit();});
+        addInteraction("exit", "exits the program", exitInteraction);
     }
 
     private void addRegisterInteraction() {
@@ -37,5 +39,11 @@ public class MainInteraction extends MenuInteraction {
         if (thirstycalc.getApplicationState().isLoggedIn()) {
             new LoggedInUserInteractionFactory(thirstycalc).build().run();
         }
+    }
+
+    private void onExit() {
+        System.out.println("On exit");
+        thirstycalc.save();
+        stop();
     }
 }

@@ -31,11 +31,6 @@ public class MenuInteraction extends Interaction<Void> {
     }
 
     private void onSelect(String selection) {
-        if (selection.equals("exit")) {
-            stop();
-            return;
-        }
-
         Interaction<?> interaction = interactions.get(selection);
 
         if (interaction == null) {
