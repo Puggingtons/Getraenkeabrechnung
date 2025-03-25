@@ -3,6 +3,8 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 
+import java.io.IOException;
+
 public class ThirstyCalc {
     private final UserDatabase userDatabase;
 
@@ -55,5 +57,23 @@ public class ThirstyCalc {
 
     public ApplicationState getApplicationState() {
         return applicationState;
+    }
+
+    public void save() {
+        try {
+            System.out.println("Saving users.json");
+            userDatabase.save("users.json");
+        } catch (IOException e) {
+            System.out.println("Could not save users");
+            // throw new RuntimeException(e);
+        }
+    }
+
+    public void load() {
+        try {
+            userDatabase.load("users.json");
+        } catch (IOException e) {
+            System.out.println("Could not load users!");
+        }
     }
 }
