@@ -5,41 +5,43 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEventSource;
 
-public class LoginInteraction extends InteractionEventSource<User> implements Interaction<User> {
-    @Override
-    public void explain() {
+public class LoginInteraction extends Interaction<User> {
 
+    private final StringInput usernameInput;
+    private final StringInput passwordInput;
+
+    public LoginInteraction() {
+        super();
+        usernameInput = new StringInput("Username> ");
+        passwordInput = new StringInput("Password> ");
     }
 
     @Override
-    public User run() {
-        StringInput usernameInput = new StringInput("Username: ");
-        StringInput passwordInput = new StringInput("Password: ");
+    public void explain() {
+        System.out.println("Please enter your username and password to login.");
+    }
 
-        while (true) {
-            String username = getValidInput(usernameInput);
-            String password = getValidInput(passwordInput);
+    @Override
+    public void execute() {
+        String username = getValidInput(usernameInput);
+        String password = getValidInput(passwordInput);
 
-            // todo check if username and password exist and are valid
+        // todo check if username and password exist and are valid
 
-            // todo: this is temporary
-            if (username.equals("Hans")) {
-                System.out.println("User does not exist");
-                continue;
-            }
-
-            if (password.equals("ff")) {
-                System.out.println("Password is incorrect");
-                continue;
-            }
-
-            User user = new User(new Username(username), new Password(password));
-            success(user);
-
-            return user;
+        // todo: this is temporary
+        if (username.equals("Hans")) {
+            System.out.println("User does not exist");
+            failure();
         }
+
+        if (password.equals("ff")) {
+            System.out.println("Password is incorrect");
+            failure();
+        }
+
+        User user = new User(new Username(username), new Password(password));
+        success(user);
     }
 
     private String getValidInput(StringInput input) {

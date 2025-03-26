@@ -2,15 +2,14 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEventSource;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SelectInteraction extends InteractionEventSource<String> implements Interaction<String> {
+public class SelectInteraction extends Interaction<String> {
 
     private final Map<String, String> options;
-    private final String prompt;
+    private final StringInput input;
 
     public SelectInteraction() {
         this(new HashMap<>());
@@ -22,7 +21,8 @@ public class SelectInteraction extends InteractionEventSource<String> implements
 
     public SelectInteraction(Map<String, String> options, String prompt) {
         this.options = options;
-        this.prompt = prompt;
+
+        input = new StringInput(prompt);
     }
 
     // todo: move this functionality to a new class
@@ -38,32 +38,27 @@ public class SelectInteraction extends InteractionEventSource<String> implements
         options.forEach((k, v) -> System.out.println("[ " + k + " ] " + v));
     }
 
-    public String run() {
-        StringInput input = new StringInput(prompt);
+    public void execute() {
+        Result<String> result = input.prompt();
 
-        while (true) {
-            Result<String> result = input.prompt();
-
-            if (result.isNone()) {
-                System.out.println("Invalid input!");
-                return ""; // todo
-            }
-
-            if (result.isHelp()) {
-                explain();
-                failure();
-                continue;
-            }
-
-            String key = result.getValue();
-
-            if (!options.containsKey(key)) {
-                System.out.println("Unknown option: " + key);
-                continue;
-            }
-
-            success(key);
-            return key;
+        if (result.isNone()) {
+            System.out.println("Invalid input!");
+            failure();
+            return;
         }
+
+        if (result.isHelp()) {
+            explain();
+            return;
+        }
+
+        String key = result.getValue();
+
+        if (!options.containsKey(key)) {
+            System.out.println("Unknown option: " + key);
+            return;
+        }
+
+        success(key);
     }
 }

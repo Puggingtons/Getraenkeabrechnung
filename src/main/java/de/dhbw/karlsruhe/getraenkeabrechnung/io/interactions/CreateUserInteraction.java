@@ -5,43 +5,45 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEventSource;
 
-public class CreateUserInteraction extends InteractionEventSource<User> implements Interaction<User> {
+public class CreateUserInteraction extends Interaction<User> {
+
+    private final StringInput usernameInput;
+    private final StringInput passwordInput;
+    private final StringInput passwordVerificationInput;
+
+    public CreateUserInteraction() {
+        usernameInput = new StringInput("Username: ");
+        passwordInput = new StringInput("Password: ");
+        passwordVerificationInput = new StringInput("Verify Password: ");
+    }
+
     @Override
     public void explain() {
         System.out.println("Please enter a username and a password.");
     }
 
     @Override
-    public User run() {
-        StringInput usernameInput = new StringInput("Username: ");
-        StringInput passwordInput = new StringInput("Password: ");
-        StringInput passwordVerificationInput = new StringInput("Verify Password: ");
+    public void execute() {
+        String username = getValidInput(usernameInput);
+        String password = getValidInput(passwordInput);
+        String passwordVerification = getValidInput(passwordVerificationInput);
 
-        while (true) {
-            String username = getValidInput(usernameInput);
-            String password = getValidInput(passwordInput);
-            String passwordVerification = getValidInput(passwordVerificationInput);
-
-            // todo: check user database
-            if (username.equals("Hans")) {
-                System.out.println("Username already exists!");
-                continue;
-            }
-
-            if (!password.equals(passwordVerification)) {
-                System.out.println("Passwords do not match!");
-                failure();
-                continue;
-            }
-
-            User user = new User(new Username(username), new Password(password));
-            success(user);
-
-            // todo: createUser in user database
-            return user;
+        // todo: check user database
+        if (username.equals("Hans")) {
+            System.out.println("Username already exists!");
+            failure();
+            return;
         }
+
+        if (!password.equals(passwordVerification)) {
+            System.out.println("Passwords do not match!");
+            failure();
+            return;
+        }
+
+        User user = new User(new Username(username), new Password(password));
+        success(user);
     }
 
     private String getValidInput(StringInput input) {

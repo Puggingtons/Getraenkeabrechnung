@@ -1,33 +1,35 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class InteractionEventSource<T> {
 
-    private Consumer<T> onSuccess;
-    private Consumer<Void> onFailure;
+    private final List<Consumer<T>> onSuccessConsumers;
+    private final List<Consumer<Void>> onFailureConsumers;
 
     public InteractionEventSource() {
-        this.onSuccess = null;
-        this.onFailure = null;
+        this.onSuccessConsumers = new ArrayList<>();
+        this.onFailureConsumers = new ArrayList<>();
     }
 
     public void onSuccess(Consumer<T> onSuccess) {
-        this.onSuccess = onSuccess;
+        this.onSuccessConsumers.add(onSuccess);
     }
 
     protected void success(T t) {
-        if (onSuccess != null) {
+        for (Consumer<T> onSuccess : onSuccessConsumers) {
             onSuccess.accept(t);
         }
     }
 
     public void onFailure(Consumer<Void> onFailure) {
-        this.onFailure = onFailure;
+        this.onFailureConsumers.add(onFailure);
     }
 
     protected void failure() {
-        if (onFailure != null) {
+        for (Consumer<Void> onFailure : onFailureConsumers) {
             onFailure.accept(null);
         }
     }

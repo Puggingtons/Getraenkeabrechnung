@@ -7,6 +7,8 @@ public class Main {
     public static void main(String[] args) {
         ThirstyCalc thirstycalc = new ThirstyCalc();
 
+        thirstycalc.load();
+
         createMainInteraction(thirstycalc).run();
     }
 

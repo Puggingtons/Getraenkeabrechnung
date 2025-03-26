@@ -1,10 +1,36 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-public interface Interaction<T> {
+import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.event.InteractionEventSource;
 
-    String DEFAULT_PROMPT = "> ";
+public abstract class Interaction<T> extends InteractionEventSource<T> {
 
-    void explain();
+    private boolean run;
 
-    T run();
+    /**
+     * Stops onSuccess and onFailure.
+     */
+    public Interaction() {
+        run = false;
+
+        onSuccess((_) -> {stop();});
+        onFailure((_) -> {stop();});
+    }
+
+    static final String DEFAULT_PROMPT = "> ";
+
+    abstract void explain();
+
+    public void run() {
+        run = true;
+
+        while (run) {
+            execute();
+        }
+    }
+
+    protected abstract void execute();
+
+    protected void stop() {
+        run = false;
+    }
 }
