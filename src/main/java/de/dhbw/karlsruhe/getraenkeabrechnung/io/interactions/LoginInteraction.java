@@ -29,6 +29,8 @@ public class LoginInteraction extends Interaction<User> {
 
         // todo check if username and password exist and are valid
 
+        // todo: Login with hashed password
+
         // todo: this is temporary
         if (username.equals("Hans")) {
             System.out.println("User does not exist");

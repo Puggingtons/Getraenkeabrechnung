@@ -15,6 +15,8 @@ import java.util.Set;
 public class User {
     private Username username;
     private Password password;
+    private String hashedPassword;
+    private String salt;
     private String realFirstName;
     private String realLastName;
     private String realName;
@@ -61,9 +63,29 @@ public class User {
     public void setPassword(Password password) {
         if (PasswordValidator.isValidPassword(password)) {
             this.password = password;
+            hashAndSetPassword(password);
         } else {
             throw new IllegalArgumentException("Password not valid!");
         }
+    }
+
+    private void hashAndSetPassword(Password password) {
+        String hash = password.hashPassword();
+
+        this.hashedPassword = hash;
+        this.salt = password.getSalt();
+    }
+
+    public boolean verifyPassword(String providedPassword) {
+        return Password.verifyPassword(providedPassword, this.hashedPassword, this.salt);
+    }
+
+    public String getHashedPassword() {
+        return hashedPassword;
+    }
+
+    public String getSalt() {
+        return salt;
     }
 
     public String getRealFirstName() {
