@@ -5,6 +5,8 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
 
 public class CreateUserInteraction extends Interaction<User> {
 
@@ -43,7 +45,16 @@ public class CreateUserInteraction extends Interaction<User> {
         }
 
         User user = new User(new Username(username), new Password(password));
-        success(user);
+
+        if (!UsernameValidator.isValidUsername(user.getUsername())) {
+            failure();
+        } else if (!PasswordValidator.isValidPassword(user.getPassword())) {
+            failure();
+        } else {
+            success(user);
+        }
+
+        // success(user);
     }
 
     private String getValidInput(StringInput input) {
