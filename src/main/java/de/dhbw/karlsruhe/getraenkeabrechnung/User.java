@@ -30,6 +30,8 @@ public class User {
 
         this.username = username;
         this.password = password;
+        this.realFirstName = realFirstName;
+        this.realLastName = realLastName;
         this.email = email;
         this.realName = realFirstName + " " + realLastName;
         this.konto = new Konto();
@@ -42,6 +44,7 @@ public class User {
     public User(Username username, Password password) {
         this.username = username;
         this.password = password;
+        hashAndSetPassword(password);
     }
 
     public Username getUsername() {

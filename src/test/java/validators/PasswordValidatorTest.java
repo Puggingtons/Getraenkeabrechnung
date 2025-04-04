@@ -38,5 +38,12 @@ class PasswordValidatorTest {
     void isValidPasswordNoUpperCharShouldReturnFalse() {
         assertFalse(PasswordValidator.isValidPassword(new Password("noupper#2")));
     }
-    
+
+    @Test
+    void isPasswordHashedCorrectlyShouldReturnTrue() {
+        Password password = new Password("goodPassword=1");
+        password.hashPassword();
+        assertTrue(password.verifyPassword("goodPassword=1", password.getHashedPassword(), password.getSalt()));
+    }
+
 }
