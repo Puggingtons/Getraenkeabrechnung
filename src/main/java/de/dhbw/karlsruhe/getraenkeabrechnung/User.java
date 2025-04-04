@@ -28,6 +28,8 @@ public class User {
 
         this.username = username;
         this.password = password;
+        this.realFirstName = realFirstName;
+        this.realLastName = realLastName;
         this.email = email;
         this.realName = realFirstName + " " + realLastName;
         this.konto = new Konto();
@@ -40,6 +42,7 @@ public class User {
     public User(Username username, Password password) {
         this.username = username;
         this.password = password;
+        hashAndSetPassword(password);
     }
 
     public Username getUsername() {
@@ -61,9 +64,27 @@ public class User {
     public void setPassword(Password password) {
         if (PasswordValidator.isValidPassword(password)) {
             this.password = password;
+            hashAndSetPassword(password);
         } else {
             throw new IllegalArgumentException("Password not valid!");
         }
+    }
+
+    private void hashAndSetPassword(Password password) {
+        password.hashPassword();
+        password.getHashedPassword();
+    }
+
+    public boolean verifyPassword(String providedPassword) {
+        return Password.verifyPassword(providedPassword, password.getHashedPassword(), password.getSalt());
+    }
+
+    public String getHashedPassword() {
+        return password.getHashedPassword();
+    }
+
+    public String getSalt() {
+        return password.getSalt();
     }
 
     public String getRealFirstName() {
