@@ -15,7 +15,6 @@ import java.util.Set;
 public class User {
     private Username username;
     private Password password;
-    private String hashedPassword;
     private String salt;
     private String realFirstName;
     private String realLastName;
@@ -73,18 +72,17 @@ public class User {
     }
 
     private void hashAndSetPassword(Password password) {
-        String hash = password.hashPassword();
-
-        this.hashedPassword = hash;
+        password.hashPassword();
+        password.getHashedPassword();
         this.salt = password.getSalt();
     }
 
     public boolean verifyPassword(String providedPassword) {
-        return Password.verifyPassword(providedPassword, this.hashedPassword, this.salt);
+        return Password.verifyPassword(providedPassword, password.getHashedPassword(), this.salt);
     }
 
     public String getHashedPassword() {
-        return hashedPassword;
+        return password.getHashedPassword();
     }
 
     public String getSalt() {
