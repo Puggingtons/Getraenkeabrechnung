@@ -1,8 +1,12 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
+
+import java.io.IOException;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
@@ -13,11 +17,19 @@ public class CreateUserInteraction extends Interaction<User> {
     private final StringInput usernameInput;
     private final StringInput passwordInput;
     private final StringInput passwordVerificationInput;
+    private final UserDatabase userDatabase;
 
     public CreateUserInteraction() {
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
         passwordVerificationInput = new StringInput("Verify Password: ");
+        userDatabase = new UserDatabase();
+
+        try {
+            userDatabase.load("users.json");
+        } catch (IOException e) {
+            System.out.println("Could not load users: " + e.getMessage());
+        }
     }
 
     @Override
@@ -30,10 +42,12 @@ public class CreateUserInteraction extends Interaction<User> {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
+        userDatabase.getUsers();
 
-        // todo: check user database
-        if (username.equals("Hans")) {
-            System.out.println("Username already exists!");
+        // Check if user exists
+        Username usernameObj = new Username(username);
+        if (userDatabase.userExists(usernameObj)) {
+            System.out.println("User already exists!");
             failure();
             return;
         }
@@ -51,6 +65,9 @@ public class CreateUserInteraction extends Interaction<User> {
         } else if (!PasswordValidator.isValidPassword(user.getPassword())) {
             failure();
         } else {
+            // todo: Add register functionality for user db
+            // userDatabase.addUser(user);
+            // userDatabase.registerNewUser(user);
             success(user);
         }
 

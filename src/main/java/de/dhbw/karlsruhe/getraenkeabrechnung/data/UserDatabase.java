@@ -28,6 +28,8 @@ public class UserDatabase {
         for (User u : users.get()) {
             if (u.getUsername().equals(user.getUsername())) {
                 return;
+            } else {
+                addUser(user);
             }
         }
 

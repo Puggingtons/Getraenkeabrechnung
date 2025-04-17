@@ -20,7 +20,7 @@ public class LoginInteraction extends Interaction<User> {
         usernameInput = new StringInput("Username> ");
         passwordInput = new StringInput("Password> ");
         userDatabase = new UserDatabase();
-        
+
         // Load users from JSON file
         try {
             userDatabase.load("users.json");
@@ -38,6 +38,7 @@ public class LoginInteraction extends Interaction<User> {
     public void execute() {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
+        userDatabase.getUsers();
 
         // Check if user exists
         Username usernameObj = new Username(username);
@@ -64,6 +65,7 @@ public class LoginInteraction extends Interaction<User> {
         }
 
         // Login successful
+        System.out.println("Login successful!");
         success(foundUser);
     }
 
