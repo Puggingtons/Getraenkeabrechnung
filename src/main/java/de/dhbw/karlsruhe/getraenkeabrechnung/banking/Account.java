@@ -32,4 +32,14 @@ public class Account {
         balance = balance.subtract(amount);
         return amount;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Account other = (Account) o;
+
+        return username.equals(other.username) && balance.equals(other.balance);
+    }
 }
