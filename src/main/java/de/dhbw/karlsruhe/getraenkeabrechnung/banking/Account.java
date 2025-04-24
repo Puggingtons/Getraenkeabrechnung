@@ -1,12 +1,19 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.banking;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 
 public class Account {
+    private final Username username;
     private Money balance;
 
-    public Account() {
+    public Account(Username username) {
+        this.username = username;
         this.balance = new Money("0.00");
+    }
+
+    public Username getUsername() {
+        return username;
     }
 
     public Money getBalance() {
