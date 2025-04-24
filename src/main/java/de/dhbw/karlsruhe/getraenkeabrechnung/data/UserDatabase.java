@@ -54,7 +54,7 @@ public class UserDatabase {
     }
 
     public void save(String path) throws IOException {
-        users.save(Path.of(path));
+        save(Path.of(path));
     }
 
     public void save(Path path) throws IOException {

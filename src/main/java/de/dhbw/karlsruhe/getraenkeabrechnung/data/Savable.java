@@ -42,7 +42,8 @@ public class Savable<T> {
     }
 
     public void save(Path path) throws IOException {
-        Gson gson = new Gson();
-        Files.writeString(path, gson.toJson(t));
+        String serialized = new Gson().toJson(t);
+
+        Files.writeString(path, serialized);
     }
 }
