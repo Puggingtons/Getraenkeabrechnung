@@ -34,8 +34,11 @@ public class SelectInteraction extends Interaction<String> {
         this.options.put(key, option);
     }
 
-    public void explain() {
-        options.forEach((k, v) -> System.out.println("[ " + k + " ] " + v));
+    String usage() {
+        StringBuilder sb = new StringBuilder();
+        options.forEach((k, v) -> sb.append("[ ").append(k).append(" ] ").append(v).append("\n"));
+
+        return sb.toString();
     }
 
     public void execute() {

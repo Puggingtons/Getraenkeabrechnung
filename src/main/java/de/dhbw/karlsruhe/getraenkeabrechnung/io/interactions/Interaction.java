@@ -18,7 +18,11 @@ public abstract class Interaction<T> extends InteractionEventSource<T> {
 
     static final String DEFAULT_PROMPT = "> ";
 
-    abstract void explain();
+    public void explain() {
+        System.out.println(usage());
+    }
+
+    abstract String usage();
 
     public void run() {
         run = true;
