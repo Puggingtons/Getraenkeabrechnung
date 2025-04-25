@@ -1,5 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
@@ -62,6 +63,10 @@ public class ThirstyCalc {
 
     public ApplicationState getApplicationState() {
         return applicationState;
+    }
+
+    public Account getAccountOfLoggedInUser() {
+        return accountDatabase.getAccountOfUser(applicationState.getLoggedInUser());
     }
 
     public void save() {
