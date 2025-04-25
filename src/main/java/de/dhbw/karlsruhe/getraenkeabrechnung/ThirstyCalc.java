@@ -73,6 +73,8 @@ public class ThirstyCalc {
         try {
             System.out.println("Saving users.json");
             userDatabase.save("users.json");
+
+            System.out.println("Saving accounts.json");
             accountDatabase.save("accounts.json");
         } catch (IOException e) {
             System.out.println("Could not save users");
@@ -84,7 +86,7 @@ public class ThirstyCalc {
             userDatabase.load("users.json");
             accountDatabase.load("accounts.json");
         } catch (IOException e) {
-            System.out.println("Could not load users!");
+            System.out.println("Could not load users or accounts!");
         }
     }
 }
