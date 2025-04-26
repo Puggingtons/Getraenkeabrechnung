@@ -1,5 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 
@@ -7,11 +9,14 @@ import java.io.IOException;
 
 public class ThirstyCalc {
     private final UserDatabase userDatabase;
+    private final AccountDatabase accountDatabase;
 
     private final ApplicationState applicationState;
 
     public ThirstyCalc() {
         userDatabase = new UserDatabase();
+        accountDatabase = new AccountDatabase();
+
         applicationState = new ApplicationState();
 
         greet();
@@ -53,27 +58,35 @@ public class ThirstyCalc {
 
     public void createNewUser(User user) {
         userDatabase.registerNewUser(user);
+        accountDatabase.createAccount(user);
     }
 
     public ApplicationState getApplicationState() {
         return applicationState;
     }
 
+    public Account getAccountOfLoggedInUser() {
+        return accountDatabase.getAccountOfUser(applicationState.getLoggedInUser());
+    }
+
     public void save() {
         try {
             System.out.println("Saving users.json");
             userDatabase.save("users.json");
+
+            System.out.println("Saving accounts.json");
+            accountDatabase.save("accounts.json");
         } catch (IOException e) {
             System.out.println("Could not save users");
-            // throw new RuntimeException(e);
         }
     }
 
     public void load() {
         try {
             userDatabase.load("users.json");
+            accountDatabase.load("accounts.json");
         } catch (IOException e) {
-            System.out.println("Could not load users!");
+            System.out.println("Could not load users or accounts!");
         }
     }
 }

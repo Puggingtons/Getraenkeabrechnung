@@ -21,8 +21,8 @@ public class StringInputInteraction extends Interaction<String> {
     }
 
     @Override
-    public void explain() {
-        System.out.println(message);
+    String usage() {
+        return message;
     }
 
     @Override

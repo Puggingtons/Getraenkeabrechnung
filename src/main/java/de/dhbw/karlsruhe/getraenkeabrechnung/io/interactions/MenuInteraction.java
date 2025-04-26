@@ -15,8 +15,8 @@ public class MenuInteraction extends Interaction<Void> {
     }
 
     @Override
-    public void explain() {
-        selectInteraction.explain();
+    String usage() {
+        return selectInteraction.usage();
     }
 
     @Override
