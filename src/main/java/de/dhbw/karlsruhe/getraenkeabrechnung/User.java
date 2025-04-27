@@ -38,11 +38,14 @@ public class User {
         this.rights = new HashSet<>();
     }
 
-    // Constructor for class LoginCommand
+    // Default constructor
+    public User() {
+    }
+
+    // USE THIS CONSTRUCTOR ONLY FOR TESTING PURPOSES
     public User(Username username, Password password) {
         this.username = username;
         this.password = password;
-        hashAndSetPassword(password);
     }
 
     public Username getUsername() {
@@ -68,6 +71,10 @@ public class User {
         } else {
             throw new IllegalArgumentException("Password not valid!");
         }
+    }
+
+    public void nullPassword() {
+        password.nullPasswordString();
     }
 
     private void hashAndSetPassword(Password password) {

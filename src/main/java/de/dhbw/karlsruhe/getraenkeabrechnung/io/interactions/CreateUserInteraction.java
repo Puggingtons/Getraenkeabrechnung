@@ -35,10 +35,13 @@ public class CreateUserInteraction extends Interaction<User> {
         String passwordVerification = getValidInput(passwordVerificationInput);
         userDatabase.getUsers();
 
+        User user = new User();
+
         // Check if user exists
         Username usernameObj = new Username(username);
+        Password passwordObj = new Password(password);
         if (userDatabase.userExists(usernameObj)) {
-            System.out.println("User already exists!");
+            System.out.println("Username already exists!");
             failure();
             return;
         }
@@ -49,20 +52,17 @@ public class CreateUserInteraction extends Interaction<User> {
             return;
         }
 
-        User user = new User(new Username(username), new Password(password));
+        user.setUsername(usernameObj);
+        user.setPassword(passwordObj);
 
         if (!UsernameValidator.isValidUsername(user.getUsername())) {
             failure();
         } else if (!PasswordValidator.isValidPassword(user.getPassword())) {
             failure();
         } else {
-            // todo: Add register functionality for user db
-            // userDatabase.addUser(user);
-            // userDatabase.registerNewUser(user);
             success(user);
+            user.nullPassword();;
         }
-
-        // success(user);
     }
 
     private String getValidInput(StringInput input) {

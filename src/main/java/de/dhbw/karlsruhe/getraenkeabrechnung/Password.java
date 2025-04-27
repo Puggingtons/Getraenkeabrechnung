@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class Password {
 
-    private final String passwordString;
+    private String passwordString;
     private String hashedPassword;
     private String salt;
 
@@ -18,7 +18,6 @@ public class Password {
     }
 
     public Boolean isValid(Optional<String> pattern) {
-
         if (pattern.isEmpty()) {
             return false;
         }
@@ -77,4 +76,7 @@ public class Password {
         return this.hashedPassword;
     }
 
+    public void nullPasswordString() {
+        this.passwordString = null;
+    }
 }
