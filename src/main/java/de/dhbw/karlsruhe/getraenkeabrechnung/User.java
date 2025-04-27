@@ -1,5 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
@@ -19,12 +20,12 @@ public class User {
     private String realLastName;
     private String realName;
     private Email email;
-    private Konto konto;
+    private Account account;
 
     private Set<Right> rights;
 
     public User(Username username, Password password, String realFirstName, String realLastName,
-                String realName, Email email, Konto konto) {
+                String realName, Email email, Account account) {
 
         this.username = username;
         this.password = password;
@@ -32,8 +33,7 @@ public class User {
         this.realLastName = realLastName;
         this.email = email;
         this.realName = realFirstName + " " + realLastName;
-        this.konto = new Konto();
-        konto.setAccountCredit(0);
+        this.account = new Account(this.username);
 
         this.rights = new HashSet<>();
     }
@@ -123,24 +123,12 @@ public class User {
         this.email = email;
     }
 
-    public Konto getKonto() {
-        return konto;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setKonto(Konto konto) {
-        this.konto = konto;
-    }
-
-    public void addCreditAmount(double credit) {
-        konto.addAccountCredit(credit);
-    }
-
-    public void removeCreditAmount(double credit) {
-        konto.removeAccountCredit(credit);
-    }
-
-    public double getAccountCredit() {
-        return konto.getAccountCredit();
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public void addRights(Collection<Right> rights) {
