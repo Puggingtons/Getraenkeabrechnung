@@ -35,6 +35,15 @@ public class AccountDatabase {
         throw new AccountDoesNotExistException("Account with the username " + user.getUsername() + " does not exist");
     }
 
+    public void removeAccount(User user) {
+        for (Account a : accounts.get()) {
+            if (a.getUsername().equals(user.getUsername())) {
+                accounts.get().remove(a);
+                return;
+            }
+        }
+    }
+
     public void load(String path) throws IOException {
         load(Path.of(path));
     }

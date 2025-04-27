@@ -24,6 +24,19 @@ public class UserDatabase {
         this.users.get().add(user);
     }
 
+    public void removeUser(User user) {
+        this.users.get().remove(user);
+    }
+
+    public void deleteUser(User user) {
+        for (User u : users.get()) {
+            if (u.getUsername().equals(user.getUsername())) {
+                users.get().remove(u);
+                return;
+            }
+        }
+    }
+
     public void registerNewUser(User user) {
         for (User u : users.get()) {
             if (u.getUsername().equals(user.getUsername())) {

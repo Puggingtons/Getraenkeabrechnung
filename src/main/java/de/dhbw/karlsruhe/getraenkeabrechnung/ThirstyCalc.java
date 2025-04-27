@@ -61,6 +61,11 @@ public class ThirstyCalc {
         accountDatabase.createAccount(user);
     }
 
+    public void deleteUser(User user) {
+        userDatabase.deleteUser(user);
+        accountDatabase.removeAccount(user);
+    }
+
     public ApplicationState getApplicationState() {
         return applicationState;
     }

@@ -5,6 +5,7 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -129,6 +130,15 @@ public class User {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public boolean checkBalanceLeft() {
+        if (this.account.getBalance().getAmount().compareTo(BigDecimal.ZERO) > 0) {
+            return true;
+        } else {
+            return false;
+            
+        }
     }
 
     public void addRights(Collection<Right> rights) {
