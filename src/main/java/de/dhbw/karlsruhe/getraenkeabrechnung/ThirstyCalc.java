@@ -61,6 +61,11 @@ public class ThirstyCalc {
         accountDatabase.createAccount(user);
     }
 
+    public void createNewDrinkOption(DrinkCategory drinkCategory) {
+        // Implementation for creating a new drink option
+        System.out.println("Creating a new drink option for category: " + drinkCategory);
+    }
+
     public ApplicationState getApplicationState() {
         return applicationState;
     }

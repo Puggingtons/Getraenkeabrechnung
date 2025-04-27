@@ -2,10 +2,15 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 public class Color {
 
-    private String colorName;
+    private ColorName colorName;
     private double colorPrice;
 
-    public String getColorName() {
+    public Color(ColorName colorName, double colorPrice) {
+        this.colorName = colorName;
+        this.colorPrice = colorPrice;
+    }
+
+    public ColorName getColorName() {
         return colorName;
     }
 
@@ -13,7 +18,7 @@ public class Color {
         return colorPrice;
     }
 
-    public void setColorName(String colorName) {
+    public void setColorName(ColorName colorName) {
         this.colorName = colorName;
     }
 
