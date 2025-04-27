@@ -23,7 +23,7 @@ public class NumberInput extends Input<Integer> {
     Result<Integer> getResult(String input) {
         try {
             Integer res = Integer.valueOf(input);
-            if (res < minValue || res > maxValue) {
+            if (res <= minValue || res >= maxValue) {
                 return Result.none();
             }
             return Result.some(res);
