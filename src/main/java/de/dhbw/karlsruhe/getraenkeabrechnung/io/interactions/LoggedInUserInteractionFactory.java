@@ -16,6 +16,7 @@ public class LoggedInUserInteractionFactory {
 
         addDefaultInteractions();
         addRoleDefinedInteractions();
+        addCheckBalanceInteraction();
 
         return menuInteraction;
     }
@@ -35,5 +36,13 @@ public class LoggedInUserInteractionFactory {
             menuInteraction.stop();
         });
         menuInteraction.addInteraction("logout", "Logout a user", interaction);
+    }
+
+    private void addCheckBalanceInteraction() {
+        CheckBalanceInteraction interaction = new CheckBalanceInteraction(thirstyCalc.getAccountOfLoggedInUser());
+        interaction.onSuccess((money) -> {
+            System.out.println("Your current balance is: " + money + ".");
+        });
+        menuInteraction.addInteraction("balance", "Shows your current balance.", interaction);
     }
 }

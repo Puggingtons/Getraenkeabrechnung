@@ -30,8 +30,8 @@ public class LoginInteraction extends Interaction<User> {
     }
 
     @Override
-    public void explain() {
-        System.out.println("Please enter your username and password to login.");
+    String usage() {
+        return "Please enter your username and password to login.";
     }
 
     @Override

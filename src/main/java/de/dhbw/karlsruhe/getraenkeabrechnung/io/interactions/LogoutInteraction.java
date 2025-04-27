@@ -2,8 +2,8 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 public class LogoutInteraction extends Interaction<Void> {
     @Override
-    public void explain() {
-        System.out.println("You're now logged out");
+    String usage() {
+        return "You're now logged out";
     }
 
     @Override

@@ -33,8 +33,8 @@ public class CreateUserInteraction extends Interaction<User> {
     }
 
     @Override
-    public void explain() {
-        System.out.println("Please enter a username and a password.");
+    String usage() {
+        return "Please enter a username and a password.";
     }
 
     @Override

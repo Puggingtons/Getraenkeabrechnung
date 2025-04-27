@@ -2,8 +2,8 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 public class ExitInteraction extends Interaction<Void> {
     @Override
-    void explain() {
-
+    String usage() {
+        return "Exits the application.";
     }
 
     @Override
