@@ -1,8 +1,5 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-
-import java.io.IOException;
-
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
@@ -19,17 +16,11 @@ public class CreateUserInteraction extends Interaction<User> {
     private final StringInput passwordVerificationInput;
     private final UserDatabase userDatabase;
 
-    public CreateUserInteraction() {
+    public CreateUserInteraction(UserDatabase userDatabase) {
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
         passwordVerificationInput = new StringInput("Verify Password: ");
-        userDatabase = new UserDatabase();
-
-        try {
-            userDatabase.load("users.json");
-        } catch (IOException e) {
-            System.out.println("Could not load users: " + e.getMessage());
-        }
+        this.userDatabase = userDatabase;
     }
 
     @Override

@@ -7,26 +7,17 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
-import java.io.IOException;
-
 public class LoginInteraction extends Interaction<User> {
 
     private final StringInput usernameInput;
     private final StringInput passwordInput;
     private final UserDatabase userDatabase;
 
-    public LoginInteraction() {
+    public LoginInteraction(UserDatabase userDatabase) {
         super();
         usernameInput = new StringInput("Username> ");
         passwordInput = new StringInput("Password> ");
-        userDatabase = new UserDatabase();
-
-        // Load users from JSON file
-        try {
-            userDatabase.load("users.json");
-        } catch (IOException e) {
-            System.out.println("Could not load users: " + e.getMessage());
-        }
+        this.userDatabase = userDatabase;
     }
 
     @Override
