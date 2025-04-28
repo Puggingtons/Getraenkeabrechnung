@@ -35,6 +35,17 @@ public class AccountDatabase {
         throw new AccountDoesNotExistException("Account with the username " + user.getUsername() + " does not exist");
     }
 
+    
+
+    public boolean checkIfAccountBalanceIsZero(User user) {
+        for (Account a : accounts.get()) {
+            if (a.getUsername().equals(user.getUsername()) && a.isEmpty()) {
+                return true;
+            } 
+        }
+        return false;
+    }
+
     public void removeAccount(User user) {
         for (Account a : accounts.get()) {
             if (a.getUsername().equals(user.getUsername())) {

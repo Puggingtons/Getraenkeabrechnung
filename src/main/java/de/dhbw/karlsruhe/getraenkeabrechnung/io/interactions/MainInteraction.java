@@ -36,7 +36,7 @@ public class MainInteraction extends MenuInteraction {
     }
 
     private void addDeleteUserInteraction() {
-        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstycalc.getUserDatabase());
+        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstycalc.getUserDatabase(), thirstycalc.getAccountDatabase());
         interaction.onSuccess(thirstycalc::deleteUser);
         addInteraction("delete", "Delete a user", interaction);
     }

@@ -33,6 +33,10 @@ public class Account {
         return amount;
     }
 
+    public boolean isEmpty() {
+        return balance.getAmount().compareTo(new Money("0.00").getAmount()) == 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

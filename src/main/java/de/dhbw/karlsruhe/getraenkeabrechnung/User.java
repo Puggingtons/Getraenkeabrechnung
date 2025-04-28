@@ -21,12 +21,11 @@ public class User {
     private String realLastName;
     private String realName;
     private Email email;
-    private Account account;
 
     private Set<Right> rights;
 
     public User(Username username, Password password, String realFirstName, String realLastName,
-                String realName, Email email, Account account) {
+                String realName, Email email) {
 
         this.username = username;
         this.password = password;
@@ -34,7 +33,6 @@ public class User {
         this.realLastName = realLastName;
         this.email = email;
         this.realName = realFirstName + " " + realLastName;
-        this.account = new Account(this.username);
 
         this.rights = new HashSet<>();
     }
@@ -122,23 +120,6 @@ public class User {
 
     public void setEmail(Email email) {
         this.email = email;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount() {
-        this.account = new Account(this.username);
-    }
-
-    public boolean checkBalanceLeft() {
-        if (this.account.getBalance().getAmount().compareTo(BigDecimal.ZERO) > 0) {
-            return true;
-        } else {
-            return false;
-            
-        }
     }
 
     public void addRights(Collection<Right> rights) {

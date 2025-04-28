@@ -2,6 +2,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
@@ -9,10 +10,12 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 public class DeleteUserInteraction extends Interaction<User>{
     private final StringInput usernameInput;
     private final UserDatabase userDatabase;
+    private final AccountDatabase accountDatabase;
 
-    public DeleteUserInteraction(UserDatabase userDatabase) {
+    public DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase) {
         usernameInput = new StringInput("Username: ");
         this.userDatabase = userDatabase;
+        this.accountDatabase = accountDatabase;
     }
 
     @Override
@@ -24,6 +27,7 @@ public class DeleteUserInteraction extends Interaction<User>{
     public void execute() {
         String username = getValidInput(usernameInput);
         userDatabase.getUsers();
+        accountDatabase.getAccounts();
         Username usernameObj = new Username(username);
 
         // Check if user exists
@@ -41,7 +45,7 @@ public class DeleteUserInteraction extends Interaction<User>{
                 break;
             }
         }
-        if (user != null && user.checkBalanceLeft()) {
+        if (user != null && !accountDatabase.checkIfAccountBalanceIsZero(user)) {
             System.out.println("User has a positive balance. Please settle the balance before deleting the user.");
             failure();
             return;

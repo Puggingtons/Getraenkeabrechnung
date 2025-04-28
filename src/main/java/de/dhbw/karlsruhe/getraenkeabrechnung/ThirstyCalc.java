@@ -74,6 +74,10 @@ public class ThirstyCalc {
         return userDatabase;
     }
 
+    public AccountDatabase getAccountDatabase() {
+        return accountDatabase;
+    }
+
     public Account getAccountOfLoggedInUser() {
         return accountDatabase.getAccountOfUser(applicationState.getLoggedInUser());
     }
