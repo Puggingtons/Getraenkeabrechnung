@@ -1,8 +1,10 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
@@ -10,11 +12,13 @@ public class LoginInteraction extends Interaction<User> {
 
     private final StringInput usernameInput;
     private final StringInput passwordInput;
+    private final UserDatabase userDatabase;
 
-    public LoginInteraction() {
+    public LoginInteraction(UserDatabase userDatabase) {
         super();
         usernameInput = new StringInput("Username> ");
         passwordInput = new StringInput("Password> ");
+        this.userDatabase = userDatabase;
     }
 
     @Override
@@ -26,24 +30,41 @@ public class LoginInteraction extends Interaction<User> {
     public void execute() {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
+        userDatabase.getUsers();
 
-        // todo check if username and password exist and are valid
-
-        // todo: Login with hashed password
-
-        // todo: this is temporary
-        if (username.equals("Hans")) {
+        // Check if user exists
+        Username usernameObj = new Username(username);
+        if (!userDatabase.userExists(usernameObj)) {
             System.out.println("User does not exist");
             failure();
+            return;
         }
 
-        if (password.equals("ff")) {
-            System.out.println("Password is incorrect");
+        // Find the user in the database
+        User foundUser = null;
+        for (User user : userDatabase.getUsers()) {
+            if (user.getUsername().equals(usernameObj)) {
+                foundUser = user;
+                break;
+            }
+        }
+
+        // Verify password
+        try {
+            if (foundUser == null || !Password.verifyPassword(password, foundUser.getHashedPassword(), foundUser.getSalt())) {
+                System.out.println("Password is incorrect");
+                failure();
+                return;
+            }
+        } catch (PasswordManagementException e) {
+            System.out.println("Error verifying password: " + e.getMessage());
             failure();
+            return;
         }
 
-        User user = new User(new Username(username), new Password(password));
-        success(user);
+        // Login successful
+        System.out.println("Login successful!");
+        success(foundUser);
     }
 
     private String getValidInput(StringInput input) {
