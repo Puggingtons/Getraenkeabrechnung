@@ -12,6 +12,7 @@ public class AdminRights {
         rights = new HashSet<>();
         rights.add(Right.CAN_SELF_INVOICE);
         rights.add(Right.CAN_CREATE_NEW_USER);
+        rights.add(Right.CAN_DELETE_USER);
     }
 
     public void giveTo(User user) {
