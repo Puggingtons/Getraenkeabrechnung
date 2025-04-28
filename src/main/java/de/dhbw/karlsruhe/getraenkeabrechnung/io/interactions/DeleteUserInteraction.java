@@ -9,11 +9,13 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
 public class DeleteUserInteraction extends Interaction<User>{
     private final StringInput usernameInput;
+    private final StringInput usernameVerificationInput;
     private final UserDatabase userDatabase;
     private final AccountDatabase accountDatabase;
 
     public DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase) {
         usernameInput = new StringInput("Username: ");
+        usernameVerificationInput = new StringInput("Confirm Username (WARNING: THIS CANNOT BE UNDONE): ");
         this.userDatabase = userDatabase;
         this.accountDatabase = accountDatabase;
     }
@@ -26,9 +28,16 @@ public class DeleteUserInteraction extends Interaction<User>{
     @Override
     public void execute() {
         String username = getValidInput(usernameInput);
+        String usernameVerification = getValidInput(usernameVerificationInput);
         userDatabase.getUsers();
         accountDatabase.getAccounts();
         Username usernameObj = new Username(username);
+
+        if (!username.equals(usernameVerification)) {
+            System.out.println("Usernames do not match!");
+            failure();
+            return;
+        }
 
         // Check if user exists
         if (!userDatabase.userExists(usernameObj)) {
@@ -36,6 +45,7 @@ public class DeleteUserInteraction extends Interaction<User>{
             failure();
             return;
         }
+
 
         // Check balance of the user
         User user = null;
