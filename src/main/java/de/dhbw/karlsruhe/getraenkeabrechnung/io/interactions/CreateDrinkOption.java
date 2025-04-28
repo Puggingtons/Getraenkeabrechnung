@@ -1,12 +1,11 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Color;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ColorName;
-import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkCategory;
+import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkOption;
 import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
-public class CreateDrinkOption extends Interaction<DrinkCategory> {
+public class CreateDrinkOption extends Interaction<DrinkOption> {
 
     private final StringInput drinkNameInput;
     private final StringInput colorNameInput;
@@ -33,9 +32,9 @@ public class CreateDrinkOption extends Interaction<DrinkCategory> {
             return;
         }
 
-        DrinkCategory drinkCategory = new DrinkCategory(new DrinkName(drinkName), new ColorName(colorName));
+        DrinkOption drinkOption = new DrinkOption(new DrinkName(drinkName), new ColorName(colorName));
 
-        success(drinkCategory);
+        success(drinkOption);
     }
 
     private String getValidInput(StringInput input) {

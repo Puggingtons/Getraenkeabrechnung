@@ -49,8 +49,8 @@ public class LoggedInUserInteractionFactory {
 
     private void addCreateDrinkOptionInteraction() {
         CreateDrinkOption interaction = new CreateDrinkOption();
-        interaction.onSuccess((drinkCategory) -> {
-            System.out.println("You created: " + drinkCategory.getDrinkName().toString() + ", its color is: " + drinkCategory.getColorName().toString() + ".");
+        interaction.onSuccess((drinkOption) -> {
+            System.out.println("You created: " + drinkOption.getDrinkName().toString() + ", its color is: " + drinkOption.getColorName().toString() + ".");
         });
         menuInteraction.addInteraction("create-drink", "Create a new drink option.", interaction);
     }
