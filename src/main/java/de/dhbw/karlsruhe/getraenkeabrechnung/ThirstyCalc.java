@@ -2,6 +2,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.DrinkDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 
@@ -10,12 +11,15 @@ import java.io.IOException;
 public class ThirstyCalc {
     private final UserDatabase userDatabase;
     private final AccountDatabase accountDatabase;
+    private final DrinkDatabase drinkDatabase;
 
     private final ApplicationState applicationState;
 
     public ThirstyCalc() {
         userDatabase = new UserDatabase();
         accountDatabase = new AccountDatabase();
+
+        drinkDatabase = new DrinkDatabase();
 
         applicationState = new ApplicationState();
 
@@ -61,9 +65,9 @@ public class ThirstyCalc {
         accountDatabase.createAccount(user);
     }
 
-    public void createNewDrinkOption(DrinkCategory drinkCategory) {
-        // Implementation for creating a new drink option
-        System.out.println("Creating a new drink option for category: " + drinkCategory);
+    public void createNewDrinkOption(DrinkOption drinkOption) {
+        drinkDatabase.createNewDrinkOption(drinkOption);
+        System.out.println("Creating a new drink option: " + drinkOption);
     }
 
     public ApplicationState getApplicationState() {
