@@ -10,9 +10,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-// Todo 
-// 1. login method (Session etc.)
-// 2. Klassen für Feld Passwort erstellen
 
 public class User {
     private Username username;
@@ -77,14 +74,21 @@ public class User {
     }
 
     private void hashAndSetPassword(Password password) {
-        password.hashPassword();
+        try {
+            password.hashPassword();
+        } catch (IllegalArgumentException | PasswordManagementException e) {
+            throw new IllegalArgumentException("Password not valid!");
+        }
         password.getHashedPassword();
     }
 
     public boolean verifyPassword(String providedPassword) {
-        return Password.verifyPassword(providedPassword, password.getHashedPassword(), password.getSalt());
+        try {
+            return Password.verifyPassword(providedPassword, password.getHashedPassword(), password.getSalt());
+        } catch (PasswordManagementException e) {
+            throw new IllegalArgumentException("Password verification failed!", e);
+        }
     }
-
     public String getHashedPassword() {
         return password.getHashedPassword();
     }

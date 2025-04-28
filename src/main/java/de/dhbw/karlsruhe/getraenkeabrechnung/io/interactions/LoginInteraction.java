@@ -1,6 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
@@ -49,8 +50,14 @@ public class LoginInteraction extends Interaction<User> {
         }
 
         // Verify password
-        if (foundUser == null || !Password.verifyPassword(password, foundUser.getHashedPassword(), foundUser.getSalt())) {
-            System.out.println("Password is incorrect");
+        try {
+            if (foundUser == null || !Password.verifyPassword(password, foundUser.getHashedPassword(), foundUser.getSalt())) {
+                System.out.println("Password is incorrect");
+                failure();
+                return;
+            }
+        } catch (PasswordManagementException e) {
+            System.out.println("Error verifying password: " + e.getMessage());
             failure();
             return;
         }

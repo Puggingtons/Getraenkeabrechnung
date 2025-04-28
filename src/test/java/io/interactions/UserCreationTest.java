@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
@@ -27,7 +28,11 @@ public class UserCreationTest {
         String password = "Flow@Test123";
         
         User testUser = new User(new Username(username), new Password(password));
-        testUser.getPassword().hashPassword();
+        try {
+            testUser.getPassword().hashPassword();
+        } catch (PasswordManagementException e) {
+            fail("Password hashing failed: " + e.getMessage());
+        }
         database.addUser(testUser);
         
         // Test login via ThirstyCalc
