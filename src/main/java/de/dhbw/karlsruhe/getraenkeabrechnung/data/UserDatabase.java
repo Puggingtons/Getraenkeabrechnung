@@ -41,12 +41,10 @@ public class UserDatabase {
         for (User u : users.get()) {
             if (u.getUsername().equals(user.getUsername())) {
                 return;
-            } else {
-                addUser(user);
-            }
+            } 
         }
 
-        users.get().add(user);
+       addUser(user);
     }
 
     public boolean userExists(Username username) {

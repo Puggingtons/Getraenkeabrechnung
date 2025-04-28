@@ -128,8 +128,8 @@ public class User {
         return account;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccount() {
+        this.account = new Account(this.username);
     }
 
     public boolean checkBalanceLeft() {

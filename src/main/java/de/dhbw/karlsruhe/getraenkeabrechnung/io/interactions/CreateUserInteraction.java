@@ -61,7 +61,8 @@ public class CreateUserInteraction extends Interaction<User> {
             failure();
         } else {
             success(user);
-            user.nullPassword();;
+            user.nullPassword();
+            user.setAccount();
         }
     }
 

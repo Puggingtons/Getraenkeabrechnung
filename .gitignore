@@ -5,6 +5,7 @@ build/
 !**/src/test/**/build/
 
 users.json
+accounts.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
