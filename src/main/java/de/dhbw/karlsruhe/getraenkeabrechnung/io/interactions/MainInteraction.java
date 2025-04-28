@@ -19,7 +19,7 @@ public class MainInteraction extends MenuInteraction {
 
     private void addExitInteraction() {
         ExitInteraction exitInteraction = new ExitInteraction();
-        exitInteraction.onSuccess((_) -> {this.onExit();});
+        exitInteraction.onSuccess(event -> { this.onExit(); });
         addInteraction("exit", "exits the program", exitInteraction);
     }
 
