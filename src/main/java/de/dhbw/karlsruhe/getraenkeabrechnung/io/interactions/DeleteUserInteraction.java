@@ -34,14 +34,18 @@ public class DeleteUserInteraction extends Interaction<User>{
         Username usernameObj = new Username(username);
 
         if (!username.equals(usernameVerification)) {
-            System.out.println("Usernames do not match!");
+            System.out.println(
+                "Usernames do not match!"
+                );
             failure();
             return;
         }
 
         // Check if user exists
         if (!userDatabase.userExists(usernameObj)) {
-            System.out.println("User does not exist!");
+            System.out.println(
+                "User does not exist!"
+                );
             failure();
             return;
         }
@@ -56,7 +60,9 @@ public class DeleteUserInteraction extends Interaction<User>{
             }
         }
         if (user != null && !accountDatabase.checkIfAccountBalanceIsZero(user)) {
-            System.out.println("User has a positive balance. Please settle the balance before deleting the user.");
+            System.out.println(
+                "User has a positive balance. Please settle the balance before deleting the user."
+                );
             failure();
             return;
         }
@@ -72,10 +78,14 @@ public class DeleteUserInteraction extends Interaction<User>{
 
         // Delete the user
         if (foundUser != null) {
-            System.out.println("User deleted successfully!");
+            System.out.println(
+                "User deleted successfully!"
+                );
             success(foundUser);
         } else {
-            System.out.println("User not found");
+            System.out.println(
+                "User not found"
+                );
             failure();
         }
     }
@@ -90,7 +100,9 @@ public class DeleteUserInteraction extends Interaction<User>{
             }
 
             if (result.isNone()) {
-                System.out.println("Invalid input!");
+                System.out.println(
+                    "Invalid input!"
+                    );
                 continue;
             }
 

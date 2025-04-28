@@ -34,7 +34,9 @@ public class Account {
     }
 
     public boolean isEmpty() {
-        return balance.getAmount().compareTo(new Money("0.00").getAmount()) == 0;
+        return balance.getAmount().compareTo(
+            new Money("0.00").getAmount()
+            ) == 0;
     }
 
     @Override
