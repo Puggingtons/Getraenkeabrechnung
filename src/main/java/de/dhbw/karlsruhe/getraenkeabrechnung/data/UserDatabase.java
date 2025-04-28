@@ -20,6 +20,16 @@ public class UserDatabase {
         return users.get().toArray(new User[0]);
     }
 
+    public User getUser(Username username) {
+        for (User u : users.get()) {
+            if (u.getUsername().equals(username)) {
+                return u;
+            }
+        }
+
+        throw new UserDoesNotExistException("User with the username " + username + " does not exist!");
+    }
+
     public void addUser(User user) {
         this.users.get().add(user);
     }

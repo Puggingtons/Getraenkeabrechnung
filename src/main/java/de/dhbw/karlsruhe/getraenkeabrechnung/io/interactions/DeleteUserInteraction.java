@@ -32,7 +32,7 @@ public class DeleteUserInteraction extends Interaction<User>{
 
         // Check if user exists
         if (!userDatabase.userExists(usernameObj)) {
-            System.out.println("User does not exist");
+            System.out.println("User does not exist!");
             failure();
             return;
         }
