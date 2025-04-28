@@ -12,8 +12,8 @@ public abstract class Interaction<T> extends InteractionEventSource<T> {
     public Interaction() {
         run = false;
 
-        onSuccess((_) -> {stop();});
-        onFailure((_) -> {stop();});
+        onSuccess(event -> {stop();});
+        onFailure(event -> {stop();});
     }
 
     static final String DEFAULT_PROMPT = "> ";

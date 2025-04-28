@@ -2,5 +2,9 @@
   "plantuml.exportOutDir": ".",
   "plantuml.commandArgs": [
     "-DPLANTUML_LIMIT_SIZE=8192"
-  ]
+  ],
+  "java.project.referencedLibraries": [
+    "libs/gson-2.12.1.jar"
+  ],
+  "java.configuration.updateBuildConfiguration": "interactive"
 }
