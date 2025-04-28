@@ -2,20 +2,20 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 public class DrinkCategory {
 
-    private DrinkName drinkName;
+    private DrinkOption drinkOption;
     private ColorName colorName;
 
-    public DrinkCategory(DrinkName drinkName, ColorName colorName) {
-        this.drinkName = drinkName;
+    public DrinkCategory(DrinkOption drinkOption, ColorName colorName) {
+        this.drinkOption = drinkOption;
         this.colorName = colorName;
     }
 
-    public DrinkName getDrinkName() {
-        return drinkName;
+    public DrinkOption getDrinkOption() {
+        return drinkOption;
     }
 
-    public void setDrinkName(DrinkName drinkName) {
-        this.drinkName = drinkName;
+    public void setDrinkOption(DrinkOption drinkOption) {
+        this.drinkOption = drinkOption;
     }
 
     public ColorName getColorName() {
