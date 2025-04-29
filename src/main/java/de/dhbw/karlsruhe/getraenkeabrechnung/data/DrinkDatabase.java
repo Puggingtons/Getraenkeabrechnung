@@ -54,7 +54,7 @@ public class DrinkDatabase {
             }
         }
 
-        drinkOptionList.get().add(drinkOption);
+        addDrinkOption(drinkOption);
     }
 
     /**
