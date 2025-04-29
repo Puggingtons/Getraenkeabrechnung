@@ -1,16 +1,15 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-// Todo 
-// 1. login method (Session etc.)
-// 2. Klassen für Feld Passwort erstellen
 
 public class User {
     private Username username;
@@ -19,12 +18,11 @@ public class User {
     private String realLastName;
     private String realName;
     private Email email;
-    private Konto konto;
 
     private Set<Right> rights;
 
     public User(Username username, Password password, String realFirstName, String realLastName,
-                String realName, Email email, Konto konto) {
+                String realName, Email email) {
 
         this.username = username;
         this.password = password;
@@ -32,17 +30,18 @@ public class User {
         this.realLastName = realLastName;
         this.email = email;
         this.realName = realFirstName + " " + realLastName;
-        this.konto = new Konto();
-        konto.setAccountCredit(0);
 
         this.rights = new HashSet<>();
     }
 
-    // Constructor for class LoginCommand
+    // Default constructor
+    public User() {
+    }
+
+    // USE THIS CONSTRUCTOR ONLY FOR TESTING PURPOSES
     public User(Username username, Password password) {
         this.username = username;
         this.password = password;
-        hashAndSetPassword(password);
     }
 
     public Username getUsername() {
@@ -70,15 +69,26 @@ public class User {
         }
     }
 
+    public void nullPassword() {
+        password.nullPasswordString();
+    }
+
     private void hashAndSetPassword(Password password) {
-        password.hashPassword();
+        try {
+            password.hashPassword();
+        } catch (IllegalArgumentException | PasswordManagementException e) {
+            throw new IllegalArgumentException("Password not valid!");
+        }
         password.getHashedPassword();
     }
 
     public boolean verifyPassword(String providedPassword) {
-        return Password.verifyPassword(providedPassword, password.getHashedPassword(), password.getSalt());
+        try {
+            return Password.verifyPassword(providedPassword, password.getHashedPassword(), password.getSalt());
+        } catch (PasswordManagementException e) {
+            throw new IllegalArgumentException("Password verification failed!", e);
+        }
     }
-
     public String getHashedPassword() {
         return password.getHashedPassword();
     }
@@ -114,26 +124,6 @@ public class User {
 
     public void setEmail(Email email) {
         this.email = email;
-    }
-
-    public Konto getKonto() {
-        return konto;
-    }
-
-    public void setKonto(Konto konto) {
-        this.konto = konto;
-    }
-
-    public void addCreditAmount(double credit) {
-        konto.addAccountCredit(credit);
-    }
-
-    public void removeCreditAmount(double credit) {
-        konto.removeAccountCredit(credit);
-    }
-
-    public double getAccountCredit() {
-        return konto.getAccountCredit();
     }
 
     public void addRights(Collection<Right> rights) {

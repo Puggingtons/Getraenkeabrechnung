@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 public class Password {
 
-    private final String passwordString;
+    private String passwordString;
     private String hashedPassword;
     private String salt;
 
@@ -18,7 +18,6 @@ public class Password {
     }
 
     public Boolean isValid(Optional<String> pattern) {
-
         if (pattern.isEmpty()) {
             return false;
         }
@@ -29,7 +28,7 @@ public class Password {
     }
 
     // Hashes the password
-    public String hashPassword() {
+    public String hashPassword() throws PasswordManagementException {
         try {
             SecureRandom random = new SecureRandom();
             // Generetes the salt
@@ -47,12 +46,12 @@ public class Password {
 
             return this.hashedPassword;
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error hashing passoword", e);
+           throw new PasswordManagementException("Error hashing password: ", e);
         }
     }
 
     // Verifies the password against the stored hash and salt
-    public static boolean verifyPassword(String plainPassword, String storedHash, String storedSalt) {
+    public static boolean verifyPassword(String plainPassword, String storedHash, String storedSalt) throws PasswordManagementException {
         try {
             byte[] saltBytes = Base64.getDecoder().decode(storedSalt);
 
@@ -65,7 +64,7 @@ public class Password {
 
             return hashedPassword.equals(storedHash);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("Error verifying password", e);
+            throw new PasswordManagementException("Error verifying the password: ", e);
         }
     }
 
@@ -77,4 +76,7 @@ public class Password {
         return this.hashedPassword;
     }
 
+    public void nullPasswordString() {
+        this.passwordString = null;
+    }
 }
