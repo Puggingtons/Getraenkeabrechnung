@@ -3,6 +3,7 @@ package validators;
 import org.junit.jupiter.api.Test;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +41,7 @@ class PasswordValidatorTest {
     }
 
     @Test
-    void isPasswordHashedCorrectlyShouldReturnTrue() {
+    void isPasswordHashedCorrectlyShouldReturnTrue() throws PasswordManagementException {
         Password password = new Password("goodPassword=1");
         password.hashPassword();
         assertTrue(password.verifyPassword("goodPassword=1", password.getHashedPassword(), password.getSalt()));

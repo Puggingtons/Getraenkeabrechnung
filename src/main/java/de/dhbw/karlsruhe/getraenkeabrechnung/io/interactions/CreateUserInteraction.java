@@ -3,6 +3,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
@@ -13,11 +14,13 @@ public class CreateUserInteraction extends Interaction<User> {
     private final StringInput usernameInput;
     private final StringInput passwordInput;
     private final StringInput passwordVerificationInput;
+    private final UserDatabase userDatabase;
 
-    public CreateUserInteraction() {
+    public CreateUserInteraction(UserDatabase userDatabase) {
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
         passwordVerificationInput = new StringInput("Verify Password: ");
+        this.userDatabase = userDatabase;
     }
 
     @Override
@@ -30,9 +33,14 @@ public class CreateUserInteraction extends Interaction<User> {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
+        userDatabase.getUsers();
 
-        // todo: check user database
-        if (username.equals("Hans")) {
+        User user = new User();
+
+        // Check if user exists
+        Username usernameObj = new Username(username);
+        Password passwordObj = new Password(password);
+        if (userDatabase.userExists(usernameObj)) {
             System.out.println("Username already exists!");
             failure();
             return;
@@ -44,7 +52,8 @@ public class CreateUserInteraction extends Interaction<User> {
             return;
         }
 
-        User user = new User(new Username(username), new Password(password));
+        user.setUsername(usernameObj);
+        user.setPassword(passwordObj);
 
         if (!UsernameValidator.isValidUsername(user.getUsername())) {
             failure();
@@ -52,9 +61,8 @@ public class CreateUserInteraction extends Interaction<User> {
             failure();
         } else {
             success(user);
+            user.nullPassword();
         }
-
-        // success(user);
     }
 
     private String getValidInput(StringInput input) {
