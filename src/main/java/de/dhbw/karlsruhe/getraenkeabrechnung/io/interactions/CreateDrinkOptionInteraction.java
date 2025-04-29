@@ -5,12 +5,12 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
-public class CreateDrinkOption extends Interaction<DrinkOption> {
+public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
 
     private final StringInput drinkNameInput;
     private final StringInput colorNameInput;
 
-    public CreateDrinkOption() {
+    public CreateDrinkOptionInteraction() {
         drinkNameInput = new StringInput("Drinkname: ");
         colorNameInput = new StringInput("Drinkcolor: ");
     }
@@ -26,8 +26,8 @@ public class CreateDrinkOption extends Interaction<DrinkOption> {
         String colorName = getValidInput(colorNameInput);
 
         // todo: check drink database
-        if (drinkName.equals("yellow")) {
-            System.out.println("Category already exists!");
+        if (drinkName.equals("beer")) {
+            System.out.println("Drink already exists!");
             failure();
             return;
         }
