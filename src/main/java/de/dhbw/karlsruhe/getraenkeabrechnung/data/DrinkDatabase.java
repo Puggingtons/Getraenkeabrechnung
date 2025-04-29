@@ -11,7 +11,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class DrinkDatabase {
-    private Savable<List<DrinkOption>> drinkOptionList;
+    private static Savable<List<DrinkOption>> drinkOptionList;
 
     public DrinkDatabase() {
         this.drinkOptionList = new Savable<>( new ArrayList<>());
@@ -63,7 +63,7 @@ public class DrinkDatabase {
      * @param drinkOption the drink option to check
      * @return true if the drink option exists, false otherwise
      */
-    public boolean drinkOptionExists(DrinkName drinkName) {
+    public static boolean drinkOptionExists(DrinkName drinkName) {
         for (DrinkOption d : drinkOptionList.get()) {
             if (d.getDrinkName().equals(drinkName)) {
                 return true;

@@ -1,6 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ColorName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkOption;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.DrinkDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
@@ -25,8 +26,8 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
         String drinkName = getValidInput(drinkNameInput);
         String colorName = getValidInput(colorNameInput);
 
-        // todo: check drink database
-        if (drinkName.equals("beer")) {
+        if (DrinkDatabase.drinkOptionExists(new DrinkName(drinkName))) {
+            // If the drink option already exists, we don't need to add it again
             System.out.println("Drink already exists!");
             failure();
             return;
