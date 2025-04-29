@@ -1,6 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ColorName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkOption;
+import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.DrinkDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
@@ -8,10 +9,15 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
 public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
 
+    private final ThirstyCalc thirstyCalc;
+
     private final StringInput drinkNameInput;
     private final StringInput colorNameInput;
 
-    public CreateDrinkOptionInteraction() {
+    public CreateDrinkOptionInteraction(ThirstyCalc thirstyCalc) {
+        
+        this.thirstyCalc = thirstyCalc;
+        
         drinkNameInput = new StringInput("Drinkname: ");
         colorNameInput = new StringInput("Drinkcolor: ");
     }
@@ -26,7 +32,7 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
         String drinkName = getValidInput(drinkNameInput);
         String colorName = getValidInput(colorNameInput);
 
-        if (DrinkDatabase.drinkOptionExists(new DrinkName(drinkName))) {
+        if (thirstyCalc.drinkOptionExists(new DrinkName(drinkName))) {
             // If the drink option already exists, we don't need to add it again
             System.out.println("Drink already exists!");
             failure();

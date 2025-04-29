@@ -70,6 +70,11 @@ public class ThirstyCalc {
         System.out.println("Creating a new drink option: " + drinkOption);
     }
 
+    public boolean drinkOptionExists(DrinkName drinkName) {
+        return drinkDatabase.drinkOptionExists(drinkName);
+    }
+    
+
     public void deleteUser(User user) {
         userDatabase.deleteUser(user);
         accountDatabase.removeAccount(user);
