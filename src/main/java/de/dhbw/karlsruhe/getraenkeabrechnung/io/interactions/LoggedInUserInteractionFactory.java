@@ -50,6 +50,7 @@ public class LoggedInUserInteractionFactory {
     private void addCreateDrinkOptionInteraction() {
         CreateDrinkOptionInteraction interaction = new CreateDrinkOptionInteraction();
         interaction.onSuccess((drinkOption) -> {
+            thirstyCalc.createNewDrinkOption(drinkOption);
             System.out.println("You created: " + drinkOption.getDrinkName().toString() + ", its color is: " + drinkOption.getColorName().toString() + ".");
         });
         menuInteraction.addInteraction("create-drink", "Create a new drink option.", interaction);
