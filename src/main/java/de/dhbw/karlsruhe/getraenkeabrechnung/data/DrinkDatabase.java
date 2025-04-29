@@ -1,6 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.data;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkOption; // Adjust the package path if necessary
+import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkName;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -10,7 +11,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class DrinkDatabase {
-
     private Savable<List<DrinkOption>> drinkOptionList;
 
     public DrinkDatabase() {
@@ -48,7 +48,8 @@ public class DrinkDatabase {
      */
     public void createNewDrinkOption(DrinkOption drinkOption) {
         for (DrinkOption d : drinkOptionList.get()) {
-            if (d.equals(drinkOption)) {
+            if (d.getDrinkName().equals(drinkOption.getDrinkName())) {
+                // If the drink option already exists, we don't need to add it again
                 return;
             }
         }
@@ -62,9 +63,9 @@ public class DrinkDatabase {
      * @param drinkOption the drink option to check
      * @return true if the drink option exists, false otherwise
      */
-    public boolean drinkOptionExists(DrinkOption drinkOption) {
+    public boolean drinkOptionExists(DrinkName drinkName) {
         for (DrinkOption d : drinkOptionList.get()) {
-            if (d.equals(drinkOption)) {
+            if (d.getDrinkName().equals(drinkName)) {
                 return true;
             }
         }
