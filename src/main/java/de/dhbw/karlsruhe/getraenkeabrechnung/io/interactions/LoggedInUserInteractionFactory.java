@@ -17,6 +17,7 @@ public class LoggedInUserInteractionFactory {
         addDefaultInteractions();
         addRoleDefinedInteractions();
         addCheckBalanceInteraction();
+        addCreateDrinkOptionInteraction();
 
         return menuInteraction;
     }
@@ -44,5 +45,14 @@ public class LoggedInUserInteractionFactory {
             System.out.println("Your current balance is: " + money + ".");
         });
         menuInteraction.addInteraction("balance", "Shows your current balance.", interaction);
+    }
+
+    private void addCreateDrinkOptionInteraction() {
+        CreateDrinkOptionInteraction interaction = new CreateDrinkOptionInteraction(thirstyCalc);
+        interaction.onSuccess((drinkOption) -> {
+            thirstyCalc.createNewDrinkOption(drinkOption);
+            System.out.println("You created: " + drinkOption.getDrinkName().toString() + ", its color is: " + drinkOption.getColorName().toString() + ".");
+        });
+        menuInteraction.addInteraction("create-drink", "Create a new drink option.", interaction);
     }
 }

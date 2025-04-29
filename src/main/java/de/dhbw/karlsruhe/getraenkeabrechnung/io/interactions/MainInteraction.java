@@ -44,6 +44,7 @@ public class MainInteraction extends MenuInteraction {
     private void onLogin(User user) {
         thirstycalc.login(user);
         if (thirstycalc.getApplicationState().isLoggedIn()) {
+                System.out.println("Welcome " + user.getUsername() + "!");
             new LoggedInUserInteractionFactory(thirstycalc).build().run();
         }
     }

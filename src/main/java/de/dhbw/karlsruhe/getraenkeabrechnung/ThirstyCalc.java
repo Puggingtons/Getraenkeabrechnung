@@ -2,6 +2,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.DrinkDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 
@@ -10,12 +11,15 @@ import java.io.IOException;
 public class ThirstyCalc {
     private final UserDatabase userDatabase;
     private final AccountDatabase accountDatabase;
+    private final DrinkDatabase drinkDatabase;
 
     private final ApplicationState applicationState;
 
     public ThirstyCalc() {
         userDatabase = new UserDatabase();
         accountDatabase = new AccountDatabase();
+
+        drinkDatabase = new DrinkDatabase();
 
         applicationState = new ApplicationState();
 
@@ -61,6 +65,16 @@ public class ThirstyCalc {
         accountDatabase.createAccount(user);
     }
 
+    public void createNewDrinkOption(DrinkOption drinkOption) {
+        drinkDatabase.createNewDrinkOption(drinkOption);
+        System.out.println("Creating a new drink option: " + drinkOption);
+    }
+
+    public boolean drinkOptionExists(DrinkName drinkName) {
+        return drinkDatabase.drinkOptionExists(drinkName);
+    }
+    
+
     public void deleteUser(User user) {
         userDatabase.deleteUser(user);
         accountDatabase.removeAccount(user);
@@ -89,6 +103,10 @@ public class ThirstyCalc {
 
             System.out.println("Saving accounts.json");
             accountDatabase.save("accounts.json");
+
+            System.out.println("Saving drinks.json");
+            drinkDatabase.save("drinks.json");
+
         } catch (IOException e) {
             System.out.println("Could not save users");
         }
@@ -98,8 +116,10 @@ public class ThirstyCalc {
         try {
             userDatabase.load("users.json");
             accountDatabase.load("accounts.json");
+            drinkDatabase.load("drinks.json");
+
         } catch (IOException e) {
-            System.out.println("Could not load users or accounts!");
+            System.out.println("Could not load users, accounts or drinks!");
         }
     }
 }

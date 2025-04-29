@@ -2,32 +2,28 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 public class DrinkCategory {
 
-    private String drinkName;
-    private Color color;
+    private DrinkOption drinkOption;
+    private ColorName colorName;
 
-    public DrinkCategory(String drinkName, Color color) {
-        this.drinkName = drinkName;
-        this.color = color;
+    public DrinkCategory(DrinkOption drinkOption, ColorName colorName) {
+        this.drinkOption = drinkOption;
+        this.colorName = colorName;
     }
 
-    public String getDrinkName() {
-        return drinkName;
+    public DrinkOption getDrinkOption() {
+        return drinkOption;
     }
 
-    public void setDrinkName(String drinkName) {
-        this.drinkName = drinkName;
+    public void setDrinkOption(DrinkOption drinkOption) {
+        this.drinkOption = drinkOption;
     }
 
-    public Color getColor() {
-        return color;
+    public ColorName getColorName() {
+        return colorName;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public double getPrice(Color color) {
-        return color.getColorPrice();
+    public void setColor(ColorName colorName) {
+        this.colorName = colorName;
     }
 
 }
