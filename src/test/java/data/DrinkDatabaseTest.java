@@ -19,7 +19,7 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.DrinkDatabase;
 public class DrinkDatabaseTest {
 
     @Test
-    public void itSavesDirnkOption(@TempDir Path tempDir) {
+    public void itSavesDrinkOption(@TempDir Path tempDir) {
         DrinkOption[] drinkOptions = {new DrinkOption(new DrinkName("beer"), new ColorName("yellow"))};
 
         DrinkDatabase drinkDatabase = new DrinkDatabase();
