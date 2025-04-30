@@ -42,7 +42,7 @@ public class ChangePasswordInteraction extends Interaction<User> {
         }
 
         try {
-            if (foundUser == null || !user.verifyPassword(oldPassword)) {
+            if (foundUser == null || !foundUser.verifyPassword(oldPassword)) {
                 System.out.println("Old password is incorrect!");
                 failure();
                 return;
