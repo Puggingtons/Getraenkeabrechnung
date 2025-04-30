@@ -25,6 +25,7 @@ public class LoggedInUserInteractionFactory {
 
     private void addDefaultInteractions() {
         addLogoutInteraction();
+        addChangePasswordInteraction();
     }
 
     private void addRoleDefinedInteractions() {
@@ -56,6 +57,14 @@ public class LoggedInUserInteractionFactory {
             menuInteraction.stop();
         });
         menuInteraction.addInteraction("logout", "Logout from your account", interaction);
+    }
+
+    private void addChangePasswordInteraction() {
+        ChangePasswordInteraction interaction = new ChangePasswordInteraction(thirstyCalc.getLoggedInUser(), thirstyCalc.getUserDatabase());
+        interaction.onSuccess((changePassword) -> {
+            thirstyCalc.changePassword(changePassword);
+        });
+        menuInteraction.addInteraction("change-password", "Change your password.", interaction);
     }
 
     private void addCheckBalanceInteraction() {

@@ -72,6 +72,11 @@ public class ThirstyCalc {
         System.out.println("Registered new user: " + user.getUsername());
     }
 
+    public void changePassword(User user) {
+        userDatabase.updateUser(user);
+        System.out.println("Changed password for user: " + user.getUsername());
+    }
+
     public void createNewDrinkOption(DrinkOption drinkOption) {
         drinkDatabase.createNewDrinkOption(drinkOption);
         System.out.println("Creating a new drink option: " + drinkOption);
@@ -101,6 +106,10 @@ public class ThirstyCalc {
 
     public Account getAccountOfLoggedInUser() {
         return accountDatabase.getAccountOfUser(applicationState.getLoggedInUser());
+    }
+
+    public User getLoggedInUser() {
+        return applicationState.getLoggedInUser();
     }
 
     public void save() {

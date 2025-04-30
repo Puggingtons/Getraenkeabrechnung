@@ -16,8 +16,8 @@ public class LoginInteraction extends Interaction<User> {
 
     public LoginInteraction(UserDatabase userDatabase) {
         super();
-        usernameInput = new StringInput("Username> ");
-        passwordInput = new StringInput("Password> ");
+        usernameInput = new StringInput("Username: ");
+        passwordInput = new StringInput("Password: ");
         this.userDatabase = userDatabase;
     }
 

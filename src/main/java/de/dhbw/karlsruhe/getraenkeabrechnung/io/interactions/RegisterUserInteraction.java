@@ -8,7 +8,6 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
-import de.dhbw.karlsruhe.getraenkeabrechnung.rights.AdminRights;
 
 public class RegisterUserInteraction extends Interaction<User> {
 
