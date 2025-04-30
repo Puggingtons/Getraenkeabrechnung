@@ -64,6 +64,7 @@ public class ChangePasswordInteraction extends Interaction<User> {
             foundUser.setPassword(newPasswordObj);
             System.out.println("Password successfully updated!");
             success(foundUser);
+            foundUser.nullPassword();
 
         } catch (IllegalArgumentException e) {
             System.out.println("Error updating password: " + e.getMessage());
