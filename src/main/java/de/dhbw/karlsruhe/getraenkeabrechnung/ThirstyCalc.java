@@ -63,6 +63,13 @@ public class ThirstyCalc {
     public void createNewUser(User user) {
         userDatabase.registerNewUser(user);
         accountDatabase.createAccount(user);
+        System.out.println("Created new user: " + user.getUsername());
+    }
+
+    public void registerNewUser(User user) {
+        userDatabase.registerNewUser(user);
+        accountDatabase.createAccount(user);
+        System.out.println("Registered new user: " + user.getUsername());
     }
 
     public void createNewDrinkOption(DrinkOption drinkOption) {

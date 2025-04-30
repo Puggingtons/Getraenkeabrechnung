@@ -39,6 +39,9 @@ public class LoggedInUserInteractionFactory {
             if (hasRight(loggedInUser, Right.CAN_CREATE_DRINK)) {
                 addCreateDrinkOptionInteraction();
             }
+            if (hasRight(loggedInUser, Right.CAN_CREATE_NEW_USER)) {
+                addCreateUserInteraction();
+            }
         }
     }
     
@@ -52,7 +55,7 @@ public class LoggedInUserInteractionFactory {
             thirstyCalc.logout();
             menuInteraction.stop();
         });
-        menuInteraction.addInteraction("logout", "Logout a user", interaction);
+        menuInteraction.addInteraction("logout", "Logout from your account", interaction);
     }
 
     private void addCheckBalanceInteraction() {
@@ -61,6 +64,15 @@ public class LoggedInUserInteractionFactory {
             System.out.println("Your current balance is: " + money + ".");
         });
         menuInteraction.addInteraction("balance", "Shows your current balance.", interaction);
+    }
+
+    private void addCreateUserInteraction() {
+        CreateUserInteraction interaction = new CreateUserInteraction(thirstyCalc.getUserDatabase());
+        interaction.onSuccess((createUser) -> {
+            thirstyCalc.createNewUser(createUser);
+            System.out.println("User " + createUser.getUsername().toString() + " created.");
+        });
+        menuInteraction.addInteraction("create-user", "Create a user and grant him rights.", interaction);
     }
 
     private void addCreateDrinkOptionInteraction() {

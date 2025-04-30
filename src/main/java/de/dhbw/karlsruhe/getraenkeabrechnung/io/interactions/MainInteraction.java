@@ -23,8 +23,8 @@ public class MainInteraction extends MenuInteraction {
     }
 
     private void addRegisterInteraction() {
-        CreateUserInteraction interaction = new CreateUserInteraction(thirstycalc.getUserDatabase());
-        interaction.onSuccess(thirstycalc::createNewUser);
+        RegisterUserInteraction interaction = new RegisterUserInteraction(thirstycalc.getUserDatabase());
+        interaction.onSuccess(thirstycalc::registerNewUser);
         addInteraction("register", "Register a new user", interaction);
     }
 
