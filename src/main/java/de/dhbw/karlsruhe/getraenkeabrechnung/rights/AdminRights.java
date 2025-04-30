@@ -13,6 +13,7 @@ public class AdminRights {
         rights.add(Right.CAN_SELF_INVOICE);
         rights.add(Right.CAN_CREATE_NEW_USER);
         rights.add(Right.CAN_DELETE_USER);
+        rights.add(Right.CAN_CREATE_DRINK);
     }
 
     public void giveTo(User user) {

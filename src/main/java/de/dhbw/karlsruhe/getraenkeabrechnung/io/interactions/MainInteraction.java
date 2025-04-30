@@ -14,7 +14,6 @@ public class MainInteraction extends MenuInteraction {
         addExitInteraction();
         addRegisterInteraction();
         addLoginInteraction();
-        addDeleteUserInteraction();
     }
 
     private void addExitInteraction() {
@@ -35,11 +34,6 @@ public class MainInteraction extends MenuInteraction {
         addInteraction("login", "Login a user", interaction);
     }
 
-    private void addDeleteUserInteraction() {
-        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstycalc.getUserDatabase(), thirstycalc.getAccountDatabase());
-        interaction.onSuccess(thirstycalc::deleteUser);
-        addInteraction("delete", "Delete a user", interaction);
-    }
 
     private void onLogin(User user) {
         thirstycalc.login(user);
