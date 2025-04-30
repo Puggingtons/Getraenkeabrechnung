@@ -43,6 +43,9 @@ public class LoggedInUserInteractionFactory {
             if (hasRight(loggedInUser, Right.CAN_CREATE_NEW_USER)) {
                 addCreateUserInteraction();
             }
+            if (hasRight(loggedInUser, Right.CAN_ADD_RIGHTS)) {
+                addAddRightsInteraction();
+            }
         }
     }
     
@@ -100,5 +103,18 @@ public class LoggedInUserInteractionFactory {
             System.out.println("You deleted the user: " + deleteUser.getUsername().toString() + ".");
         });
         menuInteraction.addInteraction("delete-user", "Delete a user", interaction);
+    }
+    
+    private void addAddRightsInteraction() {
+        AddRightsInteraction interaction = new AddRightsInteraction(thirstyCalc.getUserDatabase());
+        interaction.onSuccess((updatedUser) -> {
+            boolean updated = thirstyCalc.getUserDatabase().updateUser(updatedUser);
+            if (updated) {
+                System.out.println("User rights updated successfully.");
+            } else {
+                System.out.println("Failed to update user rights in the database.");
+            }
+        });
+        menuInteraction.addInteraction("add-rights", "Assign rights to a user", interaction);
     }
 }

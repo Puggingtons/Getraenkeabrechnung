@@ -14,6 +14,7 @@ public class AdminRights {
         rights.add(Right.CAN_CREATE_NEW_USER);
         rights.add(Right.CAN_DELETE_USER);
         rights.add(Right.CAN_CREATE_DRINK);
+        rights.add(Right.CAN_ADD_RIGHTS);
     }
 
     public void giveTo(User user) {
