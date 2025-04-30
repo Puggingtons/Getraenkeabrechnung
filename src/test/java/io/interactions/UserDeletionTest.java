@@ -13,6 +13,8 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
+import de.dhbw.karlsruhe.getraenkeabrechnung.banking.AccountDoesNotExistException;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 
 public class UserDeletionTest {
     
@@ -64,5 +66,48 @@ public class UserDeletionTest {
         assertNotNull(account, "Account should exist for user");
         assertEquals(testUser.getUsername(), account.getUsername(), 
                 "Account should be associated with the correct username");
+    }
+
+    @Test
+    public void testDeleteUser() {
+
+        assertTrue(userDatabase.userExists(testUser.getUsername()), 
+                "User should exist before deletion");
+        assertNotNull(accountDatabase.getAccountOfUser(testUser),
+                "Account should exist before deletion");
+
+        thirstyCalc.deleteUser(testUser);
+
+        assertFalse(userDatabase.userExists(testUser.getUsername()), 
+                "User should not exist after deletion");
+        assertThrows(AccountDoesNotExistException.class, () -> {
+            accountDatabase.getAccountOfUser(testUser);
+        }, "Account should not exist after deletion");
+    }
+
+
+    // todo: Write a test for the interaction
+    @Test
+    public void testDeleteUserWithPositiveBalance() {
+        testAccount.deposit(new Money("10.00"));
+        assertEquals(testAccount.getBalance(), new Money("10.00"),
+                "Account balance should be 10.00 before deletion");
+
+        assertTrue(userDatabase.userExists(testUser.getUsername()), 
+                "User should exist before deletion");
+        assertNotNull(accountDatabase.getAccountOfUser(testUser),
+                "Account should exist before deletion");
+        assertFalse(accountDatabase.checkIfAccountBalanceIsZero(testUser),
+                "Account should not be empty before deletion");
+        
+        if (accountDatabase.checkIfAccountBalanceIsZero(testUser)) {
+            thirstyCalc.deleteUser(testUser);
+        } else {
+            System.out.println("User has a positive balance. Please settle the balance before deleting the user.");
+        }
+        assertTrue(userDatabase.userExists(testUser.getUsername()), 
+                "User should still exist after attempted deletion with positive balance");
+        assertNotNull(accountDatabase.getAccountOfUser(testUser),
+                "Account should still exist after attempted deletion with positive balance");
     }
 }
