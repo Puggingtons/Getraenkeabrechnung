@@ -2,6 +2,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
@@ -12,12 +13,14 @@ public class DeleteUserInteraction extends Interaction<User>{
     private final StringInput usernameVerificationInput;
     private final UserDatabase userDatabase;
     private final AccountDatabase accountDatabase;
+    private final ThirstyCalc thirstyCalc;
 
-    public DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase) {
+    public DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase, ThirstyCalc thirstyCalc) {
         usernameInput = new StringInput("Username: ");
         usernameVerificationInput = new StringInput("Confirm Username (WARNING: THIS CANNOT BE UNDONE): ");
         this.userDatabase = userDatabase;
         this.accountDatabase = accountDatabase;
+        this.thirstyCalc = thirstyCalc;
     }
 
     @Override
@@ -50,6 +53,15 @@ public class DeleteUserInteraction extends Interaction<User>{
             return;
         }
 
+        // Check if user is trying to delete themselves
+        User loggedInUser = thirstyCalc.getApplicationState().getLoggedInUser();
+        if (loggedInUser != null && loggedInUser.getUsername().equals(usernameObj)) {
+            System.out.println(
+                "You cannot delete yourself!"
+                );
+            failure();
+            return;
+        }
 
         // Check balance of the user
         User user = null;
