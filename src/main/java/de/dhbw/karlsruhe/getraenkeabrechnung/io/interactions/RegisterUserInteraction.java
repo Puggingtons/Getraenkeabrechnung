@@ -55,9 +55,7 @@ public class RegisterUserInteraction extends Interaction<User> {
         user.setUsername(usernameObj);
         user.setPassword(passwordObj);
 
-        if (!UsernameValidator.isValidUsername(user.getUsername())) {
-            failure();
-        } else if (!PasswordValidator.isValidPassword(user.getPassword())) {
+        if (!UsernameValidator.isValidUsername(user.getUsername()) || !PasswordValidator.isValidPassword(user.getPassword())) {
             failure();
         } else {
             success(user);

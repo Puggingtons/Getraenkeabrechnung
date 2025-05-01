@@ -84,7 +84,7 @@ public class ThirstyCalc {
     }
 
     public boolean drinkOptionExists(DrinkName drinkName) {
-        return DrinkDatabase.drinkOptionExists(drinkName);
+        return drinkDatabase.drinkOptionExists(drinkName);
     }
     
 
@@ -107,10 +107,6 @@ public class ThirstyCalc {
 
     public Account getAccountOfLoggedInUser() {
         return accountDatabase.getAccountOfUser(applicationState.getLoggedInUser());
-    }
-
-    public User getLoggedInUser() {
-        return applicationState.getLoggedInUser();
     }
 
     public void save() {

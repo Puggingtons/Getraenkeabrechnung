@@ -33,16 +33,10 @@ public class ChangePasswordInteraction extends Interaction<User> {
         String newPassword = getValidInput(newPasswordInput);
         String newPasswordVerification = getValidInput(newPasswordVerificationInput);
 
-        User foundUser = null;
-        for (User user : userDatabase.getUsers()) {
-            if (user.getUsername().equals(this.user.getUsername())) {
-                foundUser = user;
-                break;
-            }
-        }
+        User foundUser = userDatabase.getUser(user.getUsername());
 
         try {
-            if (foundUser == null || !foundUser.verifyPassword(oldPassword)) {
+            if (!foundUser.verifyPassword(oldPassword)) {
                 System.out.println("Old password is incorrect!");
                 failure();
                 return;

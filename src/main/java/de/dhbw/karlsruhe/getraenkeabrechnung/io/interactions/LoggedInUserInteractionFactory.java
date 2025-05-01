@@ -33,26 +33,22 @@ public class LoggedInUserInteractionFactory {
         
         // Only add admin interactions if the user has the required rights
         if (loggedInUser != null) {
-            if (hasRight(loggedInUser, Right.CAN_DELETE_USER)) {
+            if (loggedInUser.hasRight(Right.CAN_DELETE_USER)) {
                 addDeleteUserInteraction();
             }
             
-            if (hasRight(loggedInUser, Right.CAN_CREATE_DRINK)) {
+            if (loggedInUser.hasRight(Right.CAN_CREATE_DRINK)) {
                 addCreateDrinkOptionInteraction();
             }
-            if (hasRight(loggedInUser, Right.CAN_CREATE_NEW_USER)) {
+            if (loggedInUser.hasRight(Right.CAN_CREATE_NEW_USER)) {
                 addCreateUserInteraction();
             }
-            if (hasRight(loggedInUser, Right.CAN_ADD_RIGHTS)) {
+            if (loggedInUser.hasRight(Right.CAN_ADD_RIGHTS)) {
                 addAddRightsInteraction();
             }
         }
     }
     
-    private boolean hasRight(User user, Right right) {
-        return user.hasRight(right);
-    }
-
     private void addLogoutInteraction() {
         LogoutInteraction interaction = new LogoutInteraction();
         interaction.onSuccess(event -> {
@@ -63,7 +59,7 @@ public class LoggedInUserInteractionFactory {
     }
 
     private void addChangePasswordInteraction() {
-        ChangePasswordInteraction interaction = new ChangePasswordInteraction(thirstyCalc.getLoggedInUser(), thirstyCalc.getUserDatabase());
+        ChangePasswordInteraction interaction = new ChangePasswordInteraction(thirstyCalc.getApplicationState().getLoggedInUser(), thirstyCalc.getUserDatabase());
         interaction.onSuccess((changePassword) -> {
             thirstyCalc.changePassword(changePassword);
         });
