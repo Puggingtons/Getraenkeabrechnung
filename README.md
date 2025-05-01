@@ -17,7 +17,7 @@ SUM:|66|645|113|2156
 <!-- CLOC-REPORT-END -->
 
 ## Jar bauen
-mit
+mit dem folgenden Command wird die Jar mit allen Dependencies gebaut.
 ```bash
 ./gradlew shadowJar
 ```
