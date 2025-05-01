@@ -8,24 +8,27 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.rights.AdminRights;
 
 public class CreateUserInteraction extends Interaction<User> {
 
     private final StringInput usernameInput;
     private final StringInput passwordInput;
     private final StringInput passwordVerificationInput;
+    private final StringInput adminRightsInput;
     private final UserDatabase userDatabase;
 
     public CreateUserInteraction(UserDatabase userDatabase) {
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
         passwordVerificationInput = new StringInput("Verify Password: ");
+        adminRightsInput = new StringInput("Make user admin? (y/n): ");
         this.userDatabase = userDatabase;
     }
 
     @Override
     String usage() {
-        return "Please enter a username and a password.";
+        return "Please enter a username and a password. Optionally, you can make the user an admin.";
     }
 
     @Override
@@ -33,6 +36,7 @@ public class CreateUserInteraction extends Interaction<User> {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
+        String adminChoice = getValidInput(adminRightsInput);
         userDatabase.getUsers();
 
         User user = new User();
@@ -54,6 +58,13 @@ public class CreateUserInteraction extends Interaction<User> {
 
         user.setUsername(usernameObj);
         user.setPassword(passwordObj);
+
+        // Set admin rights if requested
+        boolean makeAdmin = adminChoice.equalsIgnoreCase("y") || adminChoice.equalsIgnoreCase("yes");
+        if (makeAdmin) {
+            new AdminRights().giveTo(user);
+            System.out.println("Admin rights granted to user " + username);
+        }
 
         if (!UsernameValidator.isValidUsername(user.getUsername())) {
             failure();

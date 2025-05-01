@@ -57,6 +57,24 @@ public class UserDatabase {
        addUser(user);
     }
 
+    /**
+     * Updates an existing user in the database.
+     * If the user doesn't exist (based on username), no action is taken.
+     *
+     * @param updatedUser The user with updated information
+     * @return true if the user was updated, false if the user wasn't found
+     */
+    public boolean updateUser(User updatedUser) {
+        for (int i = 0; i < users.get().size(); i++) {
+            User existingUser = users.get().get(i);
+            if (existingUser.getUsername().equals(updatedUser.getUsername())) {
+                users.get().set(i, updatedUser);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean userExists(Username username) {
         for (User u : users.get()) {
             if (u.getUsername().equals(username)) {

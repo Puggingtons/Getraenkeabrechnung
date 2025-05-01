@@ -7,6 +7,7 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.Logger;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.LoggerFactory;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.UserLogger;
+import de.dhbw.karlsruhe.getraenkeabrechnung.rights.AdminRights;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 
 import java.io.IOException;
@@ -81,6 +82,18 @@ public class ThirstyCalc {
         logger.log("creating new user " + user.getUsername());
         userDatabase.registerNewUser(user);
         accountDatabase.createAccount(user);
+        System.out.println("Created new user: " + user.getUsername());
+    }
+
+    public void registerNewUser(User user) {
+        userDatabase.registerNewUser(user);
+        accountDatabase.createAccount(user);
+        System.out.println("Registered new user: " + user.getUsername());
+    }
+
+    public void changePassword(User user) {
+        userDatabase.updateUser(user);
+        System.out.println("Changed password for user: " + user.getUsername());
     }
 
     public void createNewDrinkOption(DrinkOption drinkOption) {
@@ -155,6 +168,43 @@ public class ThirstyCalc {
 
         } catch (IOException e) {
             System.out.println("Could not load users, accounts or drinks!");
+            createGenericAdminUser();
+        }
+
+        // If the database loaded but is empty, create an admin user
+        if (userDatabase.getUsers().length == 0) {
+            createGenericAdminUser();
+        }
+    }
+    
+    /**
+     * Creates a generic admin user when no user database is detected or when database is empty.
+     * This ensures there's always at least one user with admin rights to manage the system.
+     */
+    private void createGenericAdminUser() {
+        try {
+            // Create username and password objects
+            Username adminUsername = new Username("admin");
+            Password adminPassword = new Password("Admin123@");
+            
+            // Create new admin user
+            User adminUser = new User();
+            adminUser.setUsername(adminUsername);
+            adminUser.setPassword(adminPassword);
+            
+            // Add all admin rights
+            new AdminRights().giveTo(adminUser);
+            
+            // Add user to database and create account
+            userDatabase.registerNewUser(adminUser);
+            accountDatabase.createAccount(adminUser);
+            
+            System.out.println("Created generic admin user. Username: admin, Password: Admin123@");
+            
+            // Save the user database to persist the admin user
+            save();
+        } catch (Exception e) {
+            System.out.println("Error creating generic admin user: " + e.getMessage());
         }
     }
 }

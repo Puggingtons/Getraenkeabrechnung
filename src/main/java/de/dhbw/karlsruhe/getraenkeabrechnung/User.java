@@ -34,12 +34,14 @@ public class User {
 
     // Default constructor
     public User() {
+        this.rights = new HashSet<>();
     }
 
     // USE THIS CONSTRUCTOR ONLY FOR TESTING PURPOSES
     public User(Username username, Password password) {
         this.username = username;
         this.password = password;
+        this.rights = new HashSet<>();
     }
 
     public Username getUsername() {
@@ -126,6 +128,16 @@ public class User {
 
     public void addRights(Collection<Right> rights) {
         this.rights.addAll(rights);
+    }
+    
+    /**
+     * Checks if the user has a specific right.
+     *
+     * @param right The right to check
+     * @return true if the user has the right, false otherwise
+     */
+    public boolean hasRight(Right right) {
+        return rights != null && rights.contains(right);
     }
 
     @Override
