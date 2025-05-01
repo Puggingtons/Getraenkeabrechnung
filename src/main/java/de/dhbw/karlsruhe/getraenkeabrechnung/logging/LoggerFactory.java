@@ -9,7 +9,7 @@ public class LoggerFactory {
     private Logger logger;
 
     public LoggerFactory() {
-        this.logger = new LogWriterLoggerAdapter(new PrintStreamLogWriter(System.out));
+        this.logger = new LogWriterLoggerAdapter(new PrintStreamLogWriter(System.err));
     }
 
     public LoggerFactory(LogWriter logWriter) {
@@ -44,5 +44,9 @@ public class LoggerFactory {
 
     public Logger defaultUserLogger(User user) {
         return new TimeLogger(new UserLogger(user, this.logger));
+    }
+
+    public Logger defaultTimeLogger() {
+        return new TimeLogger(this.logger);
     }
 }
