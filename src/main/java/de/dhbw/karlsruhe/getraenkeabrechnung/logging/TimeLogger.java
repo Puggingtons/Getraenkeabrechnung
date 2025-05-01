@@ -30,4 +30,10 @@ public class TimeLogger implements Logger {
     public void log(String message) {
         logger.log(String.format("[%s] %s", dateTimeFormatter.format(getTime()), message));
     }
+
+
+    @Override
+    public Logger getInnerLogger() {
+        return logger;
+    }
 }

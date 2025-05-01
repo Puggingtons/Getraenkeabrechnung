@@ -14,4 +14,9 @@ public class LogWriterLoggerAdapter implements Logger {
     public void log(String message) {
         this.logWriter.write(message);
     }
+
+    @Override
+    public Logger getInnerLogger() {
+        return this;
+    }
 }

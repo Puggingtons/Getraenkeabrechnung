@@ -20,4 +20,9 @@ public class UserLogger implements Logger {
     public void log(String message) {
         this.logger.log(String.format("[%s] %s", user.getUsername(), message));
     }
+
+    @Override
+    public Logger getInnerLogger() {
+        return logger;
+    }
 }

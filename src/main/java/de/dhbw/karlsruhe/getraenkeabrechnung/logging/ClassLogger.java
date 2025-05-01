@@ -14,4 +14,9 @@ public class ClassLogger implements Logger {
     public void log(String message) {
         this.logger.log(String.format("[%s] %s", this.clazz.getSimpleName(), message));
     }
+
+    @Override
+    public Logger getInnerLogger() {
+        return logger;
+    }
 }
