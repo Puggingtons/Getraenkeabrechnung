@@ -1,4 +1,4 @@
-package io;
+package io.input;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.NumberInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;

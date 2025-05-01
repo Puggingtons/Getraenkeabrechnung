@@ -1,7 +1,7 @@
-package io;
+package io.input;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.FloatInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import io.mocks.InputReaderMock;
 import io.mocks.OutputWriterMock;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class StringInputTest {
-
+public class FloatInputTest {
     private InputReaderMock readerMock;
     private OutputWriterMock writerMock;
 
@@ -24,7 +23,7 @@ public class StringInputTest {
     @Test
     public void itPrintsPrompt() {
         String prompt = "Prompt";
-        StringInput input = new StringInput(prompt);
+        FloatInput input = new FloatInput(prompt);
 
         input.setReader(readerMock);
         input.setWriter(writerMock);
@@ -35,37 +34,52 @@ public class StringInputTest {
     }
 
     @Test
-    public void itReturnsInput() {
-        String in = "input";
-
-        StringInput input = new StringInput("");
+    public void itReturnsNumber() {
+        float in = 1.0f;
+        FloatInput input = new FloatInput("");
 
         input.setReader(readerMock);
         input.setWriter(writerMock);
 
-        readerMock.setNextInput(in);
+        readerMock.setNextInput(String.valueOf(in));
 
-        Result<String> res = input.prompt();
+        Result<Float> res = input.prompt();
 
+        assertTrue(readerMock.hasBeenRead());
         assertTrue(res.hasValue());
         assertEquals(in, res.getValue());
     }
 
     @Test
-    public void itReturnsEmptyInput() {
-        String in = "";
-
-        StringInput input = new StringInput("");
+    public void itReturnsHelp() {
+        FloatInput input = new FloatInput("");
 
         input.setReader(readerMock);
         input.setWriter(writerMock);
 
-        readerMock.setNextInput(in);
+        readerMock.setNextInput("help");
 
-        Result<String> res = input.prompt();
+        Result<Float> res = input.prompt();
 
+        assertTrue(readerMock.hasBeenRead());
+        assertTrue(res.isHelp());
+    }
+
+    @Test
+    public void itReturnsNoValue() {
+        FloatInput input = new FloatInput("");
+
+        input.setReader(readerMock);
+        input.setWriter(writerMock);
+
+        readerMock.setNextInput("asdasd");
+
+        Result<Float> res = input.prompt();
+
+        assertTrue(readerMock.hasBeenRead());
         assertTrue(res.isNone());
     }
 
 //    todo: test unhappy paths
 }
+
