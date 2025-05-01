@@ -1,7 +1,7 @@
 package logging;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.ClassLogger;
-import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriterLoggerAdapter;
+import de.dhbw.karlsruhe.getraenkeabrechnung.logging.LogWriterLoggerAdapter;
 import logging.mocks.LogWriterMock;
 import org.junit.jupiter.api.Test;
 

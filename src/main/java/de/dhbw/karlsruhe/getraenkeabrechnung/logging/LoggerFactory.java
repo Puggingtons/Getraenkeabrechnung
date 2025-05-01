@@ -2,7 +2,6 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.logging;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriter;
-import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriterLoggerAdapter;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.PrintStreamLogWriter;
 
 public class LoggerFactory {

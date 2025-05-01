@@ -4,7 +4,7 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.UserLogger;
-import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriterLoggerAdapter;
+import de.dhbw.karlsruhe.getraenkeabrechnung.logging.LogWriterLoggerAdapter;
 import logging.mocks.LogWriterMock;
 import org.junit.jupiter.api.Test;
 

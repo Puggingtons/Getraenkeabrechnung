@@ -1,6 +1,6 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter;
+package de.dhbw.karlsruhe.getraenkeabrechnung.logging;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.logging.Logger;
+import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriter;
 
 public class LogWriterLoggerAdapter implements Logger {
 
