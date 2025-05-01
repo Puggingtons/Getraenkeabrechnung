@@ -15,11 +15,9 @@ public class FileLogWriter implements LogWriter {
 
     @Override
     public void write(String message) {
-        try {
-            BufferedWriter bw = new BufferedWriter(writer);
+        try (BufferedWriter bw = new BufferedWriter(writer)) {
             bw.write(message);
             bw.newLine();
-            bw.close();
         } catch (IOException e) {
             System.err.println("Could not write log to file! Log: \"" + message + "\".");
         }
