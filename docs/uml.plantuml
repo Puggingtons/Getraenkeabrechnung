@@ -1,4 +1,5 @@
 @startuml uml
+'!pragma layout smetana
 /'
 Ein paar Plantuml-Beispiele, die der UML Norm nach Wikipedia entsprechen :)
 https://de.wikipedia.org/wiki/Klassendiagramm
@@ -409,6 +410,77 @@ package io {
 
 } /' end package: io '/
 
+package logging {
+    package logwriter {
+        interface LogWriter {
+            void write(String message)
+        }
+
+        class FileLogWriter implements LogWriter {
+            +FileLogWriter(File file)
+            +write(String message)
+        }
+
+        class PrintStreamLogWriter implements LogWriter {
+            +PrintStreamLogWriter(PrintStream printStream)
+            +write(String message)
+        }
+    } /' end package: logwriter '/
+
+    interface Logger {
+        void log(String message)
+        Logger getInnerLogger()
+    }
+
+    class ClassLogger implements Logger {
+        +ClassLogger(Class clazz, Logger logger)
+        +log(String message)
+        +Logger getInnerLogger()
+    }
+
+    class TimeLogger implements Logger {
+        +TimeLogger(Logger logger)
+        +log(String message)
+        +Logger getInnerLogger()
+    }
+
+    class UserLogger implements Logger {
+        +UserLogger(User user, Logger logger)
+        +log(String message)
+        +Logger getInnerLogger()
+    }
+
+    class LogWriterLoggerAdapter implements Logger {
+        +LogWriterLoggerAdapter(LogWriter logWriter)
+        +void log(String message)
+        +Logger getInnerLogger()
+    }
+
+    class LoggerFactory {
+        +LoggerFactory()
+        +LoggerFactory(LogWriter logWriter)
+        +LoggerFactory(Logger logger)
+        +LoggerFactory addUserLogger(User user)
+        +LoggerFactory addTimeLogger()
+        +LoggerFactory addClassLogger(Class clazz)
+        +Logger build()
+        +Logger defaultUserLogger(User user)
+        +Logger defaultTimeLogger()
+    }
+
+    LoggerFactory "1" o-- Logger
+    LoggerFactory --> LogWriter
+    LoggerFactory --> ClassLogger
+    LoggerFactory --> UserLogger
+    LoggerFactory --> TimeLogger
+    LoggerFactory --> LogWriterLoggerAdapter
+
+    ClassLogger "1" o-- Logger
+    TimeLogger "1" o-- Logger
+    UserLogger "1" o-- Logger
+    LogWriterLoggerAdapter "1" o-- Logger
+} /' end package: logging '/
+
 class ThirstyCalc {
   ' -User[] benutzer
   ' -Category[] categories
@@ -437,7 +509,8 @@ ThirstyCalc *-- Invoice
 ThirstyCalc "n" *-- User
 ThirstyCalc "n" *-- Category
 ThirstyCalc "1" *-- UserDatabase
-
+ThirstyCalc "1" *-- Logger
+ThirstyCalc --> LoggerFactory
 MainInteraction "1" o-- ThirstyCalc
 
 @enduml
