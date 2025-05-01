@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("jacoco")
     id("org.sonarqube") version "6.0.1.5171"
+    id("com.gradleup.shadow") version "8.3.6"
 }
 
 sonar {
@@ -12,8 +13,8 @@ sonar {
   }
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+group = "de.dhbw.karlsruhe.getraenkeabrechnung"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -29,6 +30,12 @@ dependencies {
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(23)) // For compatibility with JaCoCo
+    }
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "de.dhbw.karlsruhe.getraenkeabrechnung.Main"
     }
 }
 

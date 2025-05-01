@@ -15,3 +15,11 @@ Java|66|645|113|2156
 --------|--------|--------|--------|--------
 SUM:|66|645|113|2156
 <!-- CLOC-REPORT-END -->
+
+## Jar bauen
+mit dem folgenden Command wird die Jar mit allen Dependencies gebaut.
+```bash
+./gradlew shadowJar
+```
+
+Die gebaute `.jar` ist dann in `build/libs` zu finden.
