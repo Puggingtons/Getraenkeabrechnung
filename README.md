@@ -15,3 +15,11 @@ Java|66|645|113|2156
 --------|--------|--------|--------|--------
 SUM:|66|645|113|2156
 <!-- CLOC-REPORT-END -->
+
+## Jar bauen
+mit
+```bash
+./gradlew shadowJar
+```
+
+Die gebaute `.jar` ist dann in `build/libs` zu finden.
