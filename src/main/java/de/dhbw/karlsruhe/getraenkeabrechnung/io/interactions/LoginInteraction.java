@@ -27,7 +27,7 @@ public class LoginInteraction extends Interaction<User> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         userDatabase.getUsers();

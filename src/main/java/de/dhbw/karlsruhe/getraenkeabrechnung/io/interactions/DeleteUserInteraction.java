@@ -29,7 +29,7 @@ public class DeleteUserInteraction extends Interaction<User>{
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         String username = getValidInput(usernameInput);
         String usernameVerification = getValidInput(usernameVerificationInput);
         userDatabase.getUsers();

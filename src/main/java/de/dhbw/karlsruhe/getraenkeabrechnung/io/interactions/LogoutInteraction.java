@@ -7,7 +7,7 @@ public class LogoutInteraction extends Interaction<Void> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         // todo check if user is logged in
         success(null);
     }

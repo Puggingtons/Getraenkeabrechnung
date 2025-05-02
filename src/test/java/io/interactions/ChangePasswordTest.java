@@ -215,8 +215,8 @@ class ChangePasswordTest {
                 }
             };
             
-            // Execute the interaction
-            interaction.execute();
+            // Run the interaction
+            interaction.run();
         }
         
         public boolean wasSuccessful() {

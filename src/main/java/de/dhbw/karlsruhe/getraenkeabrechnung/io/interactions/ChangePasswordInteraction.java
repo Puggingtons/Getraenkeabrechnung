@@ -28,7 +28,7 @@ public class ChangePasswordInteraction extends Interaction<User> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         String oldPassword = getValidInput(oldPasswordInput);
         String newPassword = getValidInput(newPasswordInput);
         String newPasswordVerification = getValidInput(newPasswordVerificationInput);

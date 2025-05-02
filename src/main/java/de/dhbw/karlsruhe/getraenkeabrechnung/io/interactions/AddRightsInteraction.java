@@ -33,7 +33,7 @@ public class AddRightsInteraction extends Interaction<User> {
     }
     
     @Override
-    public void execute() {
+    protected void execute() {
         // Get username
         String username = getValidInput(usernameInput);
         Username usernameObj = new Username(username);

@@ -41,7 +41,7 @@ public class SelectInteraction extends Interaction<String> {
         return sb.toString();
     }
 
-    public void execute() {
+    protected void execute() {
         Result<String> result = input.prompt();
 
         if (result.isNone()) {

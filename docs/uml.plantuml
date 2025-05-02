@@ -194,13 +194,13 @@ package io {
         +class AddRightsInteraction extends Interaction<User> {
             + AddRightsInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class ChangePasswordInteraction extends Interaction<User> {
             + ChangePasswordInteraction(User user, UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class CheckBalanceInteraction extends Interaction<Money> {
@@ -218,13 +218,13 @@ package io {
         +class CreateUserInteraction extends Interaction<User> {
             + CreateUserInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class DeleteUserInteraction extends Interaction<User> {
             + DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase, ThirstyCalc thirstyCalc)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class ExitInteraction extends Interaction<Void> {
@@ -243,36 +243,36 @@ package io {
         }
 
         +class LoggedInUserInteractionFactory {
-            +LoggedInUserInteractionFactory(ThirstyCalc thirstyCalc)
-            +Interaction<?> build()
+            + LoggedInUserInteractionFactory(ThirstyCalc thirstyCalc)
+            + Interaction<?> build()
         }
 
         +class LoginInteraction extends Interaction<User> {
             + LoginInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class LogoutInteraction extends Interaction<Void> {
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class MainInteraction extends MenuInteraction {
-            +MainInteraction(ThirstyCalc thirstyCalc)
+            + MainInteraction(ThirstyCalc thirstyCalc)
         }
 
         +class MenuInteraction extends Interaction<Void> {
             + MenuInteraction()
             String usage()
-            + void execute()
+            # void execute()
             + void addInteraction(String key, String description, Interaction<?> interaction)
         }
 
         +class RegisterUserInteraction extends Interaction<User> {
             + RegisterUserInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class SelectInteraction extends Interaction<String> {
@@ -282,14 +282,14 @@ package io {
             + void pushOption(String option)
             + void addOption(String key, String option)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class StringInputInteraction extends Interaction<String> {
             + StringInputInteraction(String msg)
             + StringInputInteraction(String msg, String prompt)
             String usage()
-            + void execute()
+            # void execute()
         }
     } /' end package: io.interactions '/
 
