@@ -380,38 +380,22 @@ package logging {
     }
 } /' end package: logging '/
 
-/'##########################################################################'/
-
 package rights {
-  interface Right {
-  }
+    +enum Right {
+        CAN_CREATE_NEW_USER
+        CAN_SELF_INVOICE
+        CAN_DELETE_USER
+        CAN_CREATE_DRINK
+        CAN_ADD_RIGHTS
+    }
 
-  class SelfServiceRight {
-    boolean darfSichSelbstAbrechnenUSERRIGHTS
-  }
-
-  class OtherServiceRight {
-    boolean darfAndereAbrechnenABRECHNERRIGHTS
-    ---
-    kann Abrechnungen durchführen (Einen/Mehrere andere/n User belasten)
-  }
-
-  class AdministrativeRight {
-    boolean darfAdminSachenMachenADMINRIGHTS
-    ---
-    kann sich einloggen
-    kann User anlegen
-    kann User löschen
-    kann User bearbeiten
-    kann Abrechner anlegen
-    kann Abrechner löschen
-    kann Abrechner bearbeiten
-  }
-
-  Right <|.. SelfServiceRight
-  Right <|.. OtherServiceRight
-  Right <|.. AdministrativeRight
+    +class AdminRights {
+        + AdminRights()
+        + void giveTo(User user)
+    }
 } /' end package: rights '/
+
+/'##########################################################################'/
 
 package validatableStrings {
   package strings {
@@ -655,4 +639,6 @@ LogWriterLoggerAdapter "1" o-- Logger
 TimeLogger "1" o-- Logger
 UserLogger "1" o-- Logger
 
+AdminRights "n" *-- Right
+AdminRights --> User /' usage? '/
 @enduml
