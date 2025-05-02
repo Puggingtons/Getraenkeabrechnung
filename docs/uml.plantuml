@@ -406,20 +406,47 @@ package state {
     }
 } /' end package: state '/
 
-package validators {
-    +class EmailValidator {
-        + {static} boolean isValid(Email email)
+package validatables {
+    package validators {
+        +class EmailValidator {
+            + {static} boolean isValid(Validatable email)
+        }
+
+        +class PasswordValidator {
+            + {static} boolean isValid(Validatable password)
+        }
+
+        +class UsernameValidator {
+            + {static} boolean isValid(Validatable username)
+        }
+    } /' end package: validatables.validators '/
+
+    +class Email implements Validatable {
+        + Email(String email)
+        + boolean isValid(Optional<String> pattern)
     }
 
-    +class PasswordValidator {
-        + {static} boolean isValidPassword(Password password)
+    +class Password implements Validatable {
+        + Password(String password)
+        + boolean isValid(Optional<String> pattern)
+        + String hashPassword()
+        + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
+        + String getSalt()
+        + String getHashedPassword()
+        + void nullPasswordString()
     }
 
-    +class UsernameValidator {
-        + {static} boolean isValidUsername(Username username)
+    +class Username implements Validatable {
+        + Username(String username)
+        + boolean isValid(Optional<String> pattern)
+        + String toString()
+        + boolean equals(Object o)
     }
 
-} /' end package: validators '/
+    +interface Validatable {
+        boolean isValid(Optional<String> pattern)
+    }
+} /' end package: validatables '/
 
 +class Color {
     + Color(ColorName colorName, double colorPrice)
@@ -457,11 +484,6 @@ package validators {
     + void setColorName(ColorName colorName)
 }
 
-+class Email {
-    + Email(String email)
-    + boolean isValid(Optional<String> pattern)
-}
-
 +class GetraenkeAutomat {
     + void buyDrink(DrinkCategory drink)
 }
@@ -475,16 +497,6 @@ package validators {
 
 +class Main {
     + {static} void main(String[] args)
-}
-
-+class Password {
-    + Password(String password)
-    + Boolean isValid(Optional<String> pattern)
-    + String hashPassword()
-    + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
-    + String getSalt()
-    + String getHashedPassword()
-    + void nullPasswordString()
 }
 
 +exception PasswordManagementException {
@@ -542,13 +554,6 @@ package validators {
     + void addRights(Collection<Right> rights)
     + boolean hasRight(Right right)
     + String toString()
-}
-
-+class Username {
-    + Username(String username)
-    + boolean isValid(Optional<String> pattern)
-    + String toString()
-    + boolean equals(Object o)
 }
 
 /'#########################################################################'/
@@ -657,9 +662,9 @@ AdminRights --> User /' usage? '/
 
 ApplicationState "1" o-- User
 
-EmailValidator --> Email /' usage? '/
-PasswordValidator --> Password /' usage? '/
-UsernameValidator --> Username /' usage? '/
+EmailValidator --> Validatable /' usage? '/
+PasswordValidator --> Validatable /' usage? '/
+UsernameValidator --> Validatable /' usage? '/
 
 Color "1" o-- ColorName
 DrinkCategory "1" o-- DrinkOption
