@@ -2,7 +2,7 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.data;
 
 import com.google.gson.reflect.TypeToken;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Username;
 
 import java.io.IOException;
 import java.nio.file.Path;
