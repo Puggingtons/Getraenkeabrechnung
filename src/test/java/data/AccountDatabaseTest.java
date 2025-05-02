@@ -1,11 +1,11 @@
 package data;
 
 import com.google.gson.Gson;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Username;
-import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.Account;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.AccountDatabase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 

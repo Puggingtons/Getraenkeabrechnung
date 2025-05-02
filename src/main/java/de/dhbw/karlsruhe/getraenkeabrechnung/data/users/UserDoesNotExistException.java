@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.data;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.users;
 
 public class UserDoesNotExistException extends RuntimeException {
     public UserDoesNotExistException(String message) {

@@ -3,8 +3,8 @@ package validators;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Username;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.validators.UsernameValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.UsernameValidator;
 
 class UsernameValidatorTest {
 

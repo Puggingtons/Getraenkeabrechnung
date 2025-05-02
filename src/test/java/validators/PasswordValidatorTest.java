@@ -2,9 +2,9 @@ package validators;
 
 import org.junit.jupiter.api.Test;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.validators.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.PasswordManagementException;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.PasswordValidator;
 
 import static org.junit.jupiter.api.Assertions.*;
 

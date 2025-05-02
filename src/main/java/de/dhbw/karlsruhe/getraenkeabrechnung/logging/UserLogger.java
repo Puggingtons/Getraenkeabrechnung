@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.logging;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 
 public class UserLogger implements Logger {
 

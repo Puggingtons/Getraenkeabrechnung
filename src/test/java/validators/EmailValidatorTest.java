@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Email;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.validators.EmailValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Email;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.EmailValidator;
 
 class EmailValidatorTest {
 

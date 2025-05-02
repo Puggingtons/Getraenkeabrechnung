@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 
 public class CheckBalanceInteraction extends Interaction<Money> {

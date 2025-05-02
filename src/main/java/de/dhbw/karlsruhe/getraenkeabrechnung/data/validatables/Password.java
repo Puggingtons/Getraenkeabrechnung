@@ -1,6 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.validatables;
-
-import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -1,7 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 
 public class LoggedInUserInteractionFactory {

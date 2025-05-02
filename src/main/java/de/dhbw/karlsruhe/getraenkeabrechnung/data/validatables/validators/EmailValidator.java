@@ -1,9 +1,9 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.validatables.validators;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators;
 
 import java.util.Optional;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Email;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Validatable;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Email;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Validatable;
 
 public class EmailValidator {
 

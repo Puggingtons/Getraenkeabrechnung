@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables;
 
 public class PasswordManagementException extends Exception {
     public PasswordManagementException(String message) {

@@ -1,11 +1,12 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.users;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.PasswordManagementException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Email;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Username;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.validators.PasswordValidator;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.validators.UsernameValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Email;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.UsernameValidator;
 
 import java.util.Collection;
 import java.util.HashSet;

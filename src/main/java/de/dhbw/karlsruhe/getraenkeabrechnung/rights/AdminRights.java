@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.rights;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 
 import java.util.HashSet;
 import java.util.Set;

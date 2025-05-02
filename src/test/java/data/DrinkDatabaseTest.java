@@ -11,10 +11,10 @@ import org.junit.jupiter.api.io.TempDir;
 
 import com.google.gson.Gson;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.ColorName;
-import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkName;
-import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkOption;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.DrinkDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.ColorName;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkName;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkDatabase;
 
 public class DrinkDatabaseTest {
 

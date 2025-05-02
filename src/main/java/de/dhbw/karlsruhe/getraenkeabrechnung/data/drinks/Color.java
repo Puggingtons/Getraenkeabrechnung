@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 
 public class Color {
 

@@ -1,9 +1,8 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.data;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.banking;
 
 import com.google.gson.reflect.TypeToken;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
-import de.dhbw.karlsruhe.getraenkeabrechnung.banking.AccountDoesNotExistException;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.Savable;
 
 import java.io.IOException;
 import java.nio.file.Path;

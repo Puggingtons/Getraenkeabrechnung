@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.validatables;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables;
 
 import java.util.Optional;
 

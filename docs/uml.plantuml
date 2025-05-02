@@ -31,27 +31,98 @@ User o-- Right
   package String name
 '/
 
-package banking {
-    +class Account {
-        +Account(Username username)
-        +Username GetUsername()
-        +Money getBalance()
-        +void deposit(Money amount)
-        +Money charge(Money amount)
-        +boolean isEmpty()
-        +boolean equals(Object o)
-    }
-
-    +exception AccountDoesNotExistException {
-        +AccountDoesNotExistException(String message)
-    }
-
-    +exception NotEnoughMoneyException {
-        +NotEnoughMoneyException(String message)
-    }
-} /' end package: banking '/
-
 package data {
+    package banking {
+        +class Account {
+            +Account(Username username)
+            +Username GetUsername()
+            +Money getBalance()
+            +void deposit(Money amount)
+            +Money charge(Money amount)
+            +boolean isEmpty()
+            +boolean equals(Object o)
+        }
+
+        +class AccountDatabase {
+            + AccountDatabase()
+            + Account[] getAccounts()
+            + void createAccount(User user)
+            + Account getAccountOfUser(User user)
+            + boolean checkIfAccountBalanceIsZero(User user)
+            + void removeAccount(User user)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+        }
+
+        +exception AccountDoesNotExistException {
+            +AccountDoesNotExistException(String message)
+        }
+
+        +exception NotEnoughMoneyException {
+            +NotEnoughMoneyException(String message)
+        }
+    } /' end package: data.banking '/
+
+    package drinks {
+        +class Color {
+            + Color(ColorName colorName, double colorPrice)
+            + ColorName getColorName()
+            + double getColorPrice()
+            + void setColorName(ColorName colorName)
+            + void setColorPrice(double colorPrice)
+        }
+
+        +class ColorName {
+            + ColorName(String colorName)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +class DrinkCategory {
+            + DrinkCategory(DrinkOption drinkOption, ColorName colorName)
+            + DrinkOption getDrinkOption()
+            + void setDrinkOption(DrinkOption drinkOption)
+            + ColorName getColorName()
+            + void setColor(ColorName colorName)
+        }
+
+        +class DrinkDatabase {
+            + DrinkDatabase()
+            + DrinkOption[] getDrinkOptions()
+            + void addDrinkOption(DrinkOption drinkOption)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+            + void createNewDrinkOption(DrinkOption drinkOption)
+            + {static} boolean drinkOptionExists(DrinkName drinkName)
+        }
+
+        +class DrinkName {
+            + DrinkName(String drinkName)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +class DrinkOption {
+            + DrinkOption(DrinkName drinkName, ColorName colorName)
+            + DrinkName getDrinkName()
+            + void setDrinkName(DrinkName drinkName)
+            + ColorName getColorName()
+            + void setColorName(ColorName colorName)
+        }
+
+        +class Position {
+            + Position(DrinkCategory drinkCategory, int amount)
+            + DrinkCategory getDrinkCategory()
+            + void setDrink(DrinkCategory drinkCategory)
+            + int getAmount()
+            + setAmount(int amount)
+        }
+    } /' end package: data.drinks '/
+
     package numbers {
         +class Money {
             + Money()
@@ -66,30 +137,101 @@ package data {
         }
     } /'end package: data.numbers '/
 
-    +class AccountDatabase {
-        + AccountDatabase()
-        + Account[] getAccounts()
-        + void createAccount(User user)
-        + Account getAccountOfUser(User user)
-        + boolean checkIfAccountBalanceIsZero(User user)
-        + void removeAccount(User user)
-        + void load(String path)
-        + void load(Path path)
-        + void save(String path)
-        + void save(Path path)
-    }
+    package users {
+        +class User {
+            + User(Username username, Password password, String realFirstName, String realLastName, String realName, Email email)
+            + User()
+            + User(Username username, Password password)
+            + Username getUsername()
+            + void setUsername(Username username)
+            + Password getPassword()
+            + void setPassword(Password password)
+            + void nullPassword()
+            + boolean verifyPassword(String providedPassword)
+            + String getHashedPassword()
+            + String getSalt()
+            + String getRealFirstName()
+            + void setRealFirstName(String realFirstName)
+            + String getRealLastName()
+            + void setRealLastName(String realLastName)
+            + String getRealName()
+            + Email getEmail()
+            + void setEmail(Email email)
+            + void addRights(Collection<Right> rights)
+            + boolean hasRight(Right right)
+            + String toString()
+        }
 
-    +class DrinkDatabase {
-        + DrinkDatabase()
-        + DrinkOption[] getDrinkOptions()
-        + void addDrinkOption(DrinkOption drinkOption)
-        + void load(String path)
-        + void load(Path path)
-        + void save(String path)
-        + void save(Path path)
-        + void createNewDrinkOption(DrinkOption drinkOption)
-        + {static} boolean drinkOptionExists(DrinkName drinkName)
-    }
+        +class UserDatabase {
+            + UserDatabase()
+            + User[] getUsers()
+            + User getUser(Username username)
+            + void addUser(User user)
+            + void removeUser(User user)
+            + void deleteUser(User user)
+            + void registerNewUser(User user)
+            + boolean updateUser(User updatedUser)
+            + boolean userExists(Username username)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+        }
+
+        +exception UserDoesNotExistException {
+            + UserDoesNotExistException(String message)
+            + UserDoesNotExistException(String message, Throwable cause)
+            + UserDoesNotExistException(Throwable cause)
+        }
+    } /' end package: data.users '/
+
+    package validatables {
+        package validators {
+            +class EmailValidator {
+                + {static} boolean isValid(Validatable email)
+            }
+
+            +class PasswordValidator {
+                + {static} boolean isValid(Validatable password)
+            }
+
+            +class UsernameValidator {
+                + {static} boolean isValid(Validatable username)
+            }
+        } /' end package: validatables.validators '/
+
+        +class Email implements Validatable {
+            + Email(String email)
+            + boolean isValid(Optional<String> pattern)
+        }
+
+        +class Password implements Validatable {
+            + Password(String password)
+            + boolean isValid(Optional<String> pattern)
+            + String hashPassword()
+            + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
+            + String getSalt()
+            + String getHashedPassword()
+            + void nullPasswordString()
+        }
+
+        +exception PasswordManagementException {
+            + PasswordManagementException(String message)
+            + PasswordManagementException(String message, Throwable cause)
+            + PasswordManagementException(Throwable cause)
+        }
+
+        +class Username implements Validatable {
+            + Username(String username)
+            + boolean isValid(Optional<String> pattern)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +interface Validatable {
+            boolean isValid(Optional<String> pattern)
+        }
+    } /' end package: data.validatables '/
 
     +class Savable<T> {
         + Savable(T t)
@@ -98,28 +240,6 @@ package data {
         + void load(Path path, TypeToken<T> typeToken)
         + void save(String path)
         + void save(Path path)
-    }
-
-    +class UserDatabase {
-        + UserDatabase()
-        + User[] getUsers()
-        + User getUser(Username username)
-        + void addUser(User user)
-        + void removeUser(User user)
-        + void deleteUser(User user)
-        + void registerNewUser(User user)
-        + boolean updateUser(User updatedUser)
-        + boolean userExists(Username username)
-        + void load(String path)
-        + void load(Path path)
-        + void save(String path)
-        + void save(Path path)
-    }
-
-    +exception UserDoesNotExistException {
-        + UserDoesNotExistException(String message)
-        + UserDoesNotExistException(String message, Throwable cause)
-        + UserDoesNotExistException(Throwable cause)
     }
 } /' end package: data '/
 
@@ -406,100 +526,8 @@ package state {
     }
 } /' end package: state '/
 
-package validatables {
-    package validators {
-        +class EmailValidator {
-            + {static} boolean isValid(Validatable email)
-        }
-
-        +class PasswordValidator {
-            + {static} boolean isValid(Validatable password)
-        }
-
-        +class UsernameValidator {
-            + {static} boolean isValid(Validatable username)
-        }
-    } /' end package: validatables.validators '/
-
-    +class Email implements Validatable {
-        + Email(String email)
-        + boolean isValid(Optional<String> pattern)
-    }
-
-    +class Password implements Validatable {
-        + Password(String password)
-        + boolean isValid(Optional<String> pattern)
-        + String hashPassword()
-        + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
-        + String getSalt()
-        + String getHashedPassword()
-        + void nullPasswordString()
-    }
-
-    +class Username implements Validatable {
-        + Username(String username)
-        + boolean isValid(Optional<String> pattern)
-        + String toString()
-        + boolean equals(Object o)
-    }
-
-    +interface Validatable {
-        boolean isValid(Optional<String> pattern)
-    }
-} /' end package: validatables '/
-
-+class Color {
-    + Color(ColorName colorName, double colorPrice)
-    + ColorName getColorName()
-    + double getColorPrice()
-    + void setColorName(ColorName colorName)
-    + void setColorPrice(double colorPrice)
-}
-
-+class ColorName {
-    + ColorName(String colorName)
-    + String toString()
-    + boolean equals(Object o)
-}
-
-+class DrinkCategory {
-    + DrinkCategory(DrinkOption drinkOption, ColorName colorName)
-    + DrinkOption getDrinkOption()
-    + void setDrinkOption(DrinkOption drinkOption)
-    + ColorName getColorName()
-    + void setColor(ColorName colorName)
-}
-
-+class DrinkName {
-    + DrinkName(String drinkName)
-    + String toString()
-    + boolean equals(Object o)
-}
-
-+class DrinkOption {
-    + DrinkOption(DrinkName drinkName, ColorName colorName)
-    + DrinkName getDrinkName()
-    + void setDrinkName(DrinkName drinkName)
-    + ColorName getColorName()
-    + void setColorName(ColorName colorName)
-}
-
 +class Main {
     + {static} void main(String[] args)
-}
-
-+exception PasswordManagementException {
-    + PasswordManagementException(String message)
-    + PasswordManagementException(String message, Throwable cause)
-    + PasswordManagementException(Throwable cause)
-}
-
-+class Position {
-    + Position(DrinkCategory drinkCategory, int amount)
-    + DrinkCategory getDrinkCategory()
-    + void setDrink(DrinkCategory drinkCategory)
-    + int getAmount()
-    + setAmount(int amount)
 }
 
 +class ThirstyCalc {
@@ -519,30 +547,6 @@ package validatables {
     + Account getAccountOfLoggedInUser()
     + void save()
     + void load()
-}
-
-+class User {
-    + User(Username username, Password password, String realFirstName, String realLastName, String realName, Email email)
-    + User()
-    + User(Username username, Password password)
-    + Username getUsername()
-    + void setUsername(Username username)
-    + Password getPassword()
-    + void setPassword(Password password)
-    + void nullPassword()
-    + boolean verifyPassword(String providedPassword)
-    + String getHashedPassword()
-    + String getSalt()
-    + String getRealFirstName()
-    + void setRealFirstName(String realFirstName)
-    + String getRealLastName()
-    + void setRealLastName(String realLastName)
-    + String getRealName()
-    + Email getEmail()
-    + void setEmail(Email email)
-    + void addRights(Collection<Right> rights)
-    + boolean hasRight(Right right)
-    + String toString()
 }
 
 /'#########################################################################'/
@@ -682,5 +686,4 @@ User "1" o-- Password
 User "1" o-- Email
 User --> UsernameValidator
 User --> PasswordValidator
-User --> PasswordManagementException : <<throws>>
 @enduml
