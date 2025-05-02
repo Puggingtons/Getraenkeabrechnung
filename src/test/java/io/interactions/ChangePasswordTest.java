@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.PasswordManagementException;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions.ChangePasswordInteraction;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 
@@ -215,8 +215,8 @@ class ChangePasswordTest {
                 }
             };
             
-            // Execute the interaction
-            interaction.execute();
+            // Run the interaction
+            interaction.run();
         }
         
         public boolean wasSuccessful() {

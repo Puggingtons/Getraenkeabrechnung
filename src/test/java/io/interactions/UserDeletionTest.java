@@ -5,15 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
-import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.PasswordManagementException;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.Account;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.AccountDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
-import de.dhbw.karlsruhe.getraenkeabrechnung.banking.AccountDoesNotExistException;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.AccountDoesNotExistException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 
 public class UserDeletionTest {

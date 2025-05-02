@@ -1,25 +1,19 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.AccountDatabase;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
 public class DeleteUserInteraction extends Interaction<User>{
     private final StringInput usernameInput;
     private final StringInput usernameVerificationInput;
-    private final UserDatabase userDatabase;
-    private final AccountDatabase accountDatabase;
     private final ThirstyCalc thirstyCalc;
 
-    public DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase, ThirstyCalc thirstyCalc) {
+    public DeleteUserInteraction(ThirstyCalc thirstyCalc) {
         usernameInput = new StringInput("Username: ");
         usernameVerificationInput = new StringInput("Confirm Username (WARNING: THIS CANNOT BE UNDONE): ");
-        this.userDatabase = userDatabase;
-        this.accountDatabase = accountDatabase;
         this.thirstyCalc = thirstyCalc;
     }
 
@@ -29,11 +23,11 @@ public class DeleteUserInteraction extends Interaction<User>{
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         String username = getValidInput(usernameInput);
         String usernameVerification = getValidInput(usernameVerificationInput);
-        userDatabase.getUsers();
-        accountDatabase.getAccounts();
+        thirstyCalc.getUserDatabase().getUsers();
+        thirstyCalc.getAccountDatabase().getAccounts();
         Username usernameObj = new Username(username);
 
         if (!username.equals(usernameVerification)) {
@@ -45,7 +39,7 @@ public class DeleteUserInteraction extends Interaction<User>{
         }
 
         // Check if user exists
-        if (!userDatabase.userExists(usernameObj)) {
+        if (!thirstyCalc.getUserDatabase().userExists(usernameObj)) {
             System.out.println(
                 "User does not exist!"
                 );
@@ -65,13 +59,13 @@ public class DeleteUserInteraction extends Interaction<User>{
 
         // Check balance of the user
         User user = null;
-        for (User u : userDatabase.getUsers()) {
+        for (User u : thirstyCalc.getUserDatabase().getUsers()) {
             if (u.getUsername().equals(usernameObj)) {
                 user = u;
                 break;
             }
         }
-        if (user != null && !accountDatabase.checkIfAccountBalanceIsZero(user)) {
+        if (user != null && !thirstyCalc.getAccountDatabase().checkIfAccountBalanceIsZero(user)) {
             System.out.println(
                 "User has a positive balance. Please settle the balance before deleting the user."
                 );
@@ -81,7 +75,7 @@ public class DeleteUserInteraction extends Interaction<User>{
 
         // Find the user in the database
         User foundUser = null;
-        for (User u : userDatabase.getUsers()) {
+        for (User u : thirstyCalc.getUserDatabase().getUsers()) {
             if (u.getUsername().equals(usernameObj)) {
                 foundUser = user;
                 break;

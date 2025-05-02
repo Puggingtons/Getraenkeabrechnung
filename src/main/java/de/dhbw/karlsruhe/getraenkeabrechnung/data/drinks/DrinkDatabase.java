@@ -1,9 +1,7 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.data;
-
-import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkOption; // Adjust the package path if necessary
-import de.dhbw.karlsruhe.getraenkeabrechnung.DrinkName;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 
 import com.google.gson.reflect.TypeToken;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.Savable;
 
 import java.util.List;
 import java.io.IOException;

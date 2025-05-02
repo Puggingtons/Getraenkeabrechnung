@@ -1,9 +1,9 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
@@ -33,7 +33,7 @@ public class AddRightsInteraction extends Interaction<User> {
     }
     
     @Override
-    public void execute() {
+    protected void execute() {
         // Get username
         String username = getValidInput(usernameInput);
         Username usernameObj = new Username(username);

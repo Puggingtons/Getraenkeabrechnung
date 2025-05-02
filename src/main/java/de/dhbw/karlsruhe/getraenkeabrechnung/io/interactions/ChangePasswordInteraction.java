@@ -1,8 +1,8 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
@@ -28,7 +28,7 @@ public class ChangePasswordInteraction extends Interaction<User> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         String oldPassword = getValidInput(oldPasswordInput);
         String newPassword = getValidInput(newPasswordInput);
         String newPasswordVerification = getValidInput(newPasswordVerificationInput);

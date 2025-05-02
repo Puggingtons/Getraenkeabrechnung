@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.logging;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriter;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.PrintStreamLogWriter;
 

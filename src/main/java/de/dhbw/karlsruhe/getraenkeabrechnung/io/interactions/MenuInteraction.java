@@ -20,7 +20,7 @@ public class MenuInteraction extends Interaction<Void> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         explain();
         selectInteraction.run();
     }

@@ -1,4 +1,4 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,7 +7,7 @@ import java.util.Base64;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class Password {
+public class Password implements Validatable {
 
     private String passwordString;
     private String hashedPassword;
@@ -17,7 +17,7 @@ public class Password {
         this.passwordString = password;
     }
 
-    public Boolean isValid(Optional<String> pattern) {
+    public boolean isValid(Optional<String> pattern) {
         if (pattern.isEmpty()) {
             return false;
         }

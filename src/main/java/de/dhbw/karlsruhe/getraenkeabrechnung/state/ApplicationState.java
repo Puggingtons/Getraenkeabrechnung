@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.state;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 
 public class ApplicationState {
 

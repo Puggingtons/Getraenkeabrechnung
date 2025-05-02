@@ -1,13 +1,13 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.UsernameValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.PasswordValidator;
 
 public class RegisterUserInteraction extends Interaction<User> {
 
@@ -29,7 +29,7 @@ public class RegisterUserInteraction extends Interaction<User> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
@@ -55,7 +55,7 @@ public class RegisterUserInteraction extends Interaction<User> {
         user.setUsername(usernameObj);
         user.setPassword(passwordObj);
 
-        if (!UsernameValidator.isValidUsername(user.getUsername()) || !PasswordValidator.isValidPassword(user.getPassword())) {
+        if (!UsernameValidator.isValid(user.getUsername()) || !PasswordValidator.isValid(user.getPassword())) {
             failure();
         } else {
             success(user);

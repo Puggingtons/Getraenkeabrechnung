@@ -1,14 +1,14 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.BooleanInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.UsernameValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.PasswordValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.AdminRights;
 
 public class CreateUserInteraction extends Interaction<User> {
@@ -33,7 +33,7 @@ public class CreateUserInteraction extends Interaction<User> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
@@ -66,9 +66,9 @@ public class CreateUserInteraction extends Interaction<User> {
             System.out.println("Admin rights granted to user " + username);
         }
 
-        if (!UsernameValidator.isValidUsername(user.getUsername())) {
+        if (!UsernameValidator.isValid(user.getUsername())) {
             failure();
-        } else if (!PasswordValidator.isValidPassword(user.getPassword())) {
+        } else if (!PasswordValidator.isValid(user.getPassword())) {
             failure();
         } else {
             success(user);

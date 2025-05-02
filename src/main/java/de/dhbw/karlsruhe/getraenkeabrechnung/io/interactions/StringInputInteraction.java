@@ -26,7 +26,7 @@ public class StringInputInteraction extends Interaction<String> {
     }
 
     @Override
-    public void execute() {
+    protected void execute() {
         Result<String> result = input.prompt();
 
         if (result.isHelp()) {

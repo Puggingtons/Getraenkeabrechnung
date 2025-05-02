@@ -1,8 +1,8 @@
 package logging;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.Logger;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.LoggerFactory;
 import logging.mocks.LogWriterMock;

@@ -1,9 +1,9 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables;
 
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class Username {
+public class Username implements Validatable {
 
     private final String usernameString;
 

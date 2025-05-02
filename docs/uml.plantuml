@@ -31,27 +31,98 @@ User o-- Right
   package String name
 '/
 
-package banking {
-    +class Account {
-        +Account(Username username)
-        +Username GetUsername()
-        +Money getBalance()
-        +void deposit(Money amount)
-        +Money charge(Money amount)
-        +boolean isEmpty()
-        +boolean equals(Object o)
-    }
-
-    +exception AccountDoesNotExistException {
-        +AccountDoesNotExistException(String message)
-    }
-
-    +exception NotEnoughMoneyException {
-        +NotEnoughMoneyException(String message)
-    }
-} /' end package: banking '/
-
 package data {
+    package banking {
+        +class Account {
+            +Account(Username username)
+            +Username GetUsername()
+            +Money getBalance()
+            +void deposit(Money amount)
+            +Money charge(Money amount)
+            +boolean isEmpty()
+            +boolean equals(Object o)
+        }
+
+        +class AccountDatabase {
+            + AccountDatabase()
+            + Account[] getAccounts()
+            + void createAccount(User user)
+            + Account getAccountOfUser(User user)
+            + boolean checkIfAccountBalanceIsZero(User user)
+            + void removeAccount(User user)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+        }
+
+        +exception AccountDoesNotExistException {
+            +AccountDoesNotExistException(String message)
+        }
+
+        +exception NotEnoughMoneyException {
+            +NotEnoughMoneyException(String message)
+        }
+    } /' end package: data.banking '/
+
+    package drinks {
+        +class Color {
+            + Color(ColorName colorName, double colorPrice)
+            + ColorName getColorName()
+            + double getColorPrice()
+            + void setColorName(ColorName colorName)
+            + void setColorPrice(double colorPrice)
+        }
+
+        +class ColorName {
+            + ColorName(String colorName)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +class DrinkCategory {
+            + DrinkCategory(DrinkOption drinkOption, ColorName colorName)
+            + DrinkOption getDrinkOption()
+            + void setDrinkOption(DrinkOption drinkOption)
+            + ColorName getColorName()
+            + void setColor(ColorName colorName)
+        }
+
+        +class DrinkDatabase {
+            + DrinkDatabase()
+            + DrinkOption[] getDrinkOptions()
+            + void addDrinkOption(DrinkOption drinkOption)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+            + void createNewDrinkOption(DrinkOption drinkOption)
+            + {static} boolean drinkOptionExists(DrinkName drinkName)
+        }
+
+        +class DrinkName {
+            + DrinkName(String drinkName)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +class DrinkOption {
+            + DrinkOption(DrinkName drinkName, ColorName colorName)
+            + DrinkName getDrinkName()
+            + void setDrinkName(DrinkName drinkName)
+            + ColorName getColorName()
+            + void setColorName(ColorName colorName)
+        }
+
+        +class Position {
+            + Position(DrinkCategory drinkCategory, int amount)
+            + DrinkCategory getDrinkCategory()
+            + void setDrink(DrinkCategory drinkCategory)
+            + int getAmount()
+            + setAmount(int amount)
+        }
+    } /' end package: data.drinks '/
+
     package numbers {
         +class Money {
             + Money()
@@ -66,30 +137,101 @@ package data {
         }
     } /'end package: data.numbers '/
 
-    +class AccountDatabase {
-        + AccountDatabase()
-        + Account[] getAccounts()
-        + void createAccount(User user)
-        + Account getAccountOfUser(User user)
-        + boolean checkIfAccountBalanceIsZero(User user)
-        + void removeAccount(User user)
-        + void load(String path)
-        + void load(Path path)
-        + void save(String path)
-        + void save(Path path)
-    }
+    package users {
+        +class User {
+            + User(Username username, Password password, String realFirstName, String realLastName, String realName, Email email)
+            + User()
+            + User(Username username, Password password)
+            + Username getUsername()
+            + void setUsername(Username username)
+            + Password getPassword()
+            + void setPassword(Password password)
+            + void nullPassword()
+            + boolean verifyPassword(String providedPassword)
+            + String getHashedPassword()
+            + String getSalt()
+            + String getRealFirstName()
+            + void setRealFirstName(String realFirstName)
+            + String getRealLastName()
+            + void setRealLastName(String realLastName)
+            + String getRealName()
+            + Email getEmail()
+            + void setEmail(Email email)
+            + void addRights(Collection<Right> rights)
+            + boolean hasRight(Right right)
+            + String toString()
+        }
 
-    +class DrinkDatabase {
-        + DrinkDatabase()
-        + DrinkOption[] getDrinkOptions()
-        + void addDrinkOption(DrinkOption drinkOption)
-        + void load(String path)
-        + void load(Path path)
-        + void save(String path)
-        + void save(Path path)
-        + void createNewDrinkOption(DrinkOption drinkOption)
-        + {static} boolean drinkOptionExists(DrinkName drinkName)
-    }
+        +class UserDatabase {
+            + UserDatabase()
+            + User[] getUsers()
+            + User getUser(Username username)
+            + void addUser(User user)
+            + void removeUser(User user)
+            + void deleteUser(User user)
+            + void registerNewUser(User user)
+            + boolean updateUser(User updatedUser)
+            + boolean userExists(Username username)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+        }
+
+        +exception UserDoesNotExistException {
+            + UserDoesNotExistException(String message)
+            + UserDoesNotExistException(String message, Throwable cause)
+            + UserDoesNotExistException(Throwable cause)
+        }
+    } /' end package: data.users '/
+
+    package validatables {
+        package validators {
+            +class EmailValidator {
+                + {static} boolean isValid(Validatable email)
+            }
+
+            +class PasswordValidator {
+                + {static} boolean isValid(Validatable password)
+            }
+
+            +class UsernameValidator {
+                + {static} boolean isValid(Validatable username)
+            }
+        } /' end package: validatables.validators '/
+
+        +class Email implements Validatable {
+            + Email(String email)
+            + boolean isValid(Optional<String> pattern)
+        }
+
+        +class Password implements Validatable {
+            + Password(String password)
+            + boolean isValid(Optional<String> pattern)
+            + String hashPassword()
+            + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
+            + String getSalt()
+            + String getHashedPassword()
+            + void nullPasswordString()
+        }
+
+        +exception PasswordManagementException {
+            + PasswordManagementException(String message)
+            + PasswordManagementException(String message, Throwable cause)
+            + PasswordManagementException(Throwable cause)
+        }
+
+        +class Username implements Validatable {
+            + Username(String username)
+            + boolean isValid(Optional<String> pattern)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +interface Validatable {
+            boolean isValid(Optional<String> pattern)
+        }
+    } /' end package: data.validatables '/
 
     +class Savable<T> {
         + Savable(T t)
@@ -98,28 +240,6 @@ package data {
         + void load(Path path, TypeToken<T> typeToken)
         + void save(String path)
         + void save(Path path)
-    }
-
-    +class UserDatabase {
-        + UserDatabase()
-        + User[] getUsers()
-        + User getUser(Username username)
-        + void addUser(User user)
-        + void removeUser(User user)
-        + void deleteUser(User user)
-        + void registerNewUser(User user)
-        + boolean updateUser(User updatedUser)
-        + boolean userExists(Username username)
-        + void load(String path)
-        + void load(Path path)
-        + void save(String path)
-        + void save(Path path)
-    }
-
-    +exception UserDoesNotExistException {
-        + UserDoesNotExistException(String message)
-        + UserDoesNotExistException(String message, Throwable cause)
-        + UserDoesNotExistException(Throwable cause)
     }
 } /' end package: data '/
 
@@ -194,13 +314,13 @@ package io {
         +class AddRightsInteraction extends Interaction<User> {
             + AddRightsInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class ChangePasswordInteraction extends Interaction<User> {
             + ChangePasswordInteraction(User user, UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class CheckBalanceInteraction extends Interaction<Money> {
@@ -218,13 +338,13 @@ package io {
         +class CreateUserInteraction extends Interaction<User> {
             + CreateUserInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class DeleteUserInteraction extends Interaction<User> {
-            + DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase, ThirstyCalc thirstyCalc)
+            + DeleteUserInteraction(ThirstyCalc thirstyCalc)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class ExitInteraction extends Interaction<Void> {
@@ -243,36 +363,36 @@ package io {
         }
 
         +class LoggedInUserInteractionFactory {
-            +LoggedInUserInteractionFactory(ThirstyCalc thirstyCalc)
-            +Interaction<?> build()
+            + LoggedInUserInteractionFactory(ThirstyCalc thirstyCalc)
+            + Interaction<?> build()
         }
 
         +class LoginInteraction extends Interaction<User> {
             + LoginInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class LogoutInteraction extends Interaction<Void> {
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class MainInteraction extends MenuInteraction {
-            +MainInteraction(ThirstyCalc thirstyCalc)
+            + MainInteraction(ThirstyCalc thirstyCalc)
         }
 
         +class MenuInteraction extends Interaction<Void> {
             + MenuInteraction()
             String usage()
-            + void execute()
+            # void execute()
             + void addInteraction(String key, String description, Interaction<?> interaction)
         }
 
         +class RegisterUserInteraction extends Interaction<User> {
             + RegisterUserInteraction(UserDatabase userDatabase)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class SelectInteraction extends Interaction<String> {
@@ -282,14 +402,14 @@ package io {
             + void pushOption(String option)
             + void addOption(String key, String option)
             String usage()
-            + void execute()
+            # void execute()
         }
 
         +class StringInputInteraction extends Interaction<String> {
             + StringInputInteraction(String msg)
             + StringInputInteraction(String msg, String prompt)
             String usage()
-            + void execute()
+            # void execute()
         }
     } /' end package: io.interactions '/
 
@@ -406,99 +526,8 @@ package state {
     }
 } /' end package: state '/
 
-package validators {
-    +class EmailValidator {
-        + {static} boolean isValid(Email email)
-    }
-
-    +class PasswordValidator {
-        + {static} boolean isValidPassword(Password password)
-    }
-
-    +class UsernameValidator {
-        + {static} boolean isValidUsername(Username username)
-    }
-
-} /' end package: validators '/
-
-+class Color {
-    + Color(ColorName colorName, double colorPrice)
-    + ColorName getColorName()
-    + double getColorPrice()
-    + void setColorName(ColorName colorName)
-    + void setColorPrice(double colorPrice)
-}
-
-+class ColorName {
-    + ColorName(String colorName)
-    + String toString()
-    + boolean equals(Object o)
-}
-
-+class DrinkCategory {
-    + DrinkCategory(DrinkOption drinkOption, ColorName colorName)
-    + DrinkOption getDrinkOption()
-    + void setDrinkOption(DrinkOption drinkOption)
-    + ColorName getColorName()
-    + void setColor(ColorName colorName)
-}
-
-+class DrinkName {
-    + DrinkName(String drinkName)
-    + String toString()
-    + boolean equals(Object o)
-}
-
-+class DrinkOption {
-    + DrinkOption(DrinkName drinkName, ColorName colorName)
-    + DrinkName getDrinkName()
-    + void setDrinkName(DrinkName drinkName)
-    + ColorName getColorName()
-    + void setColorName(ColorName colorName)
-}
-
-+class Email {
-    + Email(String email)
-    + boolean isValid(Optional<String> pattern)
-}
-
-+class GetraenkeAutomat {
-    + void buyDrink(DrinkCategory drink)
-}
-
-+class Konto {
-    + double getAccountCredit()
-    + void setAccountCredit(double accountCredit)
-    + double addAccountCredit(double accountCredit)
-    + double removeAccountCredit(double accountCredit)
-}
-
 +class Main {
     + {static} void main(String[] args)
-}
-
-+class Password {
-    + Password(String password)
-    + Boolean isValid(Optional<String> pattern)
-    + String hashPassword()
-    + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
-    + String getSalt()
-    + String getHashedPassword()
-    + void nullPasswordString()
-}
-
-+exception PasswordManagementException {
-    + PasswordManagementException(String message)
-    + PasswordManagementException(String message, Throwable cause)
-    + PasswordManagementException(Throwable cause)
-}
-
-+class Position {
-    + Position(DrinkCategory drinkCategory, int amount)
-    + DrinkCategory getDrinkCategory()
-    + void setDrink(DrinkCategory drinkCategory)
-    + int getAmount()
-    + setAmount(int amount)
 }
 
 +class ThirstyCalc {
@@ -520,37 +549,6 @@ package validators {
     + void load()
 }
 
-+class User {
-    + User(Username username, Password password, String realFirstName, String realLastName, String realName, Email email)
-    + User()
-    + User(Username username, Password password)
-    + Username getUsername()
-    + void setUsername(Username username)
-    + Password getPassword()
-    + void setPassword(Password password)
-    + void nullPassword()
-    + boolean verifyPassword(String providedPassword)
-    + String getHashedPassword()
-    + String getSalt()
-    + String getRealFirstName()
-    + void setRealFirstName(String realFirstName)
-    + String getRealLastName()
-    + void setRealLastName(String realLastName)
-    + String getRealName()
-    + Email getEmail()
-    + void setEmail(Email email)
-    + void addRights(Collection<Right> rights)
-    + boolean hasRight(Right right)
-    + String toString()
-}
-
-+class Username {
-    + Username(String username)
-    + boolean isValid(Optional<String> pattern)
-    + String toString()
-    + boolean equals(Object o)
-}
-
 /'#########################################################################'/
 /'#                               Relations                               #'/
 /'#########################################################################'/
@@ -559,33 +557,31 @@ Account "1" *-- Money
 Account --> NotEnoughMoneyException : <<throws>> /' usage? '/
 
 AccountDatabase "n" *-- Account
-'AccountDatabase --> User /' usage? '/
+'AccountDatabase --> User /' usage? no '/
 AccountDatabase "1" *-- Savable
 AccountDatabase --> AccountDoesNotExistException : <<throws>>
 DrinkDatabase "n" *-- DrinkOption
-'DrinkDatabase --> DrinkName /' usage? '/
+'DrinkDatabase --> DrinkName /' usage? no '/
 DrinkDatabase "1" *-- Savable
 UserDatabase "n" *-- User
 UserDatabase --> UserDoesNotExistException : <<throws>>
-'UserDatabase --> Username /' usage? '/
+'UserDatabase --> Username /' usage? no '/
 UserDatabase "1" *-- Savable
 
 Result "1" *-- ResultState
-'BooleanInput --> Result /' usage? '/
-'FloatInput --> Result /' usage? '/
+'BooleanInput --> Result /' usage? no '/
+'FloatInput --> Result /' usage? no '/
 Input  --> Result /' usage? '/
 Input "1" o-- Reader
 Input "1" o-- Writer
-'NumberInput --> Result /' usage? '/
-'StringInput --> Result /' usage? '/
-
-' InteractionEventSource "n" o-- Consumer : onSuccessConsumers
-'InteractionEventSource "n" o-- Consumer : onFailureConsumers
+'NumberInput --> Result /' usage? no '/
+'StringInput --> Result /' usage? no '/
 
 AddRightsInteraction "2" *-- StringInput
 AddRightsInteraction "1" o-- UserDatabase
-'AddRightsInteraction --> Username /' usage? '/
-'AddRightsInteraction --> Right /' usage? '/
+'AddRightsInteraction --> Username /' usage? no '/
+'AddRightsInteraction --> Right /' usage? no '/
+AddRightsInteraction --> User
 ChangePasswordInteraction "3" *-- StringInput
 ChangePasswordInteraction "1" o-- User
 ChangePasswordInteraction "1" o-- UserDatabase
@@ -593,50 +589,49 @@ ChangePasswordInteraction --> Password
 CheckBalanceInteraction "1" o-- Account
 CreateDrinkOptionInteraction "2" *-- StringInput
 CreateDrinkOptionInteraction "1" o-- ThirstyCalc
-'CreateDrinkOptionInteraction --> DrinkName /' usage? '/
-'CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
-'CreateDrinkOptionInteraction --> ColorName /' usage? '/
+'CreateDrinkOptionInteraction --> DrinkName /' usage? no '/
+CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
+'CreateDrinkOptionInteraction --> ColorName /' usage? no '/
 CreateUserInteraction "3" *-- StringInput
 CreateUserInteraction "1" *-- BooleanInput
 CreateUserInteraction "1" o-- UserDatabase
 CreateUserInteraction --> UsernameValidator
 CreateUserInteraction --> PasswordValidator
-'CreateUserInteraction --> User /' usage? '/
+CreateUserInteraction --> User /' usage? '/
 CreateUserInteraction --> AdminRights /' usage? '/
 DeleteUserInteraction "2" *-- StringInput
-DeleteUserInteraction "1" o-- UserDatabase
-DeleteUserInteraction "1" o-- AccountDatabase
 DeleteUserInteraction "1" o-- ThirstyCalc
-'DeleteUserInteraction --> Username /' usage? '/
-'DeleteUserInteraction --> User /' usage? '/
+'DeleteUserInteraction --> Username /' usage? no '/
+DeleteUserInteraction --> User /' usage? '/
 LoggedInUserInteractionFactory "1" o-- ThirstyCalc
 LoggedInUserInteractionFactory "1" *-- MenuInteraction
-'LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> ChangePasswordInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> CheckBalanceInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
+LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
+LoggedInUserInteractionFactory --> ChangePasswordInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CheckBalanceInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
+LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
+LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
 LoginInteraction "2" *-- StringInput
 LoginInteraction "1" o-- UserDatabase
-'LoginInteraction --> Username /' usage? '/
-'LoginInteraction --> User /' usage? '/
-'LoginInteraction --> Password /' usage? '/
-'LoginInteraction --> PasswordManagementException /' usage? '/
+'LoginInteraction --> Username /' usage? no '/
+LoginInteraction --> User /' usage? '/
+'LoginInteraction --> Password /' usage? no '/
+'LoginInteraction --> PasswordManagementException /' usage? no '/
 MainInteraction "1" o-- ThirstyCalc
-'MainInteraction --> ExitInteraction /' usage? '/
-'MainInteraction --> RegisterUserInteraction /' usage? '/
-'MainInteraction --> LoginInteraction /' usage? '/
-'MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
+MainInteraction --> ExitInteraction /' usage? '/
+MainInteraction --> RegisterUserInteraction /' usage? '/
+MainInteraction --> LoginInteraction /' usage? '/
+MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
 MenuInteraction "n" o-- Interaction
 MenuInteraction "1" *-- SelectInteraction
 RegisterUserInteraction "3" *-- StringInput
 RegisterUserInteraction "1" o-- UserDatabase
-'RegisterUserInteraction --> Username /' usage? '/
-'RegisterUserInteraction --> Password /' usage? '/
-'RegisterUserInteraction --> UsernameValidator /' usage? '/
-'RegisterUserInteraction --> PasswordValidator /' usage? '/
+'RegisterUserInteraction --> Username /' usage? no '/
+'RegisterUserInteraction --> Password /' usage? no '/
+RegisterUserInteraction --> UsernameValidator /' usage? '/
+RegisterUserInteraction --> PasswordValidator /' usage? '/
+RegisterUserInteraction --> User /'usage? '/
 SelectInteraction "1" *-- StringInput
 StringInputInteraction "1" *-- StringInput
 
@@ -657,9 +652,9 @@ AdminRights --> User /' usage? '/
 
 ApplicationState "1" o-- User
 
-EmailValidator --> Email /' usage? '/
-PasswordValidator --> Password /' usage? '/
-UsernameValidator --> Username /' usage? '/
+EmailValidator --> Validatable /' usage? '/
+PasswordValidator --> Validatable /' usage? '/
+UsernameValidator --> Validatable /' usage? '/
 
 Color "1" o-- ColorName
 DrinkCategory "1" o-- DrinkOption
@@ -688,5 +683,4 @@ User "1" o-- Password
 User "1" o-- Email
 User --> UsernameValidator
 User --> PasswordValidator
-User --> PasswordManagementException : <<throws>>
 @enduml

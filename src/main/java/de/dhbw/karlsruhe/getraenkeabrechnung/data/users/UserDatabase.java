@@ -1,8 +1,8 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.data;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.users;
 
 import com.google.gson.reflect.TypeToken;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.Savable;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
 
 import java.io.IOException;
 import java.nio.file.Path;

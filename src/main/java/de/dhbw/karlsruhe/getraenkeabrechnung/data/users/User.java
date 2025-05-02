@@ -1,8 +1,12 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.users;
 
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.PasswordManagementException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validators.PasswordValidator;
-import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Email;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.PasswordValidator;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.UsernameValidator;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -49,7 +53,7 @@ public class User {
     }
 
     public void setUsername(Username username) {
-        if (UsernameValidator.isValidUsername(username)) {
+        if (UsernameValidator.isValid(username)) {
             this.username = username;
         } else {
             throw new IllegalArgumentException("Username not valid!");
@@ -61,7 +65,7 @@ public class User {
     }
 
     public void setPassword(Password password) {
-        if (PasswordValidator.isValidPassword(password)) {
+        if (PasswordValidator.isValid(password)) {
             this.password = password;
             hashAndSetPassword(password);
         } else {

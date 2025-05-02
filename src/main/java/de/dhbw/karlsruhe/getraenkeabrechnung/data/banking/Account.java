@@ -1,6 +1,6 @@
-package de.dhbw.karlsruhe.getraenkeabrechnung.banking;
+package de.dhbw.karlsruhe.getraenkeabrechnung.data.banking;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 
 public class Account {

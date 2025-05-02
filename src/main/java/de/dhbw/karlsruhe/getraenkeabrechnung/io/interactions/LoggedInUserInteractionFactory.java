@@ -1,7 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
-import de.dhbw.karlsruhe.getraenkeabrechnung.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 
 public class LoggedInUserInteractionFactory {
@@ -93,7 +93,7 @@ public class LoggedInUserInteractionFactory {
     }
 
     private void addDeleteUserInteraction() {
-        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstyCalc.getUserDatabase(), thirstyCalc.getAccountDatabase(), thirstyCalc);
+        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstyCalc);
         interaction.onSuccess((deleteUser) -> {
             thirstyCalc.deleteUser(deleteUser);
             System.out.println("You deleted the user: " + deleteUser.getUsername().toString() + ".");
