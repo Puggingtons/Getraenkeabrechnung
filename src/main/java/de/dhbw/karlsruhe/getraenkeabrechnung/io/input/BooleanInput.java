@@ -10,7 +10,8 @@ public class BooleanInput extends Input<Boolean> {
 
     @Override
     Result<Boolean> getResult(String input) {
-        return switch (input) {
+        String normalizedInput = input.toLowerCase();
+        return switch (normalizedInput) {
             case "y", "yes" -> Result.some(true);
             case "n", "no" -> Result.some(false);
             default -> Result.none();
