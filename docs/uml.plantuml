@@ -1,4 +1,5 @@
 @startuml uml
+'left to right direction
 '!pragma layout smetana
 /'
 Ein paar Plantuml-Beispiele, die der UML Norm nach Wikipedia entsprechen :)
@@ -231,7 +232,7 @@ package io {
             # void execute()
         }
 
-        +abstract class Interaction<T> extends InteractionEventSource<T> {
+        +abstract class Interaction<T> extends event.InteractionEventSource {
             {static} String DEFAULT_PROMPT
             + Interaction()
             + void explain()
@@ -555,34 +556,36 @@ package validators {
 /'#########################################################################'/
 Account "1" o-- Username
 Account "1" *-- Money
-Account --> NotEnoughMoneyException /' usage? '/
+Account --> NotEnoughMoneyException : <<throws>> /' usage? '/
 
 AccountDatabase "n" *-- Account
-AccountDatabase --> User /' usage? '/
+'AccountDatabase --> User /' usage? '/
 AccountDatabase "1" *-- Savable
+AccountDatabase --> AccountDoesNotExistException : <<throws>>
 DrinkDatabase "n" *-- DrinkOption
-DrinkDatabase --> DrinkName /' usage? '/
+'DrinkDatabase --> DrinkName /' usage? '/
 DrinkDatabase "1" *-- Savable
 UserDatabase "n" *-- User
-UserDatabase --> Username /' usage? '/
+UserDatabase --> UserDoesNotExistException : <<throws>>
+'UserDatabase --> Username /' usage? '/
 UserDatabase "1" *-- Savable
 
 Result "1" *-- ResultState
-BooleanInput --> Result /' usage? '/
-FloatInput --> Result /' usage? '/
+'BooleanInput --> Result /' usage? '/
+'FloatInput --> Result /' usage? '/
 Input  --> Result /' usage? '/
 Input "1" o-- Reader
 Input "1" o-- Writer
-NumberInput --> Result /' usage? '/
-StringInput --> Result /' usage? '/
+'NumberInput --> Result /' usage? '/
+'StringInput --> Result /' usage? '/
 
 ' InteractionEventSource "n" o-- Consumer : onSuccessConsumers
-InteractionEventSource "n" o-- Consumer : onFailureConsumers
+'InteractionEventSource "n" o-- Consumer : onFailureConsumers
 
 AddRightsInteraction "2" *-- StringInput
 AddRightsInteraction "1" o-- UserDatabase
-AddRightsInteraction --> Username /' usage? '/
-AddRightsInteraction --> Right /' usage? '/
+'AddRightsInteraction --> Username /' usage? '/
+'AddRightsInteraction --> Right /' usage? '/
 ChangePasswordInteraction "3" *-- StringInput
 ChangePasswordInteraction "1" o-- User
 ChangePasswordInteraction "1" o-- UserDatabase
@@ -590,50 +593,50 @@ ChangePasswordInteraction --> Password
 CheckBalanceInteraction "1" o-- Account
 CreateDrinkOptionInteraction "2" *-- StringInput
 CreateDrinkOptionInteraction "1" o-- ThirstyCalc
-CreateDrinkOptionInteraction --> DrinkName /' usage? '/
-CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
-CreateDrinkOptionInteraction --> ColorName /' usage? '/
+'CreateDrinkOptionInteraction --> DrinkName /' usage? '/
+'CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
+'CreateDrinkOptionInteraction --> ColorName /' usage? '/
 CreateUserInteraction "3" *-- StringInput
 CreateUserInteraction "1" *-- BooleanInput
 CreateUserInteraction "1" o-- UserDatabase
 CreateUserInteraction --> UsernameValidator
 CreateUserInteraction --> PasswordValidator
-CreateUserInteraction --> User /' usage? '/
+'CreateUserInteraction --> User /' usage? '/
 CreateUserInteraction --> AdminRights /' usage? '/
 DeleteUserInteraction "2" *-- StringInput
 DeleteUserInteraction "1" o-- UserDatabase
 DeleteUserInteraction "1" o-- AccountDatabase
 DeleteUserInteraction "1" o-- ThirstyCalc
-DeleteUserInteraction --> Username /' usage? '/
-DeleteUserInteraction --> User /' usage? '/
+'DeleteUserInteraction --> Username /' usage? '/
+'DeleteUserInteraction --> User /' usage? '/
 LoggedInUserInteractionFactory "1" o-- ThirstyCalc
 LoggedInUserInteractionFactory "1" *-- MenuInteraction
-LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
-LoggedInUserInteractionFactory --> ChangePasswordInteraction /' usage? '/
-LoggedInUserInteractionFactory --> CheckBalanceInteraction /' usage? '/
-LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
-LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
-LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
-LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
+'LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
+'LoggedInUserInteractionFactory --> ChangePasswordInteraction /' usage? '/
+'LoggedInUserInteractionFactory --> CheckBalanceInteraction /' usage? '/
+'LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
+'LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
+'LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
+'LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
 LoginInteraction "2" *-- StringInput
 LoginInteraction "1" o-- UserDatabase
-LoginInteraction --> Username /' usage? '/
-LoginInteraction --> User /' usage? '/
-LoginInteraction --> Password /' usage? '/
-LoginInteraction --> PasswordManagementException /' usage? '/
+'LoginInteraction --> Username /' usage? '/
+'LoginInteraction --> User /' usage? '/
+'LoginInteraction --> Password /' usage? '/
+'LoginInteraction --> PasswordManagementException /' usage? '/
 MainInteraction "1" o-- ThirstyCalc
-MainInteraction --> ExitInteraction /' usage? '/
-MainInteraction --> RegisterUserInteraction /' usage? '/
-MainInteraction --> LoginInteraction /' usage? '/
-MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
+'MainInteraction --> ExitInteraction /' usage? '/
+'MainInteraction --> RegisterUserInteraction /' usage? '/
+'MainInteraction --> LoginInteraction /' usage? '/
+'MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
 MenuInteraction "n" o-- Interaction
 MenuInteraction "1" *-- SelectInteraction
 RegisterUserInteraction "3" *-- StringInput
 RegisterUserInteraction "1" o-- UserDatabase
-RegisterUserInteraction --> Username /' usage? '/
-RegisterUserInteraction --> Password /' usage? '/
-RegisterUserInteraction --> UsernameValidator /' usage? '/
-RegisterUserInteraction --> PasswordValidator /' usage? '/
+'RegisterUserInteraction --> Username /' usage? '/
+'RegisterUserInteraction --> Password /' usage? '/
+'RegisterUserInteraction --> UsernameValidator /' usage? '/
+'RegisterUserInteraction --> PasswordValidator /' usage? '/
 SelectInteraction "1" *-- StringInput
 StringInputInteraction "1" *-- StringInput
 
@@ -667,7 +670,7 @@ DrinkOption "1" o-- ColorName
 Main -->  ThirstyCalc
 Main --> MainInteraction
 
-Password --> PasswordManagementException
+Password --> PasswordManagementException : <<throws>>
 Position "1" o-- DrinkCategory
 
 ThirstyCalc "1" *-- UserDatabase
@@ -676,14 +679,14 @@ ThirstyCalc "1" *-- DrinkDatabase
 ThirstyCalc "1" *-- ApplicationState
 ThirstyCalc "1" *-- Logger
 ThirstyCalc --> LoggerFactory
-ThirstyCalc --> Username /' usage? '/
-ThirstyCalc --> Password /' usage? '/
-ThirstyCalc --> User /' usage? '/
+'ThirstyCalc --> Username /' usage? '/
+'ThirstyCalc --> Password /' usage? '/
+'ThirstyCalc --> User /' usage? '/
 
 User "1" o-- Username
 User "1" o-- Password
 User "1" o-- Email
 User --> UsernameValidator
 User --> PasswordValidator
-User --> PasswordManagementException
+User --> PasswordManagementException : <<throws>>
 @enduml
