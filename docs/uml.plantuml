@@ -405,6 +405,21 @@ package state {
     }
 } /' end package: state '/
 
+package validators {
+    +class EmailValidator {
+        + {static} boolean isValid(Email email)
+    }
+
+    +class PasswordValidator {
+        + {static} boolean isValidPassword(Password password)
+    }
+
+    +class UsernameValidator {
+        + {static} boolean isValidUsername(Username username)
+    }
+
+} /' end package: validators '/
+
 /'##########################################################################'/
 
 package validatableStrings {
@@ -451,50 +466,6 @@ package validatableStrings {
     ValidatableString <|-- Email
     ValidatableString <|-- Realname
   } /' end package: validatableStrings.strings '/
-
-  package validators {
-    interface StringValidator {
-      ---
-      {abstract} boolean isValid(ValidatableString string)
-    }
-
-    class PasswordValidator {
-      -String PASSWORD_PATTERN
-      ---
-      boolean isValid(Password password)
-      ---
-      a digit must occur at least once
-      a lower case letter must occur at least once
-      an upper case letter must occur at least once
-      a special character must occur at least once
-      no whitespace allowed in the entire string
-      anything, at least eight places though
-    }
-
-
-    class UsernameValidator {
-      -String USERNAME_PATTERN
-      ---
-      boolean isValid(Username username)
-      ---
-      Username consists of alphanumeric characters (a-zA-Z0-9), lowercase, or uppercase.
-      Username allowed of the dot (.), underscore (_), and hyphen (-).
-      The dot (.), underscore (_), or hyphen (-) must not be the first or last character.
-      The dot (.), underscore (_), or hyphen (-) does not appear consecutively, e.g., java..regex
-      The number of characters must be between 5 to 20.
-    }
-
-    class EmailValidator {
-      ---
-      boolean isValid(Email email)
-    }
-
-    StringValidator <|-- PasswordValidator
-    StringValidator <|-- UsernameValidator
-    StringValidator <|-- EmailValidator
-
-    ' StringValidator *-- ValidatableString
-  } /' end package: validatableStrings.validators '/
 
   ' EmailValidator *-- Email
   ' UsernameValidator *-- Username
@@ -653,4 +624,8 @@ AdminRights "n" *-- Right
 AdminRights --> User /' usage? '/
 
 ApplicationState "1" o-- User
+
+EmailValidator --> Email /' usage? '/
+PasswordValidator --> Password /' usage? '/
+UsernameValidator --> Username /' usage? '/
 @enduml
