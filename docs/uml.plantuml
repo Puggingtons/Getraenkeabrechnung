@@ -30,6 +30,100 @@ User o-- Right
   package String name
 '/
 
+package banking {
+    +class Account {
+        +Account(Username username)
+        +Username GetUsername()
+        +Money getBalance()
+        +void deposit(Money amount)
+        +Money charge(Money amount)
+        +boolean isEmpty()
+        +boolean equals(Object o)
+    }
+
+    +exception AccountDoesNotExistException {
+        +AccountDoesNotExistException(String message)
+    }
+
+    +exception NotEnoughMoneyException {
+        +NotEnoughMoneyException(String message)
+    }
+} /' end package: banking '/
+
+package data {
+    package numbers {
+        +class Money {
+            + Money()
+            + Money(String amount)
+            + Money(BigDecimal amount)
+            + BidDecimal getAmount()
+            + Money add(Money money)
+            + Money subtract(Money money)
+            + Money multiply(Money money)
+            + String toString()
+            + boolean equals(Object o)
+        }
+    } /'end package: data.numbers '/
+
+    +class AccountDatabase {
+        + AccountDatabase()
+        + Account[] getAccounts()
+        + void createAccount(User user)
+        + Account getAccountOfUser(User user)
+        + boolean checkIfAccountBalanceIsZero(User user)
+        + void removeAccount(User user)
+        + void load(String path)
+        + void load(Path path)
+        + void save(String path)
+        + void save(Path path)
+    }
+
+    +class DrinkDatabase {
+        + DrinkDatabase()
+        + DrinkOption[] getDrinkOptions()
+        + void addDrinkOption(DrinkOption drinkOption)
+        + void load(String path)
+        + void load(Path path)
+        + void save(String path)
+        + void save(Path path)
+        + void createNewDrinkOption(DrinkOption drinkOption)
+        + {static} boolean drinkOptionExists(DrinkName drinkName)
+    }
+
+    +class Savable<T> {
+        + Savable(T t)
+        + T get()
+        + void load(String path, TypeToken<T> typeToken)
+        + void load(Path path, TypeToken<T> typeToken)
+        + void save(String path)
+        + void save(Path path)
+    }
+
+    +class UserDatabase {
+        + UserDatabase()
+        + User[] getUsers()
+        + User getUser(Username username)
+        + void addUser(User user)
+        + void removeUser(User user)
+        + void deleteUser(User user)
+        + void registerNewUser(User user)
+        + boolean updateUser(User updatedUser)
+        + boolean userExists(Username username)
+        + void load(String path)
+        + void load(Path path)
+        + void save(String path)
+        + void save(Path path)
+    }
+
+    +exception UserDoesNotExistException {
+        + UserDoesNotExistException(String message)
+        + UserDoesNotExistException(String message, Throwable cause)
+        + UserDoesNotExistException(Throwable cause)
+    }
+} /' end package: data '/
+
+/'##########################################################################'/
+
 package rights {
   interface Right {
   }
@@ -155,32 +249,6 @@ package validatableStrings {
   ' PasswordValidator *-- Password
 } /' end package: validatableStrings '/
 
-package data {
-    +class Savable<T> {
-        - T t
-        + Savable(T t)
-        + T get()
-        + void load(String path, TypeToken<T> typeToken)
-        + void load(Path path, TypeToken<T> typeToken)
-        + void save(String path)
-        + void save(Path path)
-    }
-
-    +class UserDatabase {
-        + UserDatabase()
-        + User[] getUsers()
-        + void addUser()
-        + void registerUser()
-        + boolean userExists(Username username)
-        + void load(String path)
-        + void load(Path path)
-        + void save(String path)
-        + void save(Path path)
-    }
-
-    UserDatabase "1" *-- Savable : "List<User>"
-} /' end package: data '/
-
 package user {
   class User {
     ' Realname realname
@@ -198,67 +266,6 @@ package user {
     kann sich selbst belasten
   }
 } /' end package: user '/
-
-package banking {
-  package numbers {
-    interface Amount {
-
-    }
-    class MoneyAmount {
-
-    }
-
-    class PositionAmount {
-      int menge
-      ---
-      ---
-      darf nicht 0 oder weniger sein
-      und muss 1 oder mehr sein
-      beachte Integer Overflows :) --> Obergrenze bei Abrechnung beachtenas Objekt benutzt ein anderes Objekt
-    }
-
-    Amount <|-- MoneyAmount
-    Amount <|-- PositionAmount
-  } /' end package: banking.numbers '/
-
-  package invoicing {
-    class Drink {
-      String name
-      ' Category category
-    }
-
-    class Category {
-      String name
-      double price 
-    }
-
-    class Position {
-      ' Drink drink
-      ' Menge amount
-    }
-
-    Drink "1" o-- Category
-    Position "1" o-- Drink
-    Position "1" *-- PositionAmount
-
-    class Invoice {
-      ' Position[] positionen
-      ' User benutzer
-    }
-
-    Invoice "n" *-- Position
-    Invoice "1" *-- User
-  } /' end package: banking.invoicing '/
-
-  class Account {
-    x: History????
-    ---
-    void belasten(MoneyAmount amount)
-    void aufladen(MoneyAmount amount)
-  }
-
-  Account "1" *-- MoneyAmount : < balance
-} /' end package: banking '/
 
 package io {
     package input {
@@ -512,5 +519,23 @@ ThirstyCalc "1" *-- UserDatabase
 ThirstyCalc "1" *-- Logger
 ThirstyCalc --> LoggerFactory
 MainInteraction "1" o-- ThirstyCalc
+
+/'##########################################################################'/
+
+Account "1" o-- Username
+Account "1" *-- Money
+Account --> NotEnoughMoneyException /' usage? '/
+
+AccountDatabase "n" *-- Account
+AccountDatabase --> User /' usage? '/
+AccountDatabase "1" *-- Savable
+
+DrinkDatabase "n" *-- DrinkOption
+DrinkDatabase --> DrinkName /' usage? '/
+DrinkDatabase "1" *-- Savable
+
+UserDatabase "n" *-- User
+UserDatabase --> Username /' usage? '/
+UserDatabase "1" *-- Savable
 
 @enduml
