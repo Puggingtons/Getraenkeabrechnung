@@ -484,17 +484,6 @@ package validatables {
     + void setColorName(ColorName colorName)
 }
 
-+class GetraenkeAutomat {
-    + void buyDrink(DrinkCategory drink)
-}
-
-+class Konto {
-    + double getAccountCredit()
-    + void setAccountCredit(double accountCredit)
-    + double addAccountCredit(double accountCredit)
-    + double removeAccountCredit(double accountCredit)
-}
-
 +class Main {
     + {static} void main(String[] args)
 }
