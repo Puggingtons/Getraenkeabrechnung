@@ -395,6 +395,16 @@ package rights {
     }
 } /' end package: rights '/
 
+package state {
+    +class ApplicationState {
+        + ApplicationState()
+        + void setLoggedInUser(User user)
+        + User getLoggedInUser()
+        + void clearLoggedInUser()
+        + boolean isLoggedIn()
+    }
+} /' end package: state '/
+
 /'##########################################################################'/
 
 package validatableStrings {
@@ -641,4 +651,6 @@ UserLogger "1" o-- Logger
 
 AdminRights "n" *-- Right
 AdminRights --> User /' usage? '/
+
+ApplicationState "1" o-- User
 @enduml
