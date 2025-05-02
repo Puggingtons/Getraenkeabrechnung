@@ -6,7 +6,7 @@ https://sonarcloud.io/summary/overall?id=Puggingtons_Getraenkeabrechnung&branch=
 ## cloc Ausgabe
 
 <!-- CLOC-REPORT-START -->
-cloc|github.com/AlDanial/cloc v 1.96  T=0.10 s (650.1 files/s, 28704.6 lines/s)
+cloc|github.com/AlDanial/cloc v 1.96  T=0.09 s (707.6 files/s, 31242.3 lines/s)
 --- | ---
 
 Language|files|blank|comment|code
