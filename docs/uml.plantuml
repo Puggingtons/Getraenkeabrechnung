@@ -557,33 +557,31 @@ Account "1" *-- Money
 Account --> NotEnoughMoneyException : <<throws>> /' usage? '/
 
 AccountDatabase "n" *-- Account
-'AccountDatabase --> User /' usage? '/
+'AccountDatabase --> User /' usage? no '/
 AccountDatabase "1" *-- Savable
 AccountDatabase --> AccountDoesNotExistException : <<throws>>
 DrinkDatabase "n" *-- DrinkOption
-'DrinkDatabase --> DrinkName /' usage? '/
+'DrinkDatabase --> DrinkName /' usage? no '/
 DrinkDatabase "1" *-- Savable
 UserDatabase "n" *-- User
 UserDatabase --> UserDoesNotExistException : <<throws>>
-'UserDatabase --> Username /' usage? '/
+'UserDatabase --> Username /' usage? no '/
 UserDatabase "1" *-- Savable
 
 Result "1" *-- ResultState
-'BooleanInput --> Result /' usage? '/
-'FloatInput --> Result /' usage? '/
+'BooleanInput --> Result /' usage? no '/
+'FloatInput --> Result /' usage? no '/
 Input  --> Result /' usage? '/
 Input "1" o-- Reader
 Input "1" o-- Writer
-'NumberInput --> Result /' usage? '/
-'StringInput --> Result /' usage? '/
-
-' InteractionEventSource "n" o-- Consumer : onSuccessConsumers
-'InteractionEventSource "n" o-- Consumer : onFailureConsumers
+'NumberInput --> Result /' usage? no '/
+'StringInput --> Result /' usage? no '/
 
 AddRightsInteraction "2" *-- StringInput
 AddRightsInteraction "1" o-- UserDatabase
-'AddRightsInteraction --> Username /' usage? '/
-'AddRightsInteraction --> Right /' usage? '/
+'AddRightsInteraction --> Username /' usage? no '/
+'AddRightsInteraction --> Right /' usage? no '/
+AddRightsInteraction --> User
 ChangePasswordInteraction "3" *-- StringInput
 ChangePasswordInteraction "1" o-- User
 ChangePasswordInteraction "1" o-- UserDatabase
@@ -591,48 +589,49 @@ ChangePasswordInteraction --> Password
 CheckBalanceInteraction "1" o-- Account
 CreateDrinkOptionInteraction "2" *-- StringInput
 CreateDrinkOptionInteraction "1" o-- ThirstyCalc
-'CreateDrinkOptionInteraction --> DrinkName /' usage? '/
-'CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
-'CreateDrinkOptionInteraction --> ColorName /' usage? '/
+'CreateDrinkOptionInteraction --> DrinkName /' usage? no '/
+CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
+'CreateDrinkOptionInteraction --> ColorName /' usage? no '/
 CreateUserInteraction "3" *-- StringInput
 CreateUserInteraction "1" *-- BooleanInput
 CreateUserInteraction "1" o-- UserDatabase
 CreateUserInteraction --> UsernameValidator
 CreateUserInteraction --> PasswordValidator
-'CreateUserInteraction --> User /' usage? '/
+CreateUserInteraction --> User /' usage? '/
 CreateUserInteraction --> AdminRights /' usage? '/
 DeleteUserInteraction "2" *-- StringInput
 DeleteUserInteraction "1" o-- ThirstyCalc
-'DeleteUserInteraction --> Username /' usage? '/
-'DeleteUserInteraction --> User /' usage? '/
+'DeleteUserInteraction --> Username /' usage? no '/
+DeleteUserInteraction --> User /' usage? '/
 LoggedInUserInteractionFactory "1" o-- ThirstyCalc
 LoggedInUserInteractionFactory "1" *-- MenuInteraction
-'LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> ChangePasswordInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> CheckBalanceInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
-'LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
+LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
+LoggedInUserInteractionFactory --> ChangePasswordInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CheckBalanceInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
+LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
+LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
 LoginInteraction "2" *-- StringInput
 LoginInteraction "1" o-- UserDatabase
-'LoginInteraction --> Username /' usage? '/
-'LoginInteraction --> User /' usage? '/
-'LoginInteraction --> Password /' usage? '/
-'LoginInteraction --> PasswordManagementException /' usage? '/
+'LoginInteraction --> Username /' usage? no '/
+LoginInteraction --> User /' usage? '/
+'LoginInteraction --> Password /' usage? no '/
+'LoginInteraction --> PasswordManagementException /' usage? no '/
 MainInteraction "1" o-- ThirstyCalc
-'MainInteraction --> ExitInteraction /' usage? '/
-'MainInteraction --> RegisterUserInteraction /' usage? '/
-'MainInteraction --> LoginInteraction /' usage? '/
-'MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
+MainInteraction --> ExitInteraction /' usage? '/
+MainInteraction --> RegisterUserInteraction /' usage? '/
+MainInteraction --> LoginInteraction /' usage? '/
+MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
 MenuInteraction "n" o-- Interaction
 MenuInteraction "1" *-- SelectInteraction
 RegisterUserInteraction "3" *-- StringInput
 RegisterUserInteraction "1" o-- UserDatabase
-'RegisterUserInteraction --> Username /' usage? '/
-'RegisterUserInteraction --> Password /' usage? '/
-'RegisterUserInteraction --> UsernameValidator /' usage? '/
-'RegisterUserInteraction --> PasswordValidator /' usage? '/
+'RegisterUserInteraction --> Username /' usage? no '/
+'RegisterUserInteraction --> Password /' usage? no '/
+RegisterUserInteraction --> UsernameValidator /' usage? '/
+RegisterUserInteraction --> PasswordValidator /' usage? '/
+RegisterUserInteraction --> User /'usage? '/
 SelectInteraction "1" *-- StringInput
 StringInputInteraction "1" *-- StringInput
 
