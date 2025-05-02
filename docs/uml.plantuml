@@ -420,110 +420,139 @@ package validators {
 
 } /' end package: validators '/
 
-/'##########################################################################'/
-
-package validatableStrings {
-  package strings {
-    interface ValidatableString {
-    }
-
-    class Username {
-      -String username
-    ---
-
-    ---
-      darf keine Leerzeichen enthalten
-    }
-
-    class Password {
-      -String password
-    ---
-
-    ---
-    darf nicht gelesen werden
-    }
-
-    class Email {
-      -String email
-    ---
-
-    ---
-    muss "@" enthalten --> https://emailregex.com/ --> Java
-    }
-
-    class Realname {
-      String title
-      String[] firstName
-      String lastName
-      ---
-      String getName()
-      ---
-      darf keine Zahlen enthalten
-    }
-
-    ValidatableString <|-- Username
-    ValidatableString <|-- Password
-    ValidatableString <|-- Email
-    ValidatableString <|-- Realname
-  } /' end package: validatableStrings.strings '/
-
-  ' EmailValidator *-- Email
-  ' UsernameValidator *-- Username
-  ' PasswordValidator *-- Password
-} /' end package: validatableStrings '/
-
-package user {
-  class User {
-    ' Realname realname
-    ' Username Username
-    ' Password password
-    ' Email email
-    ' Account konto
-    ' Right[] rights
-    ---
-
-    ---
-    kann sich einloggen
-    lesender Zugriff auf eigenen Kontostand
-    kann Geld auf das Konto aufladen
-    kann sich selbst belasten
-  }
-} /' end package: user '/
-
-class ThirstyCalc {
-  ' -User[] benutzer
-  ' -Category[] categories
----
-'  void abrechnen(Abrechnung abrechnung)
-'  void getränkeklasseHinzufügen(Getränkeklasse getränkeklasse) # darf nur admin
-'  void geldEinzahlen(User benutzer, Betrag betrag)
-'  void benutzerAnlegen(User benutzer)
-'  Abrechnung erstelleAbrechnung(User benutzer, Position[] positionen)
-    ThirstyCalc()
-    void login(String eingabe)
-    void logout()
-    void greet()
-    User getUser()
-    UserDatabase getUserDatabase()
++class Color {
+    + Color(ColorName colorName, double colorPrice)
+    + ColorName getColorName()
+    + double getColorPrice()
+    + void setColorName(ColorName colorName)
+    + void setColorPrice(double colorPrice)
 }
 
-User "n" *-- Right
-User "1" o-- Username
-User "1" o-- Password
-User "1" o-- Email
-User "1" o-- Account
-User "1" o-- Realname
++class ColorName {
+    + ColorName(String colorName)
+    + String toString()
+    + boolean equals(Object o)
+}
 
-ThirstyCalc *-- Invoice
-ThirstyCalc "n" *-- User
-ThirstyCalc "n" *-- Category
-ThirstyCalc "1" *-- UserDatabase
-ThirstyCalc "1" *-- Logger
-ThirstyCalc --> LoggerFactory
-MainInteraction "1" o-- ThirstyCalc
++class DrinkCategory {
+    + DrinkCategory(DrinkOption drinkOption, ColorName colorName)
+    + DrinkOption getDrinkOption()
+    + void setDrinkOption(DrinkOption drinkOption)
+    + ColorName getColorName()
+    + void setColor(ColorName colorName)
+}
 
-/'##########################################################################'/
++class DrinkName {
+    + DrinkName(String drinkName)
+    + String toString()
+    + boolean equals(Object o)
+}
 
++class DrinkOption {
+    + DrinkOption(DrinkName drinkName, ColorName colorName)
+    + DrinkName getDrinkName()
+    + void setDrinkName(DrinkName drinkName)
+    + ColorName getColorName()
+    + void setColorName(ColorName colorName)
+}
+
++class Email {
+    + Email(String email)
+    + boolean isValid(Optional<String> pattern)
+}
+
++class GetraenkeAutomat {
+    + void buyDrink(DrinkCategory drink)
+}
+
++class Konto {
+    + double getAccountCredit()
+    + void setAccountCredit(double accountCredit)
+    + double addAccountCredit(double accountCredit)
+    + double removeAccountCredit(double accountCredit)
+}
+
++class Main {
+    + {static} void main(String[] args)
+}
+
++class Password {
+    + Password(String password)
+    + Boolean isValid(Optional<String> pattern)
+    + String hashPassword()
+    + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
+    + String getSalt()
+    + String getHashedPassword()
+    + void nullPasswordString()
+}
+
++exception PasswordManagementException {
+    + PasswordManagementException(String message)
+    + PasswordManagementException(String message, Throwable cause)
+    + PasswordManagementException(Throwable cause)
+}
+
++class Position {
+    + Position(DrinkCategory drinkCategory, int amount)
+    + DrinkCategory getDrinkCategory()
+    + void setDrink(DrinkCategory drinkCategory)
+    + int getAmount()
+    + setAmount(int amount)
+}
+
++class ThirstyCalc {
+    + ThirstyCalc()
+    + ThirstyCalc(Logger logger)
+    + void login(User user)
+    + void logout()
+    + void createNewUser(User user)
+    + void registerNewUser(User user)
+    + void changePassword(User user)
+    + void createNewDrinkOption(DrinkOption drinkOption)
+    + boolean drinkOptionExists(DrinkName drinkName)
+    + void deleteUser(User user)
+    + ApplicationState getApplicationState()
+    + UserDatabase getUserDatabase()
+    + AccountDatabase getAccountDatabase()
+    + Account getAccountOfLoggedInUser()
+    + void save()
+    + void load()
+}
+
++class User {
+    + User(Username username, Password password, String realFirstName, String realLastName, String realName, Email email)
+    + User()
+    + User(Username username, Password password)
+    + Username getUsername()
+    + void setUsername(Username username)
+    + Password getPassword()
+    + void setPassword(Password password)
+    + void nullPassword()
+    + boolean verifyPassword(String providedPassword)
+    + String getHashedPassword()
+    + String getSalt()
+    + String getRealFirstName()
+    + void setRealFirstName(String realFirstName)
+    + String getRealLastName()
+    + void setRealLastName(String realLastName)
+    + String getRealName()
+    + Email getEmail()
+    + void setEmail(Email email)
+    + void addRights(Collection<Right> rights)
+    + boolean hasRight(Right right)
+    + String toString()
+}
+
++class Username {
+    + Username(String username)
+    + boolean isValid(Optional<String> pattern)
+    + String toString()
+    + boolean equals(Object o)
+}
+
+/'#########################################################################'/
+/'#                               Relations                               #'/
+/'#########################################################################'/
 Account "1" o-- Username
 Account "1" *-- Money
 Account --> NotEnoughMoneyException /' usage? '/
@@ -628,4 +657,33 @@ ApplicationState "1" o-- User
 EmailValidator --> Email /' usage? '/
 PasswordValidator --> Password /' usage? '/
 UsernameValidator --> Username /' usage? '/
+
+Color "1" o-- ColorName
+DrinkCategory "1" o-- DrinkOption
+DrinkCategory "1" o-- ColorName
+DrinkOption "1" o-- DrinkName
+DrinkOption "1" o-- ColorName
+
+Main -->  ThirstyCalc
+Main --> MainInteraction
+
+Password --> PasswordManagementException
+Position "1" o-- DrinkCategory
+
+ThirstyCalc "1" *-- UserDatabase
+ThirstyCalc "1" *-- AccountDatabase
+ThirstyCalc "1" *-- DrinkDatabase
+ThirstyCalc "1" *-- ApplicationState
+ThirstyCalc "1" *-- Logger
+ThirstyCalc --> LoggerFactory
+ThirstyCalc --> Username /' usage? '/
+ThirstyCalc --> Password /' usage? '/
+ThirstyCalc --> User /' usage? '/
+
+User "1" o-- Username
+User "1" o-- Password
+User "1" o-- Email
+User --> UsernameValidator
+User --> PasswordValidator
+User --> PasswordManagementException
 @enduml
