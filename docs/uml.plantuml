@@ -342,7 +342,7 @@ package io {
         }
 
         +class DeleteUserInteraction extends Interaction<User> {
-            + DeleteUserInteraction(UserDatabase userDatabase, AccountDatabase accountDatabase, ThirstyCalc thirstyCalc)
+            + DeleteUserInteraction(ThirstyCalc thirstyCalc)
             String usage()
             # void execute()
         }
@@ -602,8 +602,6 @@ CreateUserInteraction --> PasswordValidator
 'CreateUserInteraction --> User /' usage? '/
 CreateUserInteraction --> AdminRights /' usage? '/
 DeleteUserInteraction "2" *-- StringInput
-DeleteUserInteraction "1" o-- UserDatabase
-DeleteUserInteraction "1" o-- AccountDatabase
 DeleteUserInteraction "1" o-- ThirstyCalc
 'DeleteUserInteraction --> Username /' usage? '/
 'DeleteUserInteraction --> User /' usage? '/

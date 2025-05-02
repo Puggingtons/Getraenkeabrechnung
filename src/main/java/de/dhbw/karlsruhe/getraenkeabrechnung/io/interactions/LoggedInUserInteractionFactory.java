@@ -93,7 +93,7 @@ public class LoggedInUserInteractionFactory {
     }
 
     private void addDeleteUserInteraction() {
-        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstyCalc.getUserDatabase(), thirstyCalc.getAccountDatabase(), thirstyCalc);
+        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstyCalc);
         interaction.onSuccess((deleteUser) -> {
             thirstyCalc.deleteUser(deleteUser);
             System.out.println("You deleted the user: " + deleteUser.getUsername().toString() + ".");
