@@ -4,8 +4,8 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
 
 | Kapitel                 | Punkte | Person |
 |-------------------------|--------|--------|
-| 1. Einführung           | 4      | Paul   |
-| 2. Softwarearchitektur  | 8      | Sarah  |
+| 1. Einführung           | 4      | Sarah  |
+| 2. Softwarearchitektur  | 8      | Paul   |
 | 3. SOLID                | 8      | Paul   |
 | 4. Weitere Prinzipien   | 8      | Paul   |
 | 5. Unit Tests           | 8      | Sarah  |
