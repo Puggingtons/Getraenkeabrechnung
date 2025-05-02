@@ -4,6 +4,7 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
+import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.BooleanInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.validators.UsernameValidator;
@@ -15,14 +16,14 @@ public class CreateUserInteraction extends Interaction<User> {
     private final StringInput usernameInput;
     private final StringInput passwordInput;
     private final StringInput passwordVerificationInput;
-    private final StringInput adminRightsInput;
+    private final BooleanInput adminRightsInput;
     private final UserDatabase userDatabase;
 
     public CreateUserInteraction(UserDatabase userDatabase) {
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
         passwordVerificationInput = new StringInput("Verify Password: ");
-        adminRightsInput = new StringInput("Make user admin? (y/n): ");
+        adminRightsInput = new BooleanInput("Make user admin? (y/n): ");
         this.userDatabase = userDatabase;
     }
 
@@ -36,7 +37,7 @@ public class CreateUserInteraction extends Interaction<User> {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
-        String adminChoice = getValidInput(adminRightsInput);
+        boolean adminChoice = getValidInput(adminRightsInput);
         userDatabase.getUsers();
 
         User user = new User();
@@ -60,8 +61,7 @@ public class CreateUserInteraction extends Interaction<User> {
         user.setPassword(passwordObj);
 
         // Set admin rights if requested
-        boolean makeAdmin = adminChoice.equalsIgnoreCase("y") || adminChoice.equalsIgnoreCase("yes");
-        if (makeAdmin) {
+        if (adminChoice) {
             new AdminRights().giveTo(user);
             System.out.println("Admin rights granted to user " + username);
         }
@@ -79,6 +79,24 @@ public class CreateUserInteraction extends Interaction<User> {
     private String getValidInput(StringInput input) {
         while (true) {
             Result<String> result = input.prompt();
+
+            if (result.isHelp()) {
+                explain();
+                continue;
+            }
+
+            if (result.isNone()) {
+                System.out.println("Invalid input!");
+                continue;
+            }
+
+            return result.getValue();
+        }
+    }
+
+    private boolean getValidInput(BooleanInput input) {
+        while (true) {
+            Result<Boolean> result = input.prompt();
 
             if (result.isHelp()) {
                 explain();
