@@ -319,6 +319,67 @@ package io {
     } /' end package: io.writer '/
 } /' end package: io '/
 
+package logging {
+    package logwriter {
+        +class FileLogWriter implements LogWriter {
+            + FileLogWriter(File file)
+            + void write(String message)
+        }
+
+        +interface LogWriter {
+            void write(String message)
+        }
+
+        +class PrintStreamLogWriter implements LogWriter {
+            + PrintStreamLogWriter(PrintStream printStream)
+            + void write(String message)
+        }
+    } /' end package: logwriter '/
+
+    +class ClassLogger implements Logger {
+        + ClassLogger(Class clazz, Logger logger)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    +interface Logger {
+        void log(String message)
+        Logger getInnerLogger()
+    }
+
+    +class LoggerFactory {
+        + LoggerFactory()
+        + LoggerFactory(LogWriter logWriter)
+        + LoggerFactory(Logger logger)
+        + LoggerFactory addUserLogger(User user)
+        + LoggerFactory addTimeLogger()
+        + LoggerFactory addClassLogger(Class clazz)
+        + Logger build()
+        + Logger defaultUserLogger(User user)
+        + Logger defaultTimeLogger()
+    }
+
+    +class LogWriterLoggerAdapter implements Logger {
+        + LogWriterLoggerAdapter(LogWriter logWriter)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    class TimeLogger implements Logger {
+        + TimeLogger(Logger logger)
+        + void setTimeOnce(LocalDateTime time)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    class UserLogger implements Logger {
+        + UserLogger(User user, Logger logger)
+        + void setUser(User user)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+} /' end package: logging '/
+
 /'##########################################################################'/
 
 package rights {
@@ -464,77 +525,6 @@ package user {
   }
 } /' end package: user '/
 
-package logging {
-    package logwriter {
-        interface LogWriter {
-            void write(String message)
-        }
-
-        class FileLogWriter implements LogWriter {
-            +FileLogWriter(File file)
-            +write(String message)
-        }
-
-        class PrintStreamLogWriter implements LogWriter {
-            +PrintStreamLogWriter(PrintStream printStream)
-            +write(String message)
-        }
-    } /' end package: logwriter '/
-
-    interface Logger {
-        void log(String message)
-        Logger getInnerLogger()
-    }
-
-    class ClassLogger implements Logger {
-        +ClassLogger(Class clazz, Logger logger)
-        +log(String message)
-        +Logger getInnerLogger()
-    }
-
-    class TimeLogger implements Logger {
-        +TimeLogger(Logger logger)
-        +log(String message)
-        +Logger getInnerLogger()
-    }
-
-    class UserLogger implements Logger {
-        +UserLogger(User user, Logger logger)
-        +log(String message)
-        +Logger getInnerLogger()
-    }
-
-    class LogWriterLoggerAdapter implements Logger {
-        +LogWriterLoggerAdapter(LogWriter logWriter)
-        +void log(String message)
-        +Logger getInnerLogger()
-    }
-
-    class LoggerFactory {
-        +LoggerFactory()
-        +LoggerFactory(LogWriter logWriter)
-        +LoggerFactory(Logger logger)
-        +LoggerFactory addUserLogger(User user)
-        +LoggerFactory addTimeLogger()
-        +LoggerFactory addClassLogger(Class clazz)
-        +Logger build()
-        +Logger defaultUserLogger(User user)
-        +Logger defaultTimeLogger()
-    }
-
-    LoggerFactory "1" o-- Logger
-    LoggerFactory --> LogWriter
-    LoggerFactory --> ClassLogger
-    LoggerFactory --> UserLogger
-    LoggerFactory --> TimeLogger
-    LoggerFactory --> LogWriterLoggerAdapter
-
-    ClassLogger "1" o-- Logger
-    TimeLogger "1" o-- Logger
-    UserLogger "1" o-- Logger
-    LogWriterLoggerAdapter "1" o-- Logger
-} /' end package: logging '/
-
 class ThirstyCalc {
   ' -User[] benutzer
   ' -Category[] categories
@@ -599,20 +589,16 @@ AddRightsInteraction "2" *-- StringInput
 AddRightsInteraction "1" o-- UserDatabase
 AddRightsInteraction --> Username /' usage? '/
 AddRightsInteraction --> Right /' usage? '/
-
 ChangePasswordInteraction "3" *-- StringInput
 ChangePasswordInteraction "1" o-- User
 ChangePasswordInteraction "1" o-- UserDatabase
 ChangePasswordInteraction --> Password
-
 CheckBalanceInteraction "1" o-- Account
-
 CreateDrinkOptionInteraction "2" *-- StringInput
 CreateDrinkOptionInteraction "1" o-- ThirstyCalc
 CreateDrinkOptionInteraction --> DrinkName /' usage? '/
 CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
 CreateDrinkOptionInteraction --> ColorName /' usage? '/
-
 CreateUserInteraction "3" *-- StringInput
 CreateUserInteraction "1" *-- BooleanInput
 CreateUserInteraction "1" o-- UserDatabase
@@ -620,14 +606,12 @@ CreateUserInteraction --> UsernameValidator
 CreateUserInteraction --> PasswordValidator
 CreateUserInteraction --> User /' usage? '/
 CreateUserInteraction --> AdminRights /' usage? '/
-
 DeleteUserInteraction "2" *-- StringInput
 DeleteUserInteraction "1" o-- UserDatabase
 DeleteUserInteraction "1" o-- AccountDatabase
 DeleteUserInteraction "1" o-- ThirstyCalc
 DeleteUserInteraction --> Username /' usage? '/
 DeleteUserInteraction --> User /' usage? '/
-
 LoggedInUserInteractionFactory "1" o-- ThirstyCalc
 LoggedInUserInteractionFactory "1" *-- MenuInteraction
 LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
@@ -637,31 +621,38 @@ LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
 LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
 LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
 LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
-
 LoginInteraction "2" *-- StringInput
 LoginInteraction "1" o-- UserDatabase
 LoginInteraction --> Username /' usage? '/
 LoginInteraction --> User /' usage? '/
 LoginInteraction --> Password /' usage? '/
 LoginInteraction --> PasswordManagementException /' usage? '/
-
 MainInteraction "1" o-- ThirstyCalc
 MainInteraction --> ExitInteraction /' usage? '/
 MainInteraction --> RegisterUserInteraction /' usage? '/
 MainInteraction --> LoginInteraction /' usage? '/
 MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
-
 MenuInteraction "n" o-- Interaction
 MenuInteraction "1" *-- SelectInteraction
-
 RegisterUserInteraction "3" *-- StringInput
 RegisterUserInteraction "1" o-- UserDatabase
 RegisterUserInteraction --> Username /' usage? '/
 RegisterUserInteraction --> Password /' usage? '/
 RegisterUserInteraction --> UsernameValidator /' usage? '/
 RegisterUserInteraction --> PasswordValidator /' usage? '/
-
 SelectInteraction "1" *-- StringInput
-
 StringInputInteraction "1" *-- StringInput
+
+ClassLogger "1" o-- Logger
+LoggerFactory "1" o-- Logger
+LoggerFactory --> LogWriter /' usage? '/
+LoggerFactory --> ClassLogger
+LoggerFactory --> UserLogger
+LoggerFactory --> TimeLogger
+LoggerFactory --> LogWriterLoggerAdapter
+LoggerFactory --> PrintStreamLogWriter
+LogWriterLoggerAdapter "1" o-- Logger
+TimeLogger "1" o-- Logger
+UserLogger "1" o-- Logger
+
 @enduml
