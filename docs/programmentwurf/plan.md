@@ -25,7 +25,7 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
     - [ ] Gewählte Architektur **(4 P.)**
     - [ ] Domain Code **(1 P.)**
     - [ ] Analyse der Dependency Rule **(3 P.)**
-        - [ ] Positiv-Beispiel
+        - [x] Positiv-Beispiel
         - [ ] Negativ-Beispiel
 - [ ] 3\. SOLID **(8 P.)**
     - [ ] Analyse SRP **(3 P.)**

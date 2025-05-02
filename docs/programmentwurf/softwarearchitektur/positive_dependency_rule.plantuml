@@ -1,0 +1,36 @@
+@startuml
+class ThirstyCalc
+
+package logging {
+
+    package logwriter {
+        interface LogWriter
+        class FileLogWriter implements LogWriter
+        class PrintStreamLogWriter implements LogWriter
+    }
+
+    interface Logger
+    class LoggerFactory
+    class ClassLogger implements Logger
+    class LogWriterLoggerAdapter implements Logger
+    class TimeLogger implements Logger
+    class UserLogger implements Logger
+}
+
+ThirstyCalc --> LoggerFactory
+
+LoggerFactory --> ClassLogger
+LoggerFactory --> LogWriterLoggerAdapter
+LoggerFactory --> TimeLogger
+LoggerFactory --> UserLogger
+LoggerFactory --> LogWriter
+LoggerFactory --> PrintStreamLogWriter
+
+LoggerFactory "1" o-- Logger
+ClassLogger "1" o-- Logger
+TimeLogger "1" o-- Logger
+UserLogger "1" o-- Logger
+LogWriterLoggerAdapter "1" o-- Logger
+
+ThirstyCalc "1" *-- Logger
+@enduml
