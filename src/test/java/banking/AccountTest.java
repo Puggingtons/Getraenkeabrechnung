@@ -1,6 +1,6 @@
 package banking;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.banking.NotEnoughMoneyException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;

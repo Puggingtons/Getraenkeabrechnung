@@ -4,10 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.Password;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.PasswordManagementException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.User;
-import de.dhbw.karlsruhe.getraenkeabrechnung.Username;
+import de.dhbw.karlsruhe.getraenkeabrechnung.validatables.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
