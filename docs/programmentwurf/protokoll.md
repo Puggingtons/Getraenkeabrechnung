@@ -152,6 +152,8 @@ Wenn sich ein Benutzer einloggt, wird der `Logger` in ThirstyCalc durch eine Ins
 ![ocp_positive.png](solid/ocp_positive.png)
 
 #### Negativ-Beispiel
+
+
 ### Analyse [LSP/ISP/DIP] (2P)
 [jeweils eine Klasse als positives und negatives Beispiel für entweder LSP oder ISP oder DIP; jeweils UML und Begründung, warum hier das Prinzip erfüllt/nicht erfüllt wird; beim Negativ-Beispiel UML einer möglichen Lösung hinzufügen]
 
@@ -164,6 +166,12 @@ Wenn sich ein Benutzer einloggt, wird der `Logger` in ThirstyCalc durch eine Ins
 ## Kapitel 4: Weitere Prinzipien (8P)
 ### Analyse GRASP: Geringe Kopplung (3P)
 [eine bis jetzt noch nicht behandelte Klasse als positives Beispiel geringer Kopplung; UML mit zusammenspielenden Klassen, Aufgabenbeschreibung der Klasse und Begründung, warum hier eine geringe Kopplung vorliegt; es müssen auch die Aufrufer/Nutzer der Klasse berücksichtigt werden]
+
+Die Klasse `InteractionEventSource` realisiert die geringe Kopplung von GRASP.
+Durch das hier verwendete Listener Pattern (durch die Methoden `onSuccess(Consumer<T> onSuccess)` und `onFailure(Consumer<Void> onFailure)`)
+
+![low_coupling.png](grasp/low_coupling.png)
+
 ### Analyse GRASP: [Polymorphismus/Pure Fabrication] (3P)
 [eine Klasse als positives Beispiel entweder von Polymorphismus oder von Pure Fabrication; UML
 Diagramm und Begründung, warum es hier zum Einsatz kommt]
