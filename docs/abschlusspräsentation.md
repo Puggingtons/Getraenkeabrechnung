@@ -46,7 +46,7 @@ Paul Bader, Sarah Ficht & Kayra Güler
 --
 
 ### Gewählte Architektur (4P)
-[In der Vorlesung wurden Softwarearchitekturen vorgestellt. Welche Architektur wurde davon
+- [In der Vorlesung wurden Softwarearchitekturen vorgestellt. Welche Architektur wurde davon
 umgesetzt? Analyse und Begründung inkl. UML der wichtigsten Klassen, sowie Einordnung dieser Klassen in die gewählte Architektur]
 
 --
@@ -76,7 +76,7 @@ Folgender Code ist aus der Klasse `Account.java`:
 --
 
 ### Analyse der Dependency Rule (3P)
-[In der Vorlesung wurde im Rahmen der ‘Clean Architecture’ die s.g. Dependency Rule vorgestellt. Je 1 Klasse zeigen, die die Dependency Rule einhält und 1 Klasse, die die Dependency Rule verletzt; jeweils UML (mind. die betreffende Klasse inkl. der Klassen, die von ihr abhängen bzw. von der sie abhängt) und Analyse der Abhängigkeiten in beide Richtungen (d.h., von wem hängt die Klasse ab und wer hängt von der Klasse ab) in Bezug auf die Dependency Rule]
+- [In der Vorlesung wurde im Rahmen der ‘Clean Architecture’ die s.g. Dependency Rule vorgestellt. Je 1 Klasse zeigen, die die Dependency Rule einhält und 1 Klasse, die die Dependency Rule verletzt; jeweils UML (mind. die betreffende Klasse inkl. der Klassen, die von ihr abhängen bzw. von der sie abhängt) und Analyse der Abhängigkeiten in beide Richtungen (d.h., von wem hängt die Klasse ab und wer hängt von der Klasse ab) in Bezug auf die Dependency Rule]
 
 --
 
@@ -88,8 +88,7 @@ Folgender Code ist aus der Klasse `Account.java`:
 
 ![positive_dependency_rule.png](programmentwurf/softwarearchitektur/positive_dependency_rule.png)
 
---
-
+note:
 Die Klasse `LoggerFactory` erfüllt hier die Dependency Rule.
 Die Klasse `ThirstyCalc` hängt von ihr ab.
 Sie ist nicht von einer äußeren Klasse (hier `ThirstyCalc`) abhängig und hängt nur von inneren Klassen (hier `Logger`, allen Implementierungen von `Logger` sowie `LogWriter` und `PrintStreamLogWriter`) ab.
@@ -100,8 +99,7 @@ Sie ist nicht von einer äußeren Klasse (hier `ThirstyCalc`) abhängig und hän
 
 ![negative_dependency_rule.png](programmentwurf/softwarearchitektur/negative_dependency_rule.png)
 
---
-
+note:
 Die Klasse `MainInteraction` erfüllt die Dependency Rule nicht.
 Die `Main` Klasse ist von `MainInteraction` abhängig.
 Die Klasse `MainInteraction` ist von `MenuInteraction` durch Vererbung und von `ExitInteraction`, `LoggedInUserFactory`, `LoginInteraction` und `RegisterUserInteraction` durch Nutzung abhängig.
@@ -117,7 +115,7 @@ Da also eine Klasse aus einer unteren Ebene (`MainInteraction`) von einer aus ei
 --
 
 ### Analyse SRP (3P)
-[jeweils eine Klasse als positives und negatives Beispiel für SRP; jeweils UML und Beschreibung der
+- [jeweils eine Klasse als positives und negatives Beispiel für SRP; jeweils UML und Beschreibung der
 Aufgabe bzw. der Aufgaben und möglicher Lösungsweg des Negativ-Beispiels (inkl. UML)]
 
 --
@@ -130,7 +128,7 @@ Die Klasse `InputReader` hat die einzige Aufgabe, eine Eingabezeile aus einem `I
 --
 
 #### Negativ-Beispiel
-Die Klasse `AccountDatabase` hat hier mehrere Responsibilities.
+Die Klasse `AccountDatabase` hat hier mehrere Aufgaben.
 Zum einen ist sie für die Erstellung, Persistierung und Löschung von `Account`s zuständig, zum anderen hat sie auch die Funktionalität mit `checkIfAccountBalanceIsZero(User user)`, ob die `Balance` eines `Account` 0 ist.
 
 ![img.png](programmentwurf/solid/srp_negative.png)
@@ -141,23 +139,26 @@ Eine mögliche Lösung, um das SRP für `AccountDatabase` umzusetzen, ist im fol
 
 ![srp_negative_soliution.png](programmentwurf/solid/srp_negative_soliution.png)
 
---
-
+note:
 Hier wurde die Geschäftslogik, die den `User` betrifft in die Klasse `UserAccountService` ausgelagert.
 Die Klasse `AccountDatabase` ist somit lediglich für Hinzufügen, Entfernen und Persistieren der `Account`s verantworlich.
 
 --
 
 ### Analyse OCP (3P)
-[jeweils eine Klasse als positives und negatives Beispiel für OCP; jeweils UML und Analyse mit Begründung, warum das OCP erfüllt/nicht erfüllt wurde – falls erfüllt: warum hier sinnvoll/welches Problem gab es? Falls nicht erfüllt: wie könnte man es lösen (inkl. UML)?]
+- [jeweils eine Klasse als positives und negatives Beispiel für OCP; jeweils UML und Analyse mit Begründung, warum das OCP erfüllt/nicht erfüllt wurde – falls erfüllt: warum hier sinnvoll/welches Problem gab es? Falls nicht erfüllt: wie könnte man es lösen (inkl. UML)?]
 
 --
 
 #### Positiv-Beispiel
+
+![ocp_positive.png](programmentwurf/solid/ocp_positive.png)
+
+
+note:
 Das Interface `Logger` erfüllt hier das OCP.
 Es können mehrere Implementierungen des `Logger` Interface implementiert werden, ohne, dass deren Aufrufer angepasst werden müssen.
 
-note:
 Warum wurde das hier umgesetzt?
 Die Logs sollen unterschiedlich sein, je nachdem, ob ein Benutzer eingeloggt ist oder nicht.
 Die Klasse `ThirstyCalc`, welche von `Logger` und `LoggerFactory` abhängig ist, ruft bei jedem Log nur die `log(String message)` Methode vom `Logger` Interface auf.
@@ -165,57 +166,57 @@ Wenn sich ein Benutzer einloggt, wird der `Logger` in ThirstyCalc durch eine Ins
 
 --
 
-![ocp_positive.png](programmentwurf/solid/ocp_positive.png)
-
 #### Negativ-Beispiel
+
+![ocp_negative.png](programmentwurf/solid/ocp_negative.png)
+
+note:
 Die Klasse `AdminRights` erfüllt hier nicht OCP.
 Wenn man eine neue Benutzerkategorie einführen möchte, müsste man auch das die Aufrufer von `AdminRights` anpassen, um an den benötigten Stellen dann die anderen Rechte zu verteilen.
 
 --
 
-![ocp_negative.png](programmentwurf/solid/ocp_negative.png)
+![ocp_negative_solution.png](programmentwurf/solid/ocp_negative_solution.png)
 
---
-
+note:
 Eine Lösung ist die Abstraktion zu einem `RightsGiver` Interface.
 Dadurch können neue Rechtegruppen erstellt werden, ohne, dass die Aufrufer von `RightsGiver` angepasst werden müssen.
 
 --
 
-![ocp_negative_solution.png](programmentwurf/solid/ocp_negative_solution.png)
-
---
-
 ### Analyse [LSP/ISP/DIP] (2P)
-[jeweils eine Klasse als positives und negatives Beispiel für entweder LSP oder ISP oder DIP; jeweils UML und Begründung, warum hier das Prinzip erfüllt/nicht erfüllt wird; beim Negativ-Beispiel UML einer möglichen Lösung hinzufügen]
+- [jeweils eine Klasse als positives und negatives Beispiel für entweder LSP oder ISP oder DIP; jeweils UML und Begründung, warum hier das Prinzip erfüllt/nicht erfüllt wird; beim Negativ-Beispiel UML einer möglichen Lösung hinzufügen]
 
-[Anm.: es darf nur ein Prinzip ausgewählt werden; es darf NICHT z.B. ein positives Beispiel für LSP und ein negatives Beispiel für ISP genommen werden]
+- [Anm.: es darf nur ein Prinzip ausgewählt werden; es darf NICHT z.B. ein positives Beispiel für LSP und ein negatives Beispiel für ISP genommen werden]
 
 --
 
 #### Positiv-Beispiel
 
+![lsp_positive.png](programmentwurf/solid/lsp_positive.png)
+
+note:
 Die Klasse `Interaction` realisiert das LSP (Liskov Substitution Principle).
 Jede Implementierung der `Interaction` (z.B. `StringInputInteraction` oder `MenuInteraction`) kann an jeder beliebigen Stelle von `Interaction` benutzt werden, ohne, dass unerwünschte Nebeneffekte auftreten.
 
-![lsp_positive.png](programmentwurf/solid/lsp_positive.png)
+--
 
 #### Negativ-Beispiel
 
+![lsp_negative.png](programmentwurf/solid/lsp_negative.png)
+
+note:
 Die `LogWriterLoggerAdapter` Klasse kann hier einen unerwünschten Nebeneffekt haben:
 Beim Aufruf auf `getInnerLogger()` gibt sie sich selbst zurück.
 Wenn eine Klasse also rekursiv die inneren Logger von den Loggern abruft, kommt es zu einem Stackoverflow.
-
-![lsp_negative.png](programmentwurf/solid/lsp_negative.png)
 
 --
 
 ![lsp_negative_solution.png](programmentwurf/solid/lsp_negative_solution.png)
 
+note:
 Eine Lösung ist das Interface `Logger` in zwei Interfaces zu teilen.
 Jetzt muss die Klasse `LogWriterLoggerAdapter` nicht mehr die Methode `getInnerLogger()` implementieren und somit ist der unerwünschte Nebeneffekt behoben.
-
-
 
 ---
 
@@ -226,27 +227,28 @@ Jetzt muss die Klasse `LogWriterLoggerAdapter` nicht mehr die Methode `getInnerL
 --
 
 ### Analyse GRASP: Geringe Kopplung (3P)
-[eine bis jetzt noch nicht behandelte Klasse als positives Beispiel geringer Kopplung; UML mit zusammenspielenden Klassen, Aufgabenbeschreibung der Klasse und Begründung, warum hier eine geringe Kopplung vorliegt; es müssen auch die Aufrufer/Nutzer der Klasse berücksichtigt werden]
+- [eine bis jetzt noch nicht behandelte Klasse als positives Beispiel geringer Kopplung; UML mit zusammenspielenden Klassen, Aufgabenbeschreibung der Klasse und Begründung, warum hier eine geringe Kopplung vorliegt; es müssen auch die Aufrufer/Nutzer der Klasse berücksichtigt werden]
 
 --
 
+![low_coupling.png](programmentwurf/grasp/low_coupling.png)
+
+note:
 Die Klasse `InteractionEventSource` realisiert die geringe Kopplung von GRASP.
 Durch das hier verwendete Listener Pattern (durch die Methoden `onSuccess(Consumer<T> onSuccess)` und `onFailure(Consumer<Void> onFailure)`)
-
-![low_coupling.png](programmentwurf/grasp/low_coupling.png)
 
 --
 
 ### Analyse GRASP: [Polymorphismus/Pure Fabrication] (3P)
-[eine Klasse als positives Beispiel entweder von Polymorphismus oder von Pure Fabrication; UML
+- [eine Klasse als positives Beispiel entweder von Polymorphismus oder von Pure Fabrication; UML
 Diagramm und Begründung, warum es hier zum Einsatz kommt]
 
 --
 
+#### Polymorphismus
 ![polymorphism.png](programmentwurf/grasp/polymorphism.png)
 
---
-
+note:
 Die Klasse `Savable` setzt Polymorphismus durch Generics um.
 Die Klasse kapselt die Funktionalität der De-/Serialisierung und des Ladens und Speicherns von Daten.
 Da für diese Funktionalität nicht relevant ist, welche Art von Objekt behandelt wird, ist die Klasse generisch gehalten.
@@ -255,7 +257,7 @@ Somit können mehrere Objekttypen durch die gleiche Klasse verarbeitet werden (h
 --
 
 ### DRY (2P)
-[ein Commit angeben, bei dem duplizierter Code/duplizierte Logik aufgelöst wurde; Code-Beispiele (vorher/nachher) einfügen; begründen und Auswirkung beschreiben – ggf. UML zum Verständnis ergänzen]
+- [ein Commit angeben, bei dem duplizierter Code/duplizierte Logik aufgelöst wurde; Code-Beispiele (vorher/nachher) einfügen; begründen und Auswirkung beschreiben – ggf. UML zum Verständnis ergänzen]
 
 --
 
@@ -266,10 +268,18 @@ Somit können mehrere Objekttypen durch die gleiche Klasse verarbeitet werden (h
 #### Vorher
 ![dry_before.png](programmentwurf/grasp/dry_before.png)
 
+note:
+Die unterschiedlichen Spezifizierungen der `Input` Klasse (hier `NumberInput` und `StringInput`) hatten das selbe Verhalten bei der Ausführung eines Prompts. Sie unterschieden sich lediglich beim Erstellen des `Results`.
+
 --
 
 #### Nachher
 ![dry_after.png](programmentwurf/grasp/dry_after.png)
+
+note:
+Das übereinstimmende Verhalten wurde in die Elternklasse `Input` ausgelagert und die Stelle, die sich bei den Kindklassen unterschieden hat durch eine neue abstrakte Methode `getResult(String input)` ersetzt.
+Diese implementieren die Kindklassen nun.
+Somit haben sie weiterhin das selbe Verhalten, der Code wurde aber dedupliziert.
 
 --
 
@@ -283,13 +293,6 @@ Somit können mehrere Objekttypen durch die gleiche Klasse verarbeitet werden (h
 --
 
 ![dry_code_stringinput.png](programmentwurf/grasp/dry_code_stringinput.png)
-
---
-
-Die unterschiedlichen Spezifizierungen der `Input` Klasse (hier `NumberInput` und `StringInput`) hatten das selbe Verhalten bei der Ausführung eines Prompts. Sie unterschieden sich lediglich beim Erstellen des `Results`.
-Das übereinstimmende Verhalten wurde in die Elternklasse `Input` ausgelagert und die Stelle, die sich bei den Kindklassen unterschieden hat durch eine neue abstrakte Methode `getResult(String input)` ersetzt.
-Diese implementieren die Kindklassen nun.
-Somit haben sie weiterhin das selbe Verhalten, der Code wurde aber dedupliziert.
 
 ---
 
