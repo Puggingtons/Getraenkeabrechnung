@@ -172,8 +172,24 @@ Dadurch können neue Rechtegruppen erstellt werden, ohne, dass die Aufrufer von 
 
 [Anm.: es darf nur ein Prinzip ausgewählt werden; es darf NICHT z.B. ein positives Beispiel für LSP und ein negatives Beispiel für ISP genommen werden]
 #### Positiv-Beispiel
+
+Die Klasse `Interaction` realisiert das LSP (Liskov Substitution Principle).
+Jede Implementierung der `Interaction` (z.B. `StringInputInteraction` oder `MenuInteraction`) kann an jeder beliebigen Stelle von `Interaction` benutzt werden, ohne, dass unerwünschte Nebeneffekte auftreten.
+
+![lsp_positive.png](solid/lsp_positive.png)
+
 #### Negativ-Beispiel
 
+Die `LogWriterLoggerAdapter` Klasse kann hier einen unerwünschten Nebeneffekt haben:
+Beim Aufruf auf `getInnerLogger()` gibt sie sich selbst zurück.
+Wenn eine Klasse also rekursiv die inneren Logger von den Loggern abruft, kommt es zu einem Stackoverflow.
+
+![lsp_negative.png](solid/lsp_negative.png)
+
+Eine Lösung ist das Interface `Logger` in zwei Interfaces zu teilen.
+Jetzt muss die Klasse `LogWriterLoggerAdapter` nicht mehr die Methode `getInnerLogger()` implementieren und somit ist der unerwünschte Nebeneffekt behoben.
+
+![lsp_negative_solution.png](solid/lsp_negative_solution.png)
 ---
 
 ## Kapitel 4: Weitere Prinzipien (8P)

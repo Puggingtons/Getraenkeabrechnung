@@ -34,9 +34,9 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
     - [x] Analyse OCP **(3 P.)**
         - [x] Positiv-Beispiel
         - [x] Negativ-Beispiel
-    - [ ] Analyse [LSP/ISP/DIP] **(2 P.)**
-        - [ ] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
+    - [x] Analyse [LSP/ISP/DIP] **(2 P.)**
+        - [x] Positiv-Beispiel
+        - [x] Negativ-Beispiel
 - [x] 4\. Weitere Prinzipien **(8 P.)**
     - [x] Analyse GRASP: Geringe Kopplung **(3 P.)**
     - [x] Analyse GRASP: [Polymophismus/Pure Fabrication] **(3 P.)**
