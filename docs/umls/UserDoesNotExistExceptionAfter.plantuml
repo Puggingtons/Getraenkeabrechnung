@@ -1,0 +1,29 @@
+@startuml exceptionAfter
+
+package users {
+    +exception UserDoesNotExistException {
+            + UserDoesNotExistException(String message)
+            + UserDoesNotExistException(String message, Throwable cause)
+            + UserDoesNotExistException(Throwable cause)
+        }
+
+    +class UserDatabase {
+            + UserDatabase()
+            + User[] getUsers()
+            + User getUser(Username username)
+            + void addUser(User user)
+            + void removeUser(User user)
+            + void deleteUser(User user)
+            + void registerNewUser(User user)
+            + boolean updateUser(User updatedUser)
+            + boolean userExists(Username username)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+        }
+}
+
+UserDatabase --> UserDoesNotExistException : <<throws>>
+
+@enduml

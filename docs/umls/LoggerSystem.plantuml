@@ -1,0 +1,76 @@
+@startuml loggerSystem
+
+package logging {
+    package logwriter {
+        +class FileLogWriter implements LogWriter {
+            + FileLogWriter(File file)
+            + void write(String message)
+        }
+
+        +interface LogWriter {
+            void write(String message)
+        }
+
+        +class PrintStreamLogWriter implements LogWriter {
+            + PrintStreamLogWriter(PrintStream printStream)
+            + void write(String message)
+        }
+    } /' end package: logwriter '/
+
+    +class ClassLogger implements Logger {
+        + ClassLogger(Class clazz, Logger logger)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    +interface Logger {
+        void log(String message)
+        Logger getInnerLogger()
+    }
+
+    +class LoggerFactory {
+        + LoggerFactory()
+        + LoggerFactory(LogWriter logWriter)
+        + LoggerFactory(Logger logger)
+        + LoggerFactory addUserLogger(User user)
+        + LoggerFactory addTimeLogger()
+        + LoggerFactory addClassLogger(Class clazz)
+        + Logger build()
+        + Logger defaultUserLogger(User user)
+        + Logger defaultTimeLogger()
+    }
+
+    +class LogWriterLoggerAdapter implements Logger {
+        + LogWriterLoggerAdapter(LogWriter logWriter)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    class TimeLogger implements Logger {
+        + TimeLogger(Logger logger)
+        + void setTimeOnce(LocalDateTime time)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    class UserLogger implements Logger {
+        + UserLogger(User user, Logger logger)
+        + void setUser(User user)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+}
+
+ClassLogger "1" o-- Logger
+LoggerFactory "1" o-- Logger
+LoggerFactory --> LogWriter /' usage? '/
+LoggerFactory --> ClassLogger
+LoggerFactory --> UserLogger
+LoggerFactory --> TimeLogger
+LoggerFactory --> LogWriterLoggerAdapter
+LoggerFactory --> PrintStreamLogWriter
+LogWriterLoggerAdapter "1" o-- Logger
+TimeLogger "1" o-- Logger
+UserLogger "1" o-- Logger
+
+@enduml

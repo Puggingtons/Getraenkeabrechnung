@@ -56,7 +56,7 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
     - [ ] Value Objects **(1.5 P.)**
 - [ ] 7\. Refactoring **(8 P.)**
     - [ ] Code Smells **(2 P.)**
-        - [ ] CODE SMELL 1
+        - [X] CODE SMELL 1
         - [ ] CODE SMELL 2
     - [ ] Refactorings **(6 P.)**
 - [ ] 8\. Entwurfsmuster **(8 P.)**

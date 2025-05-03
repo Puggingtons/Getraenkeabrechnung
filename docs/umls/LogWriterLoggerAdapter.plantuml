@@ -1,0 +1,37 @@
+@startuml LogWriterLoggerAdapter
+
+package logging {
+    package logwriter {
+        +class FileLogWriter implements LogWriter {
+            + FileLogWriter(File file)
+            + void write(String message)
+        }
+
+        +interface LogWriter {
+            void write(String message)
+        }
+
+        +class PrintStreamLogWriter implements LogWriter {
+            + PrintStreamLogWriter(PrintStream printStream)
+            + void write(String message)
+        }
+    } /' end package: logwriter '/
+
+    +interface Logger {
+        void log(String message)
+        Logger getInnerLogger()
+    }
+
+    +class LogWriterLoggerAdapter implements Logger {
+        + LogWriterLoggerAdapter(LogWriter logWriter)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+}
+
+LoggerFactory --> LogWriter /' usage? '/
+LoggerFactory --> LogWriterLoggerAdapter
+LoggerFactory --> PrintStreamLogWriter
+LogWriterLoggerAdapter "1" o-- Logger
+@enduml

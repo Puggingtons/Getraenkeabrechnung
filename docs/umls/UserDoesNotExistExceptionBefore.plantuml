@@ -1,0 +1,20 @@
+@startuml exceptionBefore
+
+package user {
+    +class UserDatabase {
+            + UserDatabase()
+            + User[] getUsers()
+            + void addUser(User user)
+            + void removeUser(User user)
+            + void deleteUser(User user)
+            + void registerNewUser(User user)
+            + boolean updateUser(User updatedUser)
+            + boolean userExists(Username username)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+        }
+}
+
+@enduml
