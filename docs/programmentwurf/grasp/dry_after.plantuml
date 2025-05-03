@@ -1,0 +1,24 @@
+@startuml
+abstract class Input<T> {
+    # Input()
+    # Input(String prompt)
+    # Input(InputReader reader, OutputWriter writer, String prompt)
+    + void setReader(Reader reader)
+    + void setWriter(Writer writer)
+    # String readInput()
+    # boolean isHelp(String str)
+    # void print(String msg)
+    # void println(String msg)
+    + Result<T> prompt()
+    {abstract} Result<T> getResult(String input)
+
+}
+
+class NumberInput extends Input {
+    + Result<Integer> getResult(String input)
+}
+
+class StringInput extends Input {
+    + Result<String> getResult(String input)
+}
+@enduml

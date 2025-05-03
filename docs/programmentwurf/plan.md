@@ -32,15 +32,15 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
         - [x] Positiv-Beispiel
         - [x] Negativ-Beispiel
     - [ ] Analyse OCP **(3 P.)**
-        - [ ] Positiv-Beispiel
+        - [x] Positiv-Beispiel
         - [ ] Negativ-Beispiel
     - [ ] Analyse [LSP/ISP/DIP] **(2 P.)**
         - [ ] Positiv-Beispiel
         - [ ] Negativ-Beispiel
-- [ ] 4\. Weitere Prinzipien **(8 P.)**
-    - [ ] Analyse GRASP: Geringe Kopplung **(3 P.)**
-    - [ ] Analyse GRASP: [Polymophismus/Pure Fabrication] **(3 P.)**
-    - [ ] DRY **(2 P.)**
+- [x] 4\. Weitere Prinzipien **(8 P.)**
+    - [x] Analyse GRASP: Geringe Kopplung **(3 P.)**
+    - [x] Analyse GRASP: [Polymophismus/Pure Fabrication] **(3 P.)**
+    - [x] DRY **(2 P.)**
 - [ ] 5\. Unit Tests **(8 P.)**
     - [ ] 10 Unit Tests **(2 P.)**
     - [ ] ATRIP: Automatic, Thorough und Professional **(2 P.)**

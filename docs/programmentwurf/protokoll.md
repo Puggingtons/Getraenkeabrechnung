@@ -185,6 +185,24 @@ Somit können mehrere Objekttypen durch die gleiche Klasse verarbeitet werden (h
 ### DRY (2P)
 [ein Commit angeben, bei dem duplizierter Code/duplizierte Logik aufgelöst wurde; Code-Beispiele (vorher/nachher) einfügen; begründen und Auswirkung beschreiben – ggf. UML zum Verständnis ergänzen]
 
+https://github.com/Puggingtons/Getraenkeabrechnung/commit/7050c4c57c00a0a52a48088c0a997e9fa2e227af
+
+#### Vorher
+![dry_before.png](grasp/dry_before.png)
+
+#### Nachher
+![dry_after.png](grasp/dry_after.png)
+
+#### Code-Diff
+![dry_code_input.png](grasp/dry_code_input.png)
+![dry_code_numberinput.png](grasp/dry_code_numberinput.png)
+![img.png](grasp/dry_code_stringinput.png)
+
+Die unterschiedlichen Spezifizierungen der `Input` Klasse (hier `NumberInput` und `StringInput`) hatten das selbe Verhalten bei der Ausführung eines Prompts. Sie unterschieden sich lediglich beim Erstellen des `Results`.
+Das übereinstimmende Verhalten wurde in die Elternklasse `Input` ausgelagert und die Stelle, die sich bei den Kindklassen unterschieden hat durch eine neue abstrakte Methode `getResult(String input)` ersetzt.
+Diese implementieren die Kindklassen nun.
+Somit haben sie weiterhin das selbe Verhalten, der Code wurde aber dedupliziert.
+
 ---
 
 ## Kapitel 5: Unit Tests (8P)
