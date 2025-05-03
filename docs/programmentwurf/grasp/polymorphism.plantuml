@@ -1,0 +1,14 @@
+@startuml
++class Savable<T> {
+    + Savable(T t)
+    + T get()
+    + void load(String path, TypeToken<T> typeToken)
+    + void load(Path path, TypeToken<T> typeToken)
+    + void save(String path)
+    + void save(Path path)
+}
+
+AccountDatabase "1" *-- Savable : T = List<Account>
+DrinkDatabase "1" *-- Savable : T = List<DrinkOption>
+UserDatabase "1" *-- Savable : T = List<User>
+@enduml

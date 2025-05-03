@@ -175,6 +175,13 @@ Durch das hier verwendete Listener Pattern (durch die Methoden `onSuccess(Consum
 ### Analyse GRASP: [Polymorphismus/Pure Fabrication] (3P)
 [eine Klasse als positives Beispiel entweder von Polymorphismus oder von Pure Fabrication; UML
 Diagramm und Begründung, warum es hier zum Einsatz kommt]
+
+Die Klasse `Savable` setzt Polymorphismus durch Generics um.
+Die Klasse kapselt die Funktionalität der De-/Serialisierung und des Ladens und Speicherns von Daten.
+Da für diese Funktionalität nicht relevant ist, welche Art von Objekt behandelt wird, ist die Klasse generisch gehalten.
+Somit können mehrere Objekttypen durch die gleiche Klasse verarbeitet werden (hier `List<Account`, `List<User>`, `List<DrinkOption>`).
+
+![polymorphism.png](grasp/polymorphism.png)
 ### DRY (2P)
 [ein Commit angeben, bei dem duplizierter Code/duplizierte Logik aufgelöst wurde; Code-Beispiele (vorher/nachher) einfügen; begründen und Auswirkung beschreiben – ggf. UML zum Verständnis ergänzen]
 
