@@ -64,7 +64,7 @@ Geworden ist es ein `Monolith`.
 --
 
 ### Domain Code (1P)
-[kurze Erläuterung in eigenen Worten, was Domain Code ist – 1 Beispiel im Code zeigen, das bisher
+- [kurze Erläuterung in eigenen Worten, was Domain Code ist – 1 Beispiel im Code zeigen, das bisher
 noch nicht gezeigt wurde]
 
 --
@@ -128,10 +128,11 @@ Die Klasse `InputReader` hat die einzige Aufgabe, eine Eingabezeile aus einem `I
 --
 
 #### Negativ-Beispiel
+![srp_negative.png](programmentwurf/solid/srp_negative.png)
+
+note:
 Die Klasse `AccountDatabase` hat hier mehrere Aufgaben.
 Zum einen ist sie für die Erstellung, Persistierung und Löschung von `Account`s zuständig, zum anderen hat sie auch die Funktionalität mit `checkIfAccountBalanceIsZero(User user)`, ob die `Balance` eines `Account` 0 ist.
-
-![img.png](programmentwurf/solid/srp_negative.png)
 
 --
 
@@ -158,7 +159,6 @@ Die Klasse `AccountDatabase` ist somit lediglich für Hinzufügen, Entfernen und
 note:
 Das Interface `Logger` erfüllt hier das OCP.
 Es können mehrere Implementierungen des `Logger` Interface implementiert werden, ohne, dass deren Aufrufer angepasst werden müssen.
-
 Warum wurde das hier umgesetzt?
 Die Logs sollen unterschiedlich sein, je nachdem, ob ein Benutzer eingeloggt ist oder nicht.
 Die Klasse `ThirstyCalc`, welche von `Logger` und `LoggerFactory` abhängig ist, ruft bei jedem Log nur die `log(String message)` Methode vom `Logger` Interface auf.
@@ -176,6 +176,7 @@ Wenn man eine neue Benutzerkategorie einführen möchte, müsste man auch das di
 
 --
 
+#### Lösung für das Negativ-Beispiel
 ![ocp_negative_solution.png](programmentwurf/solid/ocp_negative_solution.png)
 
 note:
@@ -191,7 +192,7 @@ Dadurch können neue Rechtegruppen erstellt werden, ohne, dass die Aufrufer von 
 
 --
 
-#### Positiv-Beispiel
+#### Positiv-Beispiel: LSP
 
 ![lsp_positive.png](programmentwurf/solid/lsp_positive.png)
 
@@ -201,7 +202,7 @@ Jede Implementierung der `Interaction` (z.B. `StringInputInteraction` oder `Menu
 
 --
 
-#### Negativ-Beispiel
+#### Negativ-Beispiel: LSP
 
 ![lsp_negative.png](programmentwurf/solid/lsp_negative.png)
 
@@ -212,6 +213,7 @@ Wenn eine Klasse also rekursiv die inneren Logger von den Loggern abruft, kommt 
 
 --
 
+#### Lösung für das Negativ-Beispiel: LSP
 ![lsp_negative_solution.png](programmentwurf/solid/lsp_negative_solution.png)
 
 note:
