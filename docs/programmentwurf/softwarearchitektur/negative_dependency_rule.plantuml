@@ -1,9 +1,31 @@
 @startuml
-abstract class Interaction
-class MenuInteraction extends Interaction
+class ThirstyCalc
+class Main
 
-class MainInteraction
+package io {
+    package interactions {
+        abstract class Interaction
+        class MenuInteraction extends Interaction
+        class MainInteraction extends MenuInteraction
+        class LoggedInUserInteractionFactory
+        class DeleteUserInteraction extends Interaction
+        class ExitInteraction extends Interaction
+        class LoginInteraction extends Interaction
+        class RegisterUserInteraction extends Interaction
+    }
+}
 
-MainInteraction --> MenuInteraction
-class LoggedInUserInteractionFactory
+Main --> MainInteraction
+Main --> ThirstyCalc
+
+MenuInteraction "n" o-- Interaction
+
+MainInteraction "1" o-- ThirstyCalc
+MainInteraction --> LoggedInUserInteractionFactory
+LoggedInUserInteractionFactory --> DeleteUserInteraction
+LoggedInUserInteractionFactory "1" o-- ThirstyCalc
+DeleteUserInteraction "1" o-- ThirstyCalc
+MainInteraction --> ExitInteraction
+MainInteraction --> LoginInteraction
+MainInteraction --> RegisterUserInteraction
 @enduml

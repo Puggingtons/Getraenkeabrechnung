@@ -104,8 +104,15 @@ Die Klasse `LoggerFactory` erfüllt hier die Dependency Rule.
 Die Klasse `ThirstyCalc` hängt von ihr ab.
 Sie ist nicht von einer äußeren Klasse (hier `ThirstyCalc`) abhängig und hängt nur von inneren Klassen (hier `Logger`, allen Implementierungen von `Logger` sowie `LogWriter` und `PrintStreamLogWriter`) ab.
 ![positive_dependency_rule.png](softwarearchitektur/positive_dependency_rule.png)
-#### Negativ-Beispiel: Dependency Rule
 
+#### Negativ-Beispiel: Dependency Rule
+Die Klasse `MainInteraction` erfüllt die Dependency Rule nicht.
+Die `Main` Klasse ist von `MainInteraction` abhängig.
+Die Klasse `MainInteraction` ist von `MenuInteraction` durch Vererbung und von `ExitInteraction`, `LoggedInUserFactory`, `LoginInteraction` und `RegisterUserInteraction` durch Nutzung abhängig.
+Die Klasse `ThirstyCalc`, aus einer oberen Schicht in der Clean Architektur, ist ebenfalls eine Abhängigkeit von `MainInteraction`.
+Da also eine Klasse aus einer unteren Ebene (`MainInteraction`) von einer aus einer oberen Ebene (`ThirstyCalc`) abhängig ist, ist hier die Dependecy Rule gebrochen. 
+
+![negative_dependency_rule.png](softwarearchitektur/negative_dependency_rule.png)
 
 ---
 
@@ -120,7 +127,7 @@ Die Klasse `InputReader` hat die einzige Aufgabe, eine Eingabezeile aus einem `I
 
 #### Negativ-Beispiel
 Die Klasse `AccountDatabase` hat hier mehrere Responsibilities.
-Zum einen ist sie für die Erstellung, Persistierung und Löschung von `Accounts` zuständig, zum anderen hat sie auch die Funktionalität mit `checkIfAccountBalanceIsZero(User user)`, ob die `Balance` eines `Accounts` 0 ist.
+Zum einen ist sie für die Erstellung, Persistierung und Löschung von `Account`s zuständig, zum anderen hat sie auch die Funktionalität mit `checkIfAccountBalanceIsZero(User user)`, ob die `Balance` eines `Account` 0 ist.
 
 ![img.png](solid/srp_negative.png)
 
@@ -129,7 +136,7 @@ Eine mögliche Lösung, um das SRP für `AccountDatabase` umzusetzen, ist im fol
 ![srp_negative_soliution.png](solid/srp_negative_soliution.png)
 
 Hier wurde die Geschäftslogik, die den `User` betrifft in die Klasse `UserAccountService` ausgelagert.
-Die Klasse `AccountDatabase` ist somit lediglich für Hinzufügen, Entfernen und Persistieren der `Accounts` verantworlich.
+Die Klasse `AccountDatabase` ist somit lediglich für Hinzufügen, Entfernen und Persistieren der `Account`s verantworlich.
 
 ### Analyse OCP (3P)
 [jeweils eine Klasse als positives und negatives Beispiel für OCP; jeweils UML und Analyse mit Begründung, warum das OCP erfüllt/nicht erfüllt wurde – falls erfüllt: warum hier sinnvoll/welches Problem gab es? Falls nicht erfüllt: wie könnte man es lösen (inkl. UML)?]
