@@ -1,0 +1,9 @@
+@startuml
+abstract class Interaction
+class MenuInteraction extends Interaction
+
+class MainInteraction
+
+MainInteraction --> MenuInteraction
+class LoggedInUserInteractionFactory
+@enduml

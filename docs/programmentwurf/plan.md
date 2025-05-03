@@ -23,14 +23,14 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
     - [ ] Technischer Überblick **(2 P.)**
 - [ ] 2\. Softwarearchitektur **(8 P.)**
     - [ ] Gewählte Architektur **(4 P.)**
-    - [ ] Domain Code **(1 P.)**
+    - [x] Domain Code **(1 P.)**
     - [ ] Analyse der Dependency Rule **(3 P.)**
         - [x] Positiv-Beispiel
         - [ ] Negativ-Beispiel
 - [ ] 3\. SOLID **(8 P.)**
-    - [ ] Analyse SRP **(3 P.)**
-        - [ ] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
+    - [x] Analyse SRP **(3 P.)**
+        - [x] Positiv-Beispiel
+        - [x] Negativ-Beispiel
     - [ ] Analyse OCP **(3 P.)**
         - [ ] Positiv-Beispiel
         - [ ] Negativ-Beispiel

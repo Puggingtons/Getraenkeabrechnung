@@ -114,7 +114,23 @@ Sie ist nicht von einer äußeren Klasse (hier `ThirstyCalc`) abhängig und hän
 [jeweils eine Klasse als positives und negatives Beispiel für SRP; jeweils UML und Beschreibung der
 Aufgabe bzw. der Aufgaben und möglicher Lösungsweg des Negativ-Beispiels (inkl. UML)]
 #### Positiv-Beispiel
+Die Klasse `InputReader` hat die einzige Aufgabe, eine Eingabezeile aus einem `InputStream` zu lesen.
+
+![srp_positive.png](solid/srp_positive.png)
+
 #### Negativ-Beispiel
+Die Klasse `AccountDatabase` hat hier mehrere Responsibilities.
+Zum einen ist sie für die Erstellung, Persistierung und Löschung von `Accounts` zuständig, zum anderen hat sie auch die Funktionalität mit `checkIfAccountBalanceIsZero(User user)`, ob die `Balance` eines `Accounts` 0 ist.
+
+![img.png](solid/srp_negative.png)
+
+Eine mögliche Lösung, um das SRP für `AccountDatabase` umzusetzen, ist im folgenden UML-Diagram dargestellt:
+
+![srp_negative_soliution.png](solid/srp_negative_soliution.png)
+
+Hier wurde die Geschäftslogik, die den `User` betrifft in die Klasse `UserAccountService` ausgelagert.
+Die Klasse `AccountDatabase` ist somit lediglich für Hinzufügen, Entfernen und Persistieren der `Accounts` verantworlich.
+
 ### Analyse OCP (3P)
 [jeweils eine Klasse als positives und negatives Beispiel für OCP; jeweils UML und Analyse mit Begründung, warum das OCP erfüllt/nicht erfüllt wurde – falls erfüllt: warum hier sinnvoll/welches Problem gab es? Falls nicht erfüllt: wie könnte man es lösen (inkl. UML)?]
 #### Positiv-Beispiel

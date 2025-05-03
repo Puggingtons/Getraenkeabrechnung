@@ -1,0 +1,29 @@
+@startuml
+
+class AccountDatabase {
+    +Account[] getAccounts()
+    +void addAccount(Account account)
+    +void removeAccount(Account account)
+    + void load(String path)
+    + void save(String path)
+}
+
+class UserAccountService {
+    + void createAccount(User user)
+    + boolean checkIfAccountBalanceIsZero(User user)
+    + void removeAccount(User user)
+}
+
+class Account {}
+
+class Savable<T> {
+    + Savable(T t)
+    + T get()
+    + void load(String path)
+    + void save(String path)
+}
+
+AccountDatabase "n" *-- Account
+AccountDatabase "1" *-- Savable
+UserAccountService "1" *-- AccountDatabase
+@enduml
