@@ -21,12 +21,12 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
     - [ ] Übersicht über die Applikation **(1 P.)**
     - [ ] Starten der Applikation **(1 P.)**
     - [ ] Technischer Überblick **(2 P.)**
-- [ ] 2\. Softwarearchitektur **(8 P.)**
-    - [ ] Gewählte Architektur **(4 P.)**
+- [x] 2\. Softwarearchitektur **(8 P.)**
+    - [x] Gewählte Architektur **(4 P.)**
     - [x] Domain Code **(1 P.)**
-    - [ ] Analyse der Dependency Rule **(3 P.)**
+    - [x] Analyse der Dependency Rule **(3 P.)**
         - [x] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
+        - [x] Negativ-Beispiel
 - [ ] 3\. SOLID **(8 P.)**
     - [x] Analyse SRP **(3 P.)**
         - [x] Positiv-Beispiel

@@ -1,0 +1,59 @@
+@startuml
++class Main {
+    + {static} void main(String[] args)
+}
+
++abstract class Interaction<T> extends InteractionEventSource {
+    {static} String DEFAULT_PROMPT
+    + Interaction()
+    + void explain()
+    {abstract} String usage()
+    + void run()
+    # {abstract} void execute()
+    # void stop()
+}
+
++class InteractionEventSource<T> {
+    + InteractionEventSource()
+    + void onSuccess(Consumer<T> onSuccess)
+    # void success(T t)
+    + void onFailure(Consumer<Void> onFailure)
+    # void failure()
+}
+
++class MenuInteraction extends Interaction {
+}
+
++class MainInteraction extends MenuInteraction {
+    + MainInteraction(ThirstyCalc thirstyCalc)
+}
+
++class ThirstyCalc {
+    + ThirstyCalc()
+    + ThirstyCalc(Logger logger)
+    + void login(User user)
+    + void logout()
+    + void createNewUser(User user)
+    + void registerNewUser(User user)
+    + void changePassword(User user)
+    + void createNewDrinkOption(DrinkOption drinkOption)
+    + boolean drinkOptionExists(DrinkName drinkName)
+    + void deleteUser(User user)
+    + ApplicationState getApplicationState()
+    + UserDatabase getUserDatabase()
+    + AccountDatabase getAccountDatabase()
+    + Account getAccountOfLoggedInUser()
+    + void save()
+    + void load()
+}
+
+Main --> MainInteraction
+Main --> ThirstyCalc
+
+note right of ThirstyCalc : Domain
+note right of MainInteraction : Application
+note right of MenuInteraction : Application
+note right of Interaction : Application
+note right of InteractionEventSource : Application
+
+@enduml

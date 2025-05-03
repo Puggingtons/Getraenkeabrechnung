@@ -73,6 +73,11 @@ umgesetzt? Analyse und Begründung inkl. UML der wichtigsten Klassen, sowie Eino
 Gewählt wurde die `Clean Architecture`.
 Geworden ist es ein `Monolith`.
 
+![architecture_clean.jpg](softwarearchitektur/architecture_clean.jpg)
+
+#### Wichtigste Klassen
+![important_classes.png](softwarearchitektur/important_classes.png)
+
 ### Domain Code (1P)
 [kurze Erläuterung in eigenen Worten, was Domain Code ist – 1 Beispiel im Code zeigen, das bisher
 noch nicht gezeigt wurde]
