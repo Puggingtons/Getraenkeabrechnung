@@ -31,9 +31,9 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
     - [x] Analyse SRP **(3 P.)**
         - [x] Positiv-Beispiel
         - [x] Negativ-Beispiel
-    - [ ] Analyse OCP **(3 P.)**
+    - [x] Analyse OCP **(3 P.)**
         - [x] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
+        - [x] Negativ-Beispiel
     - [ ] Analyse [LSP/ISP/DIP] **(2 P.)**
         - [ ] Positiv-Beispiel
         - [ ] Negativ-Beispiel

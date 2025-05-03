@@ -157,7 +157,15 @@ Wenn sich ein Benutzer einloggt, wird der `Logger` in ThirstyCalc durch eine Ins
 ![ocp_positive.png](solid/ocp_positive.png)
 
 #### Negativ-Beispiel
+Die Klasse `AdminRights` erfüllt hier nicht OCP.
+Wenn man eine neue Benutzerkategorie einführen möchte, müsste man auch das die Aufrufer von `AdminRights` anpassen, um an den benötigten Stellen dann die anderen Rechte zu verteilen.
 
+![ocp_negative.png](solid/ocp_negative.png)
+
+Eine Lösung ist die Abstraktion zu einem `RightsGiver` Interface.
+Dadurch können neue Rechtegruppen erstellt werden, ohne, dass die Aufrufer von `RightsGiver` angepasst werden müssen.
+
+![ocp_negative_solution.png](solid/ocp_negative_solution.png)
 
 ### Analyse [LSP/ISP/DIP] (2P)
 [jeweils eine Klasse als positives und negatives Beispiel für entweder LSP oder ISP oder DIP; jeweils UML und Begründung, warum hier das Prinzip erfüllt/nicht erfüllt wird; beim Negativ-Beispiel UML einer möglichen Lösung hinzufügen]
