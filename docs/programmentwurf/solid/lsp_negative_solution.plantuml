@@ -1,0 +1,38 @@
+@startuml
+    +interface InnerLoggable{
+        Logger getInnerLogger()
+    }
+
+    +interface Logger {
+        void log(String message)
+    }
+
+    +class ClassLogger implements Logger, InnerLoggable {
+        + ClassLogger(Class clazz, Logger logger)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    +class LogWriterLoggerAdapter implements Logger {
+        + LogWriterLoggerAdapter(LogWriter logWriter)
+        + void log(String message)
+    }
+
+    class TimeLogger implements Logger, InnerLoggable {
+        + TimeLogger(Logger logger)
+        + void setTimeOnce(LocalDateTime time)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+    class UserLogger implements Logger, InnerLoggable {
+        + UserLogger(User user, Logger logger)
+        + void setUser(User user)
+        + void log(String message)
+        + Logger getInnerLogger()
+    }
+
+TimeLogger "1" o-- Logger
+UserLogger "1" o-- Logger
+ClassLogger "1" o-u- Logger
+@enduml

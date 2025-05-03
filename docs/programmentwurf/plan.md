@@ -21,26 +21,26 @@ In diesem Dokument sind die einzelnen Kapitel aufgelistet und Personen zugeordne
     - [ ] Übersicht über die Applikation **(1 P.)**
     - [ ] Starten der Applikation **(1 P.)**
     - [ ] Technischer Überblick **(2 P.)**
-- [ ] 2\. Softwarearchitektur **(8 P.)**
-    - [ ] Gewählte Architektur **(4 P.)**
-    - [ ] Domain Code **(1 P.)**
-    - [ ] Analyse der Dependency Rule **(3 P.)**
-        - [ ] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
+- [x] 2\. Softwarearchitektur **(8 P.)**
+    - [x] Gewählte Architektur **(4 P.)**
+    - [x] Domain Code **(1 P.)**
+    - [x] Analyse der Dependency Rule **(3 P.)**
+        - [x] Positiv-Beispiel
+        - [x] Negativ-Beispiel
 - [ ] 3\. SOLID **(8 P.)**
-    - [ ] Analyse SRP **(3 P.)**
-        - [ ] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
-    - [ ] Analyse OCP **(3 P.)**
-        - [ ] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
-    - [ ] Analyse [LSP/ISP/DIP] **(2 P.)**
-        - [ ] Positiv-Beispiel
-        - [ ] Negativ-Beispiel
-- [ ] 4\. Weitere Prinzipien **(8 P.)**
-    - [ ] Analyse GRASP: Geringe Kopplung **(3 P.)**
-    - [ ] Analyse GRASP: [Polymophismus/Pure Fabrication] **(3 P.)**
-    - [ ] DRY **(2 P.)**
+    - [x] Analyse SRP **(3 P.)**
+        - [x] Positiv-Beispiel
+        - [x] Negativ-Beispiel
+    - [x] Analyse OCP **(3 P.)**
+        - [x] Positiv-Beispiel
+        - [x] Negativ-Beispiel
+    - [x] Analyse [LSP/ISP/DIP] **(2 P.)**
+        - [x] Positiv-Beispiel
+        - [x] Negativ-Beispiel
+- [x] 4\. Weitere Prinzipien **(8 P.)**
+    - [x] Analyse GRASP: Geringe Kopplung **(3 P.)**
+    - [x] Analyse GRASP: [Polymophismus/Pure Fabrication] **(3 P.)**
+    - [x] DRY **(2 P.)**
 - [ ] 5\. Unit Tests **(8 P.)**
     - [ ] 10 Unit Tests **(2 P.)**
     - [ ] ATRIP: Automatic, Thorough und Professional **(2 P.)**

@@ -1,0 +1,376 @@
+@startuml uml
+
+
+package data {
+    package banking {
+        +class Account {
+        }
+
+        +class AccountDatabase {
+        }
+
+        +exception AccountDoesNotExistException {
+        }
+
+        +exception NotEnoughMoneyException {
+        }
+    } /' end package: data.banking '/
+
+    package drinks {
+        +class Color {
+        }
+
+        +class ColorName {
+        }
+
+        +class DrinkCategory {
+        }
+
+        +class DrinkDatabase {
+        }
+
+        +class DrinkName {
+        }
+
+        +class DrinkOption {
+        }
+
+        +class Position {
+        }
+    } /' end package: data.drinks '/
+
+    package numbers {
+        +class Money {
+        }
+    } /'end package: data.numbers '/
+
+    package users {
+        +class User {
+        }
+
+        +class UserDatabase {
+        }
+
+        +exception UserDoesNotExistException {
+        }
+    } /' end package: data.users '/
+
+    package validatables {
+        package validators {
+            +class EmailValidator {
+            }
+
+            +class PasswordValidator {
+            }
+
+            +class UsernameValidator {
+            }
+        } /' end package: validatables.validators '/
+
+        +class Email implements Validatable {
+        }
+
+        +class Password implements Validatable {
+        }
+
+        +exception PasswordManagementException {
+        }
+
+        +class Username implements Validatable {
+        }
+
+        +interface Validatable {
+        }
+    } /' end package: data.validatables '/
+
+    +class Savable<T> {
+    }
+} /' end package: data '/
+
+package io {
+    package input {
+        package result {
+            +class Result<T> {
+            }
+
+            enum ResultState {
+            }
+        } /' end package: io.input.result '/
+
+        +class BooleanInput extends Input<Boolean> {
+        }
+
+        +class FloatInput extends Input<Float> {
+        }
+
+        abstract class Input<T> {
+        }
+
+        +class NumberInput extends Input<Integer> {
+        }
+
+        +class StringInput extends Input<String> {
+        }
+    } /' end package: io.input '/
+
+    package interactions {
+        package event {
+            +class InteractionEventSource<T> {
+            }
+        } /' end: io.interactions.event '/
+
+        +class AddRightsInteraction extends Interaction<User> {
+        }
+
+        +class ChangePasswordInteraction extends Interaction<User> {
+        }
+
+        +class CheckBalanceInteraction extends Interaction<Money> {
+        }
+
+        +class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
+        }
+
+        +class CreateUserInteraction extends Interaction<User> {
+        }
+
+        +class DeleteUserInteraction extends Interaction<User> {
+        }
+
+        +class ExitInteraction extends Interaction<Void> {
+        }
+
+        +abstract class Interaction<T> extends event.InteractionEventSource {
+        }
+
+        +class LoggedInUserInteractionFactory {
+        }
+
+        +class LoginInteraction extends Interaction<User> {
+        }
+
+        +class LogoutInteraction extends Interaction<Void> {
+        }
+
+        +class MainInteraction extends MenuInteraction {
+        }
+
+        +class MenuInteraction extends Interaction<Void> {
+        }
+
+        +class RegisterUserInteraction extends Interaction<User> {
+        }
+
+        +class SelectInteraction extends Interaction<String> {
+        }
+
+        +class StringInputInteraction extends Interaction<String> {
+        }
+    } /' end package: io.interactions '/
+
+    package reader {
+        +interface Reader {
+        }
+
+        +class InputReader implements Reader {
+        }
+    } /' end package: io.reader '/
+
+    package writer {
+        +interface Writer {
+        }
+
+        +class OutputWriter implements Writer {
+        }
+    } /' end package: io.writer '/
+} /' end package: io '/
+
+package logging {
+    package logwriter {
+        +class FileLogWriter implements LogWriter {
+        }
+
+        +interface LogWriter {
+        }
+
+        +class PrintStreamLogWriter implements LogWriter {
+        }
+    } /' end package: logwriter '/
+
+    +class ClassLogger implements Logger {
+    }
+
+    +interface Logger {
+    }
+
+    +class LoggerFactory {
+    }
+
+    +class LogWriterLoggerAdapter implements Logger {
+    }
+
+    class TimeLogger implements Logger {
+    }
+
+    class UserLogger implements Logger {
+    }
+} /' end package: logging '/
+
+package rights {
+    +enum Right {
+    }
+
+    +class AdminRights {
+    }
+} /' end package: rights '/
+
+package state {
+    +class ApplicationState {
+    }
+} /' end package: state '/
+
++class Main {
+}
+
++class ThirstyCalc {
+}
+
+/'#########################################################################'/
+/'#                               Relations                               #'/
+/'#########################################################################'/
+Account "1" o-- Username
+Account "1" *-- Money
+Account --> NotEnoughMoneyException : <<throws>> /' usage? '/
+
+AccountDatabase "n" *-- Account
+'AccountDatabase --> User /' usage? no '/
+AccountDatabase "1" *-- Savable
+AccountDatabase --> AccountDoesNotExistException : <<throws>>
+DrinkDatabase "n" *-- DrinkOption
+'DrinkDatabase --> DrinkName /' usage? no '/
+DrinkDatabase "1" *-- Savable
+UserDatabase "n" *-- User
+UserDatabase --> UserDoesNotExistException : <<throws>>
+'UserDatabase --> Username /' usage? no '/
+UserDatabase "1" *-- Savable
+
+Result "1" *-- ResultState
+'BooleanInput --> Result /' usage? no '/
+'FloatInput --> Result /' usage? no '/
+Input  --> Result /' usage? '/
+Input "1" o-- Reader
+Input "1" o-- Writer
+Input --> InputReader
+Input --> OutputWriter
+'NumberInput --> Result /' usage? no '/
+'StringInput --> Result /' usage? no '/
+
+AddRightsInteraction "2" *-- StringInput
+AddRightsInteraction "1" o-- UserDatabase
+'AddRightsInteraction --> Username /' usage? no '/
+'AddRightsInteraction --> Right /' usage? no '/
+AddRightsInteraction --> User
+ChangePasswordInteraction "3" *-- StringInput
+ChangePasswordInteraction "1" o-- User
+ChangePasswordInteraction "1" o-- UserDatabase
+ChangePasswordInteraction --> Password
+CheckBalanceInteraction "1" o-- Account
+CreateDrinkOptionInteraction "2" *-- StringInput
+CreateDrinkOptionInteraction "1" o-- ThirstyCalc
+'CreateDrinkOptionInteraction --> DrinkName /' usage? no '/
+CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
+'CreateDrinkOptionInteraction --> ColorName /' usage? no '/
+CreateUserInteraction "3" *-- StringInput
+CreateUserInteraction "1" *-- BooleanInput
+CreateUserInteraction "1" o-- UserDatabase
+CreateUserInteraction --> UsernameValidator
+CreateUserInteraction --> PasswordValidator
+CreateUserInteraction --> User /' usage? '/
+CreateUserInteraction --> AdminRights /' usage? '/
+DeleteUserInteraction "2" *-- StringInput
+DeleteUserInteraction "1" o-- ThirstyCalc
+'DeleteUserInteraction --> Username /' usage? no '/
+DeleteUserInteraction --> User /' usage? '/
+LoggedInUserInteractionFactory "1" o-- ThirstyCalc
+LoggedInUserInteractionFactory "1" *-- MenuInteraction
+LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
+LoggedInUserInteractionFactory --> ChangePasswordInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CheckBalanceInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
+LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
+LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
+LoginInteraction "2" *-- StringInput
+LoginInteraction "1" o-- UserDatabase
+'LoginInteraction --> Username /' usage? no '/
+LoginInteraction --> User /' usage? '/
+'LoginInteraction --> Password /' usage? no '/
+'LoginInteraction --> PasswordManagementException /' usage? no '/
+MainInteraction "1" o-- ThirstyCalc
+MainInteraction --> ExitInteraction /' usage? '/
+MainInteraction --> RegisterUserInteraction /' usage? '/
+MainInteraction --> LoginInteraction /' usage? '/
+MainInteraction --> LoggedInUserInteractionFactory /' usage? '/
+MenuInteraction "n" o-- Interaction
+MenuInteraction "1" *-- SelectInteraction
+RegisterUserInteraction "3" *-- StringInput
+RegisterUserInteraction "1" o-- UserDatabase
+'RegisterUserInteraction --> Username /' usage? no '/
+'RegisterUserInteraction --> Password /' usage? no '/
+RegisterUserInteraction --> UsernameValidator /' usage? '/
+RegisterUserInteraction --> PasswordValidator /' usage? '/
+RegisterUserInteraction --> User /'usage? '/
+SelectInteraction "1" *-- StringInput
+StringInputInteraction "1" *-- StringInput
+
+ClassLogger "1" o-- Logger
+LoggerFactory "1" o-- Logger
+LoggerFactory --> LogWriter /' usage? '/
+LoggerFactory --> ClassLogger
+LoggerFactory --> UserLogger
+LoggerFactory --> TimeLogger
+LoggerFactory --> LogWriterLoggerAdapter
+LoggerFactory --> PrintStreamLogWriter
+LogWriterLoggerAdapter "1" o-- Logger
+LogWriterLoggerAdapter --> LogWriter
+TimeLogger "1" o-- Logger
+UserLogger "1" o-- Logger
+UserLogger "1" o-- User
+
+AdminRights "n" *-- Right
+AdminRights --> User /' usage? '/
+
+ApplicationState "1" o-- User
+
+EmailValidator --> Validatable /' usage? '/
+PasswordValidator --> Validatable /' usage? '/
+UsernameValidator --> Validatable /' usage? '/
+
+Color "1" o-- ColorName
+DrinkCategory "1" o-- DrinkOption
+DrinkCategory "1" o-- ColorName
+DrinkOption "1" o-- DrinkName
+DrinkOption "1" o-- ColorName
+
+Main -->  ThirstyCalc
+Main --> MainInteraction
+
+Password --> PasswordManagementException : <<throws>>
+Position "1" o-- DrinkCategory
+
+ThirstyCalc "1" *-- UserDatabase
+ThirstyCalc "1" *-- AccountDatabase
+ThirstyCalc "1" *-- DrinkDatabase
+ThirstyCalc "1" *-- ApplicationState
+ThirstyCalc "1" *-- Logger
+ThirstyCalc --> LoggerFactory
+'ThirstyCalc --> Username /' usage? '/
+'ThirstyCalc --> Password /' usage? '/
+'ThirstyCalc --> User /' usage? '/
+
+User "1" o-- Username
+User "1" o-- Password
+User "1" o-- Email
+User --> UsernameValidator
+User --> PasswordValidator
+@enduml

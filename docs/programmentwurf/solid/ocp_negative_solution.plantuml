@@ -1,0 +1,27 @@
+@startuml
+
+interface RightsGiver {
+    void giveTo(User user)
+}
+
+class AdminRights implements RightsGiver {
+    + AdminRights()
+    + void giveTo(User user)
+}
+
+class InvoicerRights implements RightsGiver {
+    + InvoicerRights()
+    + void giveTo(User user)
+}
+
+enum Right {
+    CAN_CREATE_NEW_USER
+    CAN_SELF_INVOICE
+    CAN_DELETE_USER
+    CAN_CREATE_DRINK
+    CAN_ADD_RIGHTS
+}
+
+AdminRights "n" *-- Right
+InvoicerRights "n" *-- Right
+@enduml

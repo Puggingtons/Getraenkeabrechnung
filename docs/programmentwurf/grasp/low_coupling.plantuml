@@ -1,0 +1,17 @@
+@startuml
++class InteractionEventSource<T> {
+    + InteractionEventSource()
+    + void onSuccess(Consumer<T> onSuccess)
+    # void success(T t)
+    + void onFailure(Consumer<Void> onFailure)
+    # void failure()
+}
+
+abstract class Interaction extends InteractionEventSource
+class LoginInteraction extends Interaction
+class MenuInteraction extends Interaction
+class MainInteraction extends MenuInteraction {
+    - void onLogin(User user)
+}
+MainInteraction --> LoginInteraction : loginInteraction.onSuccess(this::login)
+@enduml
