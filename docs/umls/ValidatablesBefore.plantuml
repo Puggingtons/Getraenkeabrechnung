@@ -1,0 +1,47 @@
+@startuml validatablesBefore
+
+package validators {
+            +class EmailValidator {
+                + {static} boolean isValidEmail(Email email)
+            }
+
+            +class PasswordValidator {
+                + {static} boolean isValidPassword(Password password)
+            }
+
+            +class UsernameValidator {
+                + {static} boolean isValidUsername(Username username)
+            }
+        }
+
++class Email {
+            + Email(String email)
+            + boolean isValid(Optional<String> pattern)
+        }
+
++class Password {
+            + Password(String password)
+            + boolean isValid(Optional<String> pattern)
+            + String hashPassword()
+            + {static} boolean verifyPassword(String plainPassword, String storedHash, String storedSalt)
+            + String getSalt()
+            + String getHashedPassword()
+            + void nullPasswordString()
+}
+
++class Username {
+            + Username(String username)
+            + boolean isValid(Optional<String> pattern)
+            + String toString()
+            + boolean equals(Object o)
+}
+
+EmailValidator --> Email /' usage? '/
+
+
+PasswordValidator --> Password /' usage? '/
+
+
+UsernameValidator --> Username /' usage? '/
+
+@enduml
