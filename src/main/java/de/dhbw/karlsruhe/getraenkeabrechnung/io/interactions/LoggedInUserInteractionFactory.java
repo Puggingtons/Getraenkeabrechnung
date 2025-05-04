@@ -22,6 +22,7 @@ public class LoggedInUserInteractionFactory
         addDefaultInteractions();
         addRoleDefinedInteractions();
         addCheckBalanceInteraction();
+        addTopUpInteraction();
 
         addCreateCategoryOptionInteraction();
         addCreateDrinkOptionInteraction();
@@ -169,5 +170,14 @@ public class LoggedInUserInteractionFactory
     {
         StoriesInteraction interaction = new StoriesInteraction();
         menuInteraction.addInteraction("stories", "Stories about ThirstyCalc", interaction);
+    }
+
+    private void addTopUpInteraction() {
+        TopUpInteraction interaction = new TopUpInteraction();
+
+        interaction.onSuccess(money -> {
+            thirstyCalc.getAccountOfLoggedInUser().deposit(money);
+        });
+        menuInteraction.addInteraction("top-up", "Top up your account", interaction);
     }
 }
