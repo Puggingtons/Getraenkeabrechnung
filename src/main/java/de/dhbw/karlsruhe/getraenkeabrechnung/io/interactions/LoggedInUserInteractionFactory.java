@@ -1,6 +1,9 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.NotEnoughMoneyException;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryName;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 
@@ -22,6 +25,8 @@ public class LoggedInUserInteractionFactory
         addDefaultInteractions();
         addRoleDefinedInteractions();
         addCheckBalanceInteraction();
+        addTopUpInteraction();
+        addPurchaseInteraction();
 
         addCreateCategoryOptionInteraction();
         addCreateDrinkOptionInteraction();
@@ -169,5 +174,39 @@ public class LoggedInUserInteractionFactory
     {
         StoriesInteraction interaction = new StoriesInteraction();
         menuInteraction.addInteraction("stories", "Stories about ThirstyCalc", interaction);
+    }
+
+    private void addTopUpInteraction()
+    {
+        TopUpInteraction interaction = new TopUpInteraction();
+
+        interaction.onSuccess(money ->
+        {
+            thirstyCalc.getAccountOfLoggedInUser().deposit(money);
+        });
+        menuInteraction.addInteraction("top-up", "Top up your account", interaction);
+    }
+
+    private void addPurchaseInteraction()
+    {
+        PurchaseInteraction interaction = new PurchaseInteraction(thirstyCalc);
+
+        interaction.onSuccess(purchase ->
+        {
+            int index = Integer.parseInt(purchase);
+            CategoryName categoryName = thirstyCalc.getDrinkDatabase().getDrinkOptions()[index].getColorName();
+
+            double price = thirstyCalc.getCategoryDatabase().getCategoryOptionByCategoryName(categoryName).getColorPrice();
+
+            try
+            {
+                thirstyCalc.getAccountOfLoggedInUser().charge(new Money(String.valueOf(price)));
+            } catch (NotEnoughMoneyException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        });
+
+        menuInteraction.addInteraction("purchase", "Purchase a drink", interaction);
     }
 }
