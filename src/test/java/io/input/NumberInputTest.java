@@ -10,18 +10,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class NumberInputTest {
+public class NumberInputTest
+{
     private InputReaderMock readerMock;
     private OutputWriterMock writerMock;
 
     @BeforeEach
-    public void setup() {
+    public void setup()
+    {
         readerMock = new InputReaderMock();
         writerMock = new OutputWriterMock();
     }
 
     @Test
-    public void itPrintsPrompt() {
+    public void itPrintsPrompt()
+    {
         String prompt = "Prompt";
         NumberInput input = new NumberInput(prompt);
 
@@ -34,7 +37,8 @@ public class NumberInputTest {
     }
 
     @Test
-    public void itReturnsNumber() {
+    public void itReturnsNumber()
+    {
         int in = 1;
         NumberInput input = new NumberInput("");
 
@@ -51,7 +55,8 @@ public class NumberInputTest {
     }
 
     @Test
-    public void itReturnsHelp() {
+    public void itReturnsHelp()
+    {
         NumberInput input = new NumberInput("");
 
         input.setReader(readerMock);
@@ -66,7 +71,8 @@ public class NumberInputTest {
     }
 
     @Test
-    public void itReturnsNoValue() {
+    public void itReturnsNoValue()
+    {
         NumberInput input = new NumberInput("");
 
         input.setReader(readerMock);
@@ -80,5 +86,5 @@ public class NumberInputTest {
         assertTrue(res.isNone());
     }
 
-//    todo: test unhappy paths
+    //    todo: test unhappy paths
 }

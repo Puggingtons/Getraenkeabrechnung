@@ -10,10 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LoggerFactoryTest {
+public class LoggerFactoryTest
+{
 
     @Test
-    public void itLogsUserInDefaultUserLogger() {
+    public void itLogsUserInDefaultUserLogger()
+    {
         String msg = "test";
         User user = new User(new Username("dings"), new Password("password"));
 
@@ -28,7 +30,8 @@ public class LoggerFactoryTest {
     }
 
     @Test
-    public void itLogsUserAndClass() {
+    public void itLogsUserAndClass()
+    {
         String msg = "test";
         User user = new User(new Username("dings"), new Password("password"));
 

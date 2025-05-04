@@ -9,24 +9,31 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountDatabase {
+public class AccountDatabase
+{
     private Savable<List<Account>> accounts;
 
-    public AccountDatabase() {
+    public AccountDatabase()
+    {
         this.accounts = new Savable<>(new ArrayList<>());
     }
 
-    public Account[] getAccounts() {
+    public Account[] getAccounts()
+    {
         return accounts.get().toArray(new Account[0]);
     }
 
-    public void createAccount(User user) {
+    public void createAccount(User user)
+    {
         this.accounts.get().add(new Account(user.getUsername()));
     }
 
-    public Account getAccountOfUser(User user) {
-        for (Account a : accounts.get()) {
-            if (a.getUsername().equals(user.getUsername())) {
+    public Account getAccountOfUser(User user)
+    {
+        for (Account a : accounts.get())
+        {
+            if (a.getUsername().equals(user.getUsername()))
+            {
                 return a;
             }
         }
@@ -35,38 +42,47 @@ public class AccountDatabase {
     }
 
 
-
-    public boolean checkIfAccountBalanceIsZero(User user) {
-        for (Account a : accounts.get()) {
-            if (a.getUsername().equals(user.getUsername()) && a.isEmpty()) {
+    public boolean checkIfAccountBalanceIsZero(User user)
+    {
+        for (Account a : accounts.get())
+        {
+            if (a.getUsername().equals(user.getUsername()) && a.isEmpty())
+            {
                 return true;
-            } 
+            }
         }
         return false;
     }
 
-    public void removeAccount(User user) {
-        for (Account a : accounts.get()) {
-            if (a.getUsername().equals(user.getUsername())) {
+    public void removeAccount(User user)
+    {
+        for (Account a : accounts.get())
+        {
+            if (a.getUsername().equals(user.getUsername()))
+            {
                 accounts.get().remove(a);
                 return;
             }
         }
     }
 
-    public void load(String path) throws IOException {
+    public void load(String path) throws IOException
+    {
         load(Path.of(path));
     }
 
-    public void load(Path path) throws IOException {
+    public void load(Path path) throws IOException
+    {
         accounts.load(path, new TypeToken<List<Account>>() {});
     }
 
-    public void save(String path) throws IOException {
+    public void save(String path) throws IOException
+    {
         save(Path.of(path));
     }
 
-    public void save(Path path) throws IOException {
+    public void save(Path path) throws IOException
+    {
         accounts.save(path);
     }
 }

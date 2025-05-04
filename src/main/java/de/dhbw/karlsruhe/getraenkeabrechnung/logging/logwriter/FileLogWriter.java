@@ -5,22 +5,31 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class FileLogWriter implements LogWriter {
+public class FileLogWriter implements LogWriter
+{
 
-    private final FileWriter writer;
+    private final File file;
 
-    public FileLogWriter(File file) throws IOException {
-        writer = new FileWriter(file, true);
+    public FileLogWriter(File file) throws IOException
+    {
+        if (!file.exists())
+        {
+            file.createNewFile();
+        }
+
+        this.file = file;
     }
 
     @Override
-    public void write(String message) {
-        try (BufferedWriter bw = new BufferedWriter(writer)) {
+    public void write(String message)
+    {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file, true)))
+        {
             bw.write(message);
             bw.newLine();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             System.err.println("Could not write log to file! Log: \"" + message + "\".");
         }
-
     }
 }

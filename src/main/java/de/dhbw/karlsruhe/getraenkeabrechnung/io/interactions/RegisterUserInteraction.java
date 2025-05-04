@@ -9,14 +9,16 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.UsernameValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.PasswordValidator;
 
-public class RegisterUserInteraction extends Interaction<User> {
+public class RegisterUserInteraction extends Interaction<User>
+{
 
     private final StringInput usernameInput;
     private final StringInput passwordInput;
     private final StringInput passwordVerificationInput;
     private final UserDatabase userDatabase;
 
-    public RegisterUserInteraction(UserDatabase userDatabase) {
+    public RegisterUserInteraction(UserDatabase userDatabase)
+    {
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
         passwordVerificationInput = new StringInput("Verify Password: ");
@@ -24,12 +26,14 @@ public class RegisterUserInteraction extends Interaction<User> {
     }
 
     @Override
-    String usage() {
+    String usage()
+    {
         return "Please enter a username and a password.";
     }
 
     @Override
-    protected void execute() {
+    protected void execute()
+    {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
@@ -40,39 +44,54 @@ public class RegisterUserInteraction extends Interaction<User> {
         // Check if user exists
         Username usernameObj = new Username(username);
         Password passwordObj = new Password(password);
-        if (userDatabase.userExists(usernameObj)) {
+        if (userDatabase.userExists(usernameObj))
+        {
             System.out.println("Username already exists!");
             failure();
             return;
         }
 
-        if (!password.equals(passwordVerification)) {
+        if (!password.equals(passwordVerification))
+        {
             System.out.println("Passwords do not match!");
             failure();
             return;
         }
 
-        user.setUsername(usernameObj);
-        user.setPassword(passwordObj);
-
-        if (!UsernameValidator.isValid(user.getUsername()) || !PasswordValidator.isValid(user.getPassword())) {
+        try
+        {
+            user.setUsername(usernameObj);
+            user.setPassword(passwordObj);
+        } catch (IllegalArgumentException e)
+        {
             failure();
-        } else {
+        }
+
+
+        if (!UsernameValidator.isValid(user.getUsername()) || !PasswordValidator.isValid(user.getPassword()))
+        {
+            failure();
+        } else
+        {
             success(user);
             user.nullPassword();
         }
     }
 
-    private String getValidInput(StringInput input) {
-        while (true) {
+    private String getValidInput(StringInput input)
+    {
+        while (true)
+        {
             Result<String> result = input.prompt();
 
-            if (result.isHelp()) {
+            if (result.isHelp())
+            {
                 explain();
                 continue;
             }
 
-            if (result.isNone()) {
+            if (result.isNone())
+            {
                 System.out.println("Invalid input!");
                 continue;
             }

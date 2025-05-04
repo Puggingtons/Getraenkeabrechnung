@@ -9,20 +9,26 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDatabase {
+public class UserDatabase
+{
     private Savable<List<User>> users;
 
-    public UserDatabase() {
+    public UserDatabase()
+    {
         this.users = new Savable<>(new ArrayList<>());
     }
 
-    public User[] getUsers() {
+    public User[] getUsers()
+    {
         return users.get().toArray(new User[0]);
     }
 
-    public User getUser(Username username) {
-        for (User u : users.get()) {
-            if (u.getUsername().equals(username)) {
+    public User getUser(Username username)
+    {
+        for (User u : users.get())
+        {
+            if (u.getUsername().equals(username))
+            {
                 return u;
             }
         }
@@ -30,31 +36,39 @@ public class UserDatabase {
         throw new UserDoesNotExistException("User with the username " + username + " does not exist!");
     }
 
-    public void addUser(User user) {
+    public void addUser(User user)
+    {
         this.users.get().add(user);
     }
 
-    public void removeUser(User user) {
+    public void removeUser(User user)
+    {
         this.users.get().remove(user);
     }
 
-    public void deleteUser(User user) {
-        for (User u : users.get()) {
-            if (u.getUsername().equals(user.getUsername())) {
+    public void deleteUser(User user)
+    {
+        for (User u : users.get())
+        {
+            if (u.getUsername().equals(user.getUsername()))
+            {
                 users.get().remove(u);
                 return;
             }
         }
     }
 
-    public void registerNewUser(User user) {
-        for (User u : users.get()) {
-            if (u.getUsername().equals(user.getUsername())) {
+    public void registerNewUser(User user)
+    {
+        for (User u : users.get())
+        {
+            if (u.getUsername().equals(user.getUsername()))
+            {
                 return;
-            } 
+            }
         }
 
-       addUser(user);
+        addUser(user);
     }
 
     /**
@@ -64,10 +78,13 @@ public class UserDatabase {
      * @param updatedUser The user with updated information
      * @return true if the user was updated, false if the user wasn't found
      */
-    public boolean updateUser(User updatedUser) {
-        for (int i = 0; i < users.get().size(); i++) {
+    public boolean updateUser(User updatedUser)
+    {
+        for (int i = 0; i < users.get().size(); i++)
+        {
             User existingUser = users.get().get(i);
-            if (existingUser.getUsername().equals(updatedUser.getUsername())) {
+            if (existingUser.getUsername().equals(updatedUser.getUsername()))
+            {
                 users.get().set(i, updatedUser);
                 return true;
             }
@@ -75,9 +92,12 @@ public class UserDatabase {
         return false;
     }
 
-    public boolean userExists(Username username) {
-        for (User u : users.get()) {
-            if (u.getUsername().equals(username)) {
+    public boolean userExists(Username username)
+    {
+        for (User u : users.get())
+        {
+            if (u.getUsername().equals(username))
+            {
                 return true;
             }
         }
@@ -86,19 +106,23 @@ public class UserDatabase {
     }
 
 
-    public void load(String path) throws IOException {
+    public void load(String path) throws IOException
+    {
         load(Path.of(path));
     }
 
-    public void load(Path path) throws IOException {
+    public void load(Path path) throws IOException
+    {
         users.load(path, new TypeToken<List<User>>() {});
     }
 
-    public void save(String path) throws IOException {
+    public void save(String path) throws IOException
+    {
         save(Path.of(path));
     }
 
-    public void save(Path path) throws IOException {
+    public void save(Path path) throws IOException
+    {
         users.save(path);
     }
 }

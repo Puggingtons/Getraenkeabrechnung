@@ -8,10 +8,12 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-public class MoneyTest {
+public class MoneyTest
+{
 
     @Test
-    public void itCanBeCreatedFromString() {
+    public void itCanBeCreatedFromString()
+    {
         String input = "12.34";
         BigDecimal amount = new BigDecimal(input);
 
@@ -19,7 +21,8 @@ public class MoneyTest {
     }
 
     @Test
-    public void itEquals() {
+    public void itEquals()
+    {
         Money money1 = new Money("12.34");
         Money money2 = new Money("12.34");
 
@@ -27,7 +30,8 @@ public class MoneyTest {
     }
 
     @Test
-    public void itDoesNotEqual() {
+    public void itDoesNotEqual()
+    {
         Money money1 = new Money("12.34");
         Money money2 = new Money("12.35");
 
@@ -35,7 +39,8 @@ public class MoneyTest {
     }
 
     @Test
-    public void itEqualsMoreZeroes() {
+    public void itEqualsMoreZeroes()
+    {
         Money money1 = new Money("12.0");
         Money money2 = new Money("12.00");
 
@@ -43,7 +48,8 @@ public class MoneyTest {
     }
 
     @Test
-    public void itDoesNotMutateWhenAdding() {
+    public void itDoesNotMutateWhenAdding()
+    {
         BigDecimal amount = new BigDecimal("12.34");
         BigDecimal sum = new BigDecimal("24.68");
         Money money = new Money(amount);
@@ -54,7 +60,8 @@ public class MoneyTest {
     }
 
     @Test
-    public void itDoesNotMutateWhenSubtracting() {
+    public void itDoesNotMutateWhenSubtracting()
+    {
         BigDecimal amount = new BigDecimal("12.34");
         BigDecimal difference = new BigDecimal("0.00");
         Money money = new Money(amount);
@@ -65,7 +72,8 @@ public class MoneyTest {
     }
 
     @Test
-    public void itDoesNotMutateWhenMultiplying() {
+    public void itDoesNotMutateWhenMultiplying()
+    {
         BigDecimal amount = new BigDecimal("12.34");
         BigDecimal product = new BigDecimal("24.68");
         Money money = new Money(amount);
@@ -76,7 +84,8 @@ public class MoneyTest {
     }
 
     @Test
-    public void itRoundsUp() {
+    public void itRoundsUp()
+    {
         BigDecimal amount = new BigDecimal("0.499");
         BigDecimal rounded = new BigDecimal("0.50");
 

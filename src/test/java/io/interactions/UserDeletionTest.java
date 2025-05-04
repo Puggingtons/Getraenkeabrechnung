@@ -16,8 +16,9 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.AccountDoesNotExistException;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 
-public class UserDeletionTest {
-    
+public class UserDeletionTest
+{
+
     private ThirstyCalc thirstyCalc;
     private UserDatabase userDatabase;
     private AccountDatabase accountDatabase;
@@ -25,62 +26,68 @@ public class UserDeletionTest {
     private Account testAccount;
     private final String TEST_USERNAME = "test_DeleteUser";
     private final String TEST_PASSWORD = "Test@Delete123";
-    
+
     @BeforeEach
-    public void setup() {
+    public void setup()
+    {
         // Initialize ThirstyCalc which contains the databases
         thirstyCalc = new ThirstyCalc();
         userDatabase = thirstyCalc.getUserDatabase();
         accountDatabase = thirstyCalc.getAccountDatabase();
-        
+
         // Create a test user
         testUser = new User(new Username(TEST_USERNAME), new Password(TEST_PASSWORD));
-        try {
+        try
+        {
             testUser.getPassword().hashPassword();
-        } catch (PasswordManagementException e) {
+        } catch (PasswordManagementException e)
+        {
             fail("Failed to hash password during setup: " + e.getMessage());
         }
-        
+
         // Add user to database
         userDatabase.addUser(testUser);
-        
+
         // Create account for the user
         accountDatabase.createAccount(testUser);
-        
+
         // Get reference to the created account
         testAccount = accountDatabase.getAccountOfUser(testUser);
-        
+
         // Verify setup was successful
         assertNotNull(testUser, "Test user should be created");
         assertNotNull(testAccount, "Test account should be created");
         assertTrue(userDatabase.userExists(testUser.getUsername()), "User should exist in database");
     }
-    
+
     @Test
-    public void testUserAndAccountExistAfterSetup() {
+    public void testUserAndAccountExistAfterSetup()
+    {
         // This test verifies that the @BeforeEach setup method works correctly
-        assertTrue(userDatabase.userExists(testUser.getUsername()), 
+        assertTrue(userDatabase.userExists(testUser.getUsername()),
                 "User should exist in database after setup");
-                
+
         Account account = accountDatabase.getAccountOfUser(testUser);
         assertNotNull(account, "Account should exist for user");
-        assertEquals(testUser.getUsername(), account.getUsername(), 
+        assertEquals(testUser.getUsername(), account.getUsername(),
                 "Account should be associated with the correct username");
     }
 
     @Test
-    public void testDeleteUser() {
+    public void testDeleteUser()
+    {
 
-        assertTrue(userDatabase.userExists(testUser.getUsername()), 
+        assertTrue(userDatabase.userExists(testUser.getUsername()),
                 "User should exist before deletion");
         assertNotNull(accountDatabase.getAccountOfUser(testUser),
                 "Account should exist before deletion");
 
         thirstyCalc.deleteUser(testUser);
 
-        assertFalse(userDatabase.userExists(testUser.getUsername()), 
+        assertFalse(userDatabase.userExists(testUser.getUsername()),
                 "User should not exist after deletion");
-        assertThrows(AccountDoesNotExistException.class, () -> {
+        assertThrows(AccountDoesNotExistException.class, () ->
+        {
             accountDatabase.getAccountOfUser(testUser);
         }, "Account should not exist after deletion");
     }
@@ -88,24 +95,27 @@ public class UserDeletionTest {
 
     // todo: Write a test for the interaction
     @Test
-    public void testDeleteUserWithPositiveBalance() {
+    public void testDeleteUserWithPositiveBalance()
+    {
         testAccount.deposit(new Money("10.00"));
         assertEquals(testAccount.getBalance(), new Money("10.00"),
                 "Account balance should be 10.00 before deletion");
 
-        assertTrue(userDatabase.userExists(testUser.getUsername()), 
+        assertTrue(userDatabase.userExists(testUser.getUsername()),
                 "User should exist before deletion");
         assertNotNull(accountDatabase.getAccountOfUser(testUser),
                 "Account should exist before deletion");
         assertFalse(accountDatabase.checkIfAccountBalanceIsZero(testUser),
                 "Account should not be empty before deletion");
-        
-        if (accountDatabase.checkIfAccountBalanceIsZero(testUser)) {
+
+        if (accountDatabase.checkIfAccountBalanceIsZero(testUser))
+        {
             thirstyCalc.deleteUser(testUser);
-        } else {
+        } else
+        {
             System.out.println("User has a positive balance. Please settle the balance before deleting the user.");
         }
-        assertTrue(userDatabase.userExists(testUser.getUsername()), 
+        assertTrue(userDatabase.userExists(testUser.getUsername()),
                 "User should still exist after attempted deletion with positive balance");
         assertNotNull(accountDatabase.getAccountOfUser(testUser),
                 "Account should still exist after attempted deletion with positive balance");

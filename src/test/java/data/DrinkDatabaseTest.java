@@ -16,28 +16,33 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkDatabase;
 
-public class DrinkDatabaseTest {
+public class DrinkDatabaseTest
+{
 
     @Test
-    public void itSavesDrinkOption(@TempDir Path tempDir) {
+    public void itSavesDrinkOption(@TempDir Path tempDir)
+    {
         DrinkOption[] drinkOptions = {new DrinkOption(new DrinkName("beer"), new ColorName("yellow"))};
 
         DrinkDatabase drinkDatabase = new DrinkDatabase();
-        for (DrinkOption drinkOption : drinkOptions) {
+        for (DrinkOption drinkOption : drinkOptions)
+        {
             drinkDatabase.addDrinkOption(drinkOption);
         }
 
         Path filePath = tempDir.resolve("drinks.json");
         Gson gson = new Gson();
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() ->
+        {
             drinkDatabase.save(filePath);
             assertEquals(Files.readString(filePath), gson.toJson(drinkOptions));
         });
     }
 
     @Test
-    public void itLoadsDrinkOptions(@TempDir Path tempDir) {
+    public void itLoadsDrinkOptions(@TempDir Path tempDir)
+    {
         DrinkOption drinkOption = new DrinkOption(new DrinkName("beer"), new ColorName("yellow"));
         DrinkOption drinkOption2 = new DrinkOption(new DrinkName("water"), new ColorName("blue"));
 
@@ -45,11 +50,12 @@ public class DrinkDatabaseTest {
         drinkDatabase.addDrinkOption(drinkOption);
         drinkDatabase.addDrinkOption(drinkOption2);
 
-        Path  filePath = tempDir.resolve("drinks.json");
+        Path filePath = tempDir.resolve("drinks.json");
 
         int initLength = drinkDatabase.getDrinkOptions().length;
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() ->
+        {
             drinkDatabase.save(filePath);
             drinkDatabase.load(filePath);
 

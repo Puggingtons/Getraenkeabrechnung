@@ -3,11 +3,13 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 
-public class MainInteraction extends MenuInteraction {
+public class MainInteraction extends MenuInteraction
+{
 
     private final ThirstyCalc thirstycalc;
 
-    public MainInteraction(ThirstyCalc thirstycalc) {
+    public MainInteraction(ThirstyCalc thirstycalc)
+    {
         super();
         this.thirstycalc = thirstycalc;
 
@@ -16,34 +18,43 @@ public class MainInteraction extends MenuInteraction {
         addLoginInteraction();
     }
 
-    private void addExitInteraction() {
+    private void addExitInteraction()
+    {
         ExitInteraction exitInteraction = new ExitInteraction();
-        exitInteraction.onSuccess(event -> { this.onExit(); });
+        exitInteraction.onSuccess(event ->
+        {
+            this.onExit();
+        });
         addInteraction("exit", "exits the program", exitInteraction);
     }
 
-    private void addRegisterInteraction() {
+    private void addRegisterInteraction()
+    {
         RegisterUserInteraction interaction = new RegisterUserInteraction(thirstycalc.getUserDatabase());
         interaction.onSuccess(thirstycalc::registerNewUser);
         addInteraction("register", "Register a new user", interaction);
     }
 
-    private void addLoginInteraction() {
+    private void addLoginInteraction()
+    {
         LoginInteraction interaction = new LoginInteraction(thirstycalc.getUserDatabase());
         interaction.onSuccess(this::onLogin);
         addInteraction("login", "Login a user", interaction);
     }
 
 
-    private void onLogin(User user) {
+    private void onLogin(User user)
+    {
         thirstycalc.login(user);
-        if (thirstycalc.getApplicationState().isLoggedIn()) {
-                System.out.println("Welcome " + user.getUsername() + "!");
+        if (thirstycalc.getApplicationState().isLoggedIn())
+        {
+            System.out.println("Welcome " + user.getUsername() + "!");
             new LoggedInUserInteractionFactory(thirstycalc).build().run();
         }
     }
 
-    private void onExit() {
+    private void onExit()
+    {
         System.out.println("On exit");
         thirstycalc.save();
         stop();

@@ -4,16 +4,19 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.Right;
 
-public class LoggedInUserInteractionFactory {
+public class LoggedInUserInteractionFactory
+{
     private final ThirstyCalc thirstyCalc;
 
     private MenuInteraction menuInteraction;
 
-    public LoggedInUserInteractionFactory(ThirstyCalc thirstyCalc) {
+    public LoggedInUserInteractionFactory(ThirstyCalc thirstyCalc)
+    {
         this.thirstyCalc = thirstyCalc;
     }
 
-    public Interaction<?> build() {
+    public Interaction<?> build()
+    {
         menuInteraction = new MenuInteraction();
 
         addDefaultInteractions();
@@ -23,94 +26,126 @@ public class LoggedInUserInteractionFactory {
         return menuInteraction;
     }
 
-    private void addDefaultInteractions() {
+    private void addDefaultInteractions()
+    {
         addLogoutInteraction();
         addChangePasswordInteraction();
     }
 
-    private void addRoleDefinedInteractions() {
+    private void addRoleDefinedInteractions()
+    {
         User loggedInUser = thirstyCalc.getApplicationState().getLoggedInUser();
-        
+
         // Only add admin interactions if the user has the required rights
-        if (loggedInUser != null) {
-            if (loggedInUser.hasRight(Right.CAN_DELETE_USER)) {
+        if (loggedInUser != null)
+        {
+            if (loggedInUser.hasRight(Right.CAN_DELETE_USER))
+            {
                 addDeleteUserInteraction();
             }
-            
-            if (loggedInUser.hasRight(Right.CAN_CREATE_DRINK)) {
+
+            if (loggedInUser.hasRight(Right.CAN_CREATE_DRINK))
+            {
                 addCreateDrinkOptionInteraction();
             }
-            if (loggedInUser.hasRight(Right.CAN_CREATE_NEW_USER)) {
+            if (loggedInUser.hasRight(Right.CAN_CREATE_NEW_USER))
+            {
                 addCreateUserInteraction();
             }
-            if (loggedInUser.hasRight(Right.CAN_ADD_RIGHTS)) {
+            if (loggedInUser.hasRight(Right.CAN_ADD_RIGHTS))
+            {
                 addAddRightsInteraction();
+            }
+
+            if(loggedInUser.hasRight(Right.CAN_VIEW_STORIES)) {
+                addStoriesInteraction();
             }
         }
     }
-    
-    private void addLogoutInteraction() {
+
+    private void addLogoutInteraction()
+    {
         LogoutInteraction interaction = new LogoutInteraction();
-        interaction.onSuccess(event -> {
+        interaction.onSuccess(event ->
+        {
             thirstyCalc.logout();
             menuInteraction.stop();
         });
         menuInteraction.addInteraction("logout", "Logout from your account", interaction);
     }
 
-    private void addChangePasswordInteraction() {
+    private void addChangePasswordInteraction()
+    {
         ChangePasswordInteraction interaction = new ChangePasswordInteraction(thirstyCalc.getApplicationState().getLoggedInUser(), thirstyCalc.getUserDatabase());
-        interaction.onSuccess((changePassword) -> {
+        interaction.onSuccess((changePassword) ->
+        {
             thirstyCalc.changePassword(changePassword);
         });
         menuInteraction.addInteraction("change-password", "Change your password.", interaction);
     }
 
-    private void addCheckBalanceInteraction() {
+    private void addCheckBalanceInteraction()
+    {
         CheckBalanceInteraction interaction = new CheckBalanceInteraction(thirstyCalc.getAccountOfLoggedInUser());
-        interaction.onSuccess((money) -> {
+        interaction.onSuccess((money) ->
+        {
             System.out.println("Your current balance is: " + money + ".");
         });
         menuInteraction.addInteraction("balance", "Shows your current balance.", interaction);
     }
 
-    private void addCreateUserInteraction() {
+    private void addCreateUserInteraction()
+    {
         CreateUserInteraction interaction = new CreateUserInteraction(thirstyCalc.getUserDatabase());
-        interaction.onSuccess((createUser) -> {
+        interaction.onSuccess((createUser) ->
+        {
             thirstyCalc.createNewUser(createUser);
             System.out.println("User " + createUser.getUsername().toString() + " created.");
         });
         menuInteraction.addInteraction("create-user", "Create a user and grant him rights.", interaction);
     }
 
-    private void addCreateDrinkOptionInteraction() {
+    private void addCreateDrinkOptionInteraction()
+    {
         CreateDrinkOptionInteraction interaction = new CreateDrinkOptionInteraction(thirstyCalc);
-        interaction.onSuccess((drinkOption) -> {
+        interaction.onSuccess((drinkOption) ->
+        {
             thirstyCalc.createNewDrinkOption(drinkOption);
             System.out.println("You created: " + drinkOption.getDrinkName().toString() + ", its color is: " + drinkOption.getColorName().toString() + ".");
         });
         menuInteraction.addInteraction("create-drink", "Create a new drink option.", interaction);
     }
 
-    private void addDeleteUserInteraction() {
+    private void addDeleteUserInteraction()
+    {
         DeleteUserInteraction interaction = new DeleteUserInteraction(thirstyCalc);
-        interaction.onSuccess((deleteUser) -> {
+        interaction.onSuccess((deleteUser) ->
+        {
             thirstyCalc.deleteUser(deleteUser);
             System.out.println("You deleted the user: " + deleteUser.getUsername().toString() + ".");
         });
         menuInteraction.addInteraction("delete-user", "Delete a user", interaction);
     }
-    
-    private void addAddRightsInteraction() {
+
+    private void addAddRightsInteraction()
+    {
         AddRightsInteraction interaction = new AddRightsInteraction(thirstyCalc.getUserDatabase());
-        interaction.onSuccess((updatedUser) -> {
+        interaction.onSuccess((updatedUser) ->
+        {
             boolean updated = thirstyCalc.getUserDatabase().updateUser(updatedUser);
-            if (updated) {
+            if (updated)
+            {
                 System.out.println("User rights updated successfully.");
-            } else {
+            } else
+            {
                 System.out.println("Failed to update user rights in the database.");
             }
         });
         menuInteraction.addInteraction("add-rights", "Assign rights to a user", interaction);
+    }
+
+    private void addStoriesInteraction() {
+        StoriesInteraction interaction = new StoriesInteraction();
+        menuInteraction.addInteraction("stories", "Stories about ThirstyCalc", interaction);
     }
 }
