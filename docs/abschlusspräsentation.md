@@ -79,6 +79,7 @@ noch nicht gezeigt wurde]
 
 Domaincode ist die Kern-Business-Logik und ist frei von Abhängigkeiten.
 Folgender Code ist aus der Klasse `Account.java`:
+
 ![domain_code.png](programmentwurf/softwarearchitektur/domain_code.png)
 
 --
