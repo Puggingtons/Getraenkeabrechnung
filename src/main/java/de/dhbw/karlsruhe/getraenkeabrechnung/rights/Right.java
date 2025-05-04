@@ -7,4 +7,5 @@ public enum Right
     CAN_DELETE_USER,
     CAN_CREATE_DRINK,
     CAN_ADD_RIGHTS,
+    CAN_VIEW_STORIES
 }

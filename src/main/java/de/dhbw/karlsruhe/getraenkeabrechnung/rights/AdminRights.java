@@ -17,6 +17,7 @@ public class AdminRights
         rights.add(Right.CAN_DELETE_USER);
         rights.add(Right.CAN_CREATE_DRINK);
         rights.add(Right.CAN_ADD_RIGHTS);
+         rights.add(Right.CAN_VIEW_STORIES);
     }
 
     public void giveTo(User user)
