@@ -8,6 +8,7 @@ users.json
 accounts.json
 drinks.json
 categories.json
+log.txt
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

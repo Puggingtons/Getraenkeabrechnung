@@ -10,10 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserLoggerTest {
+public class UserLoggerTest
+{
 
     @Test
-    public void itLogsUsername() {
+    public void itLogsUsername()
+    {
         String msg = "test";
         User user = new User(new Username("Dings"), new Password("bums"));
 

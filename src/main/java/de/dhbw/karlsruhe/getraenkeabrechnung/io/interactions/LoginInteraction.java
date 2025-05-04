@@ -8,13 +8,15 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
-public class LoginInteraction extends Interaction<User> {
+public class LoginInteraction extends Interaction<User>
+{
 
     private final StringInput usernameInput;
     private final StringInput passwordInput;
     private final UserDatabase userDatabase;
 
-    public LoginInteraction(UserDatabase userDatabase) {
+    public LoginInteraction(UserDatabase userDatabase)
+    {
         super();
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
@@ -22,19 +24,22 @@ public class LoginInteraction extends Interaction<User> {
     }
 
     @Override
-    String usage() {
+    String usage()
+    {
         return "Please enter your username and password to login.";
     }
 
     @Override
-    protected void execute() {
+    protected void execute()
+    {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         userDatabase.getUsers();
 
         // Check if user exists
         Username usernameObj = new Username(username);
-        if (!userDatabase.userExists(usernameObj)) {
+        if (!userDatabase.userExists(usernameObj))
+        {
             System.out.println("User does not exist");
             failure();
             return;
@@ -42,21 +47,26 @@ public class LoginInteraction extends Interaction<User> {
 
         // Find the user in the database
         User foundUser = null;
-        for (User user : userDatabase.getUsers()) {
-            if (user.getUsername().equals(usernameObj)) {
+        for (User user : userDatabase.getUsers())
+        {
+            if (user.getUsername().equals(usernameObj))
+            {
                 foundUser = user;
                 break;
             }
         }
 
         // Verify password
-        try {
-            if (foundUser == null || !Password.verifyPassword(password, foundUser.getHashedPassword(), foundUser.getSalt())) {
+        try
+        {
+            if (foundUser == null || !Password.verifyPassword(password, foundUser.getHashedPassword(), foundUser.getSalt()))
+            {
                 System.out.println("Password is incorrect");
                 failure();
                 return;
             }
-        } catch (PasswordManagementException e) {
+        } catch (PasswordManagementException e)
+        {
             System.out.println("Error verifying password: " + e.getMessage());
             failure();
             return;
@@ -67,16 +77,20 @@ public class LoginInteraction extends Interaction<User> {
         success(foundUser);
     }
 
-    private String getValidInput(StringInput input) {
-        while (true) {
+    private String getValidInput(StringInput input)
+    {
+        while (true)
+        {
             Result<String> result = input.prompt();
 
-            if (result.isHelp()) {
+            if (result.isHelp())
+            {
                 explain();
                 continue;
             }
 
-            if (result.isNone()) {
+            if (result.isNone())
+            {
                 System.out.println("Invalid input!");
                 continue;
             }

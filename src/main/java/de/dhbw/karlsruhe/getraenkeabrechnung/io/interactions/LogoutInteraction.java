@@ -1,13 +1,16 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-public class LogoutInteraction extends Interaction<Void> {
+public class LogoutInteraction extends Interaction<Void>
+{
     @Override
-    String usage() {
+    String usage()
+    {
         return "You're now logged out";
     }
 
     @Override
-    protected void execute() {
+    protected void execute()
+    {
         // todo check if user is logged in
         success(null);
     }

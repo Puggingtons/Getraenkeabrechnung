@@ -11,7 +11,8 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.Userna
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.PasswordValidator;
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.AdminRights;
 
-public class CreateUserInteraction extends Interaction<User> {
+public class CreateUserInteraction extends Interaction<User>
+{
 
     private final StringInput usernameInput;
     private final StringInput passwordInput;
@@ -19,7 +20,8 @@ public class CreateUserInteraction extends Interaction<User> {
     private final BooleanInput adminRightsInput;
     private final UserDatabase userDatabase;
 
-    public CreateUserInteraction(UserDatabase userDatabase) {
+    public CreateUserInteraction(UserDatabase userDatabase)
+    {
         usernameInput = new StringInput("Username: ");
         passwordInput = new StringInput("Password: ");
         passwordVerificationInput = new StringInput("Verify Password: ");
@@ -28,12 +30,14 @@ public class CreateUserInteraction extends Interaction<User> {
     }
 
     @Override
-    String usage() {
+    String usage()
+    {
         return "Please enter a username and a password. Optionally, you can make the user an admin.";
     }
 
     @Override
-    protected void execute() {
+    protected void execute()
+    {
         String username = getValidInput(usernameInput);
         String password = getValidInput(passwordInput);
         String passwordVerification = getValidInput(passwordVerificationInput);
@@ -45,13 +49,15 @@ public class CreateUserInteraction extends Interaction<User> {
         // Check if user exists
         Username usernameObj = new Username(username);
         Password passwordObj = new Password(password);
-        if (userDatabase.userExists(usernameObj)) {
+        if (userDatabase.userExists(usernameObj))
+        {
             System.out.println("Username already exists!");
             failure();
             return;
         }
 
-        if (!password.equals(passwordVerification)) {
+        if (!password.equals(passwordVerification))
+        {
             System.out.println("Passwords do not match!");
             failure();
             return;
@@ -61,31 +67,39 @@ public class CreateUserInteraction extends Interaction<User> {
         user.setPassword(passwordObj);
 
         // Set admin rights if requested
-        if (adminChoice) {
+        if (adminChoice)
+        {
             new AdminRights().giveTo(user);
             System.out.println("Admin rights granted to user " + username);
         }
 
-        if (!UsernameValidator.isValid(user.getUsername())) {
+        if (!UsernameValidator.isValid(user.getUsername()))
+        {
             failure();
-        } else if (!PasswordValidator.isValid(user.getPassword())) {
+        } else if (!PasswordValidator.isValid(user.getPassword()))
+        {
             failure();
-        } else {
+        } else
+        {
             success(user);
             user.nullPassword();
         }
     }
 
-    private String getValidInput(StringInput input) {
-        while (true) {
+    private String getValidInput(StringInput input)
+    {
+        while (true)
+        {
             Result<String> result = input.prompt();
 
-            if (result.isHelp()) {
+            if (result.isHelp())
+            {
                 explain();
                 continue;
             }
 
-            if (result.isNone()) {
+            if (result.isNone())
+            {
                 System.out.println("Invalid input!");
                 continue;
             }
@@ -94,16 +108,20 @@ public class CreateUserInteraction extends Interaction<User> {
         }
     }
 
-    private boolean getValidInput(BooleanInput input) {
-        while (true) {
+    private boolean getValidInput(BooleanInput input)
+    {
+        while (true)
+        {
             Result<Boolean> result = input.prompt();
 
-            if (result.isHelp()) {
+            if (result.isHelp())
+            {
                 explain();
                 continue;
             }
 
-            if (result.isNone()) {
+            if (result.isNone())
+            {
                 System.out.println("Invalid input!");
                 continue;
             }

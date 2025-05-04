@@ -7,10 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ClassLoggerTest {
+public class ClassLoggerTest
+{
 
     @Test
-    public void itLogsClass() {
+    public void itLogsClass()
+    {
         String msg = "test";
 
         LogWriterMock mock = new LogWriterMock();

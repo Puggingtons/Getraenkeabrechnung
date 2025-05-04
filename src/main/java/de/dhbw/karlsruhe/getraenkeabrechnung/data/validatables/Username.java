@@ -3,17 +3,21 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-public class Username implements Validatable {
+public class Username implements Validatable
+{
 
     private final String usernameString;
 
-    public Username(String username) {
+    public Username(String username)
+    {
         this.usernameString = username;
     }
 
-    public boolean isValid(Optional<String> pattern) {
+    public boolean isValid(Optional<String> pattern)
+    {
 
-        if (pattern.isEmpty()) {
+        if (pattern.isEmpty())
+        {
             return false;
         }
 
@@ -23,12 +27,14 @@ public class Username implements Validatable {
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return this.usernameString;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Username username = (Username) o;

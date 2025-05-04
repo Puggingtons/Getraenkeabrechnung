@@ -2,22 +2,27 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.writer;
 
 import java.io.PrintStream;
 
-public class OutputWriter implements Writer {
+public class OutputWriter implements Writer
+{
     private final PrintStream out;
 
-    public OutputWriter() {
+    public OutputWriter()
+    {
         this.out = System.out;
     }
 
-    public OutputWriter(PrintStream out) {
+    public OutputWriter(PrintStream out)
+    {
         this.out = out;
     }
 
-    public void writeLine(String line) {
+    public void writeLine(String line)
+    {
         out.println(line);
     }
 
-    public void write(String str) {
+    public void write(String str)
+    {
         out.print(str);
     }
 }

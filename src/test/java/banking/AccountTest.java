@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AccountTest {
+public class AccountTest
+{
 
     @Test
-    public void itDeposits() {
+    public void itDeposits()
+    {
         Account account = new Account(new Username("dings"));
         Money amount = new Money("12.34");
 
@@ -21,7 +23,8 @@ public class AccountTest {
     }
 
     @Test
-    public void itCharges() {
+    public void itCharges()
+    {
         Account account = new Account(new Username("dings"));
         Money amount = new Money("12.34");
 
@@ -34,7 +37,8 @@ public class AccountTest {
     }
 
     @Test
-    public void itThrowsExceptionIfNotEnoughMoney() {
+    public void itThrowsExceptionIfNotEnoughMoney()
+    {
         Account account = new Account(new Username("dings"));
         Money amount = new Money("12.34");
         account.deposit(new Money("10.00"));
@@ -43,7 +47,8 @@ public class AccountTest {
     }
 
     @Test
-    public void itEquals() {
+    public void itEquals()
+    {
         Account account1 = new Account(new Username("dings"));
         Account account2 = new Account(new Username("dings"));
 
@@ -51,7 +56,8 @@ public class AccountTest {
     }
 
     @Test
-    public void itDoesNotEqualBalance() {
+    public void itDoesNotEqualBalance()
+    {
         Account account1 = new Account(new Username("dings"));
         Account account2 = new Account(new Username("dings"));
 
@@ -61,7 +67,8 @@ public class AccountTest {
     }
 
     @Test
-    public void itDoesNotEqualName() {
+    public void itDoesNotEqualName()
+    {
         Account account1 = new Account(new Username("dings"));
         Account account2 = new Account(new Username("bums"));
 

@@ -25,7 +25,8 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
 
 import java.io.IOException;
 
-public class ThirstyCalc {
+public class ThirstyCalc
+{
     private final UserDatabase userDatabase;
     private final AccountDatabase accountDatabase;
     private final DrinkDatabase drinkDatabase;
@@ -35,11 +36,13 @@ public class ThirstyCalc {
 
     private Logger logger;
 
-    public ThirstyCalc() {
+    public ThirstyCalc()
+    {
         this(new LoggerFactory().defaultTimeLogger());
     }
 
-    public ThirstyCalc(Logger logger) {
+    public ThirstyCalc(Logger logger)
+    {
         this.logger = logger;
 
         userDatabase = new UserDatabase();
@@ -53,7 +56,8 @@ public class ThirstyCalc {
         greet();
     }
 
-    private void greet() {
+    private void greet()
+    {
         System.out.print("""
                 
                   _____    _   _      ___      ____     ____     _____   __   __   ____     _       _        ____
@@ -67,15 +71,18 @@ public class ThirstyCalc {
                 """);
     }
 
-    public void login(User user) {
-        if (!userDatabase.userExists(user.getUsername())) {
+    public void login(User user)
+    {
+        if (!userDatabase.userExists(user.getUsername()))
+        {
             // todo handle user does not exist
             System.out.println("user does not exist");
             logger.log("failed login attempt for user " + user.getUsername() + " because user does not exist");
             return;
         }
 
-        if (applicationState.isLoggedIn()) {
+        if (applicationState.isLoggedIn())
+        {
             // todo handle user is already logged in
             System.out.println("user already logged in");
             logger.log("failed login attempt for user " + user.getUsername() + " because there is already a logged in user");
@@ -87,37 +94,43 @@ public class ThirstyCalc {
         this.logger = new UserLogger(user, this.logger);
     }
 
-    public void logout() {
+    public void logout()
+    {
         logger.log("user " + applicationState.getLoggedInUser().getUsername() + " logged out");
         applicationState.clearLoggedInUser();
         this.logger = this.logger.getInnerLogger();
     }
 
-    public void createNewUser(User user) {
+    public void createNewUser(User user)
+    {
         logger.log("creating new user " + user.getUsername());
         userDatabase.registerNewUser(user);
         accountDatabase.createAccount(user);
         System.out.println("Created new user: " + user.getUsername());
     }
 
-    public void registerNewUser(User user) {
+    public void registerNewUser(User user)
+    {
         userDatabase.registerNewUser(user);
         accountDatabase.createAccount(user);
         System.out.println("Registered new user: " + user.getUsername());
     }
 
-    public void changePassword(User user) {
+    public void changePassword(User user)
+    {
         userDatabase.updateUser(user);
         System.out.println("Changed password for user: " + user.getUsername());
     }
 
-    public void createNewCategoryOption(CategoryOption categoryOption) {
+    public void createNewCategoryOption(CategoryOption categoryOption)
+    {
         logger.log("creating new category option " + categoryOption.getColorName() + " with price " + categoryOption.getColorPrice());
         categoryDatabase.createNewCategoryOption(categoryOption);
         System.out.println("Creating a new category option: " + categoryOption.getColorName());
     }
 
-    public boolean categoryOptionExists(CategoryOption categoryOption) {
+    public boolean categoryOptionExists(CategoryOption categoryOption)
+    {
         return categoryDatabase.categoryOptionExists(categoryOption);
     }
 
@@ -132,30 +145,37 @@ public class ThirstyCalc {
     }
     
 
-    public void deleteUser(User user) {
+    public void deleteUser(User user)
+    {
         logger.log("deleting user " + user.getUsername());
         userDatabase.deleteUser(user);
         accountDatabase.removeAccount(user);
     }
 
-    public ApplicationState getApplicationState() {
+    public ApplicationState getApplicationState()
+    {
         return applicationState;
     }
 
-    public UserDatabase getUserDatabase() {
+    public UserDatabase getUserDatabase()
+    {
         return userDatabase;
     }
 
-    public AccountDatabase getAccountDatabase() {
+    public AccountDatabase getAccountDatabase()
+    {
         return accountDatabase;
     }
 
-    public Account getAccountOfLoggedInUser() {
+    public Account getAccountOfLoggedInUser()
+    {
         return accountDatabase.getAccountOfUser(applicationState.getLoggedInUser());
     }
 
-    public void save() {
-        try {
+    public void save()
+    {
+        try
+        {
             logger.log("saving databases");
 
             logger.log("saving users.json");
@@ -175,13 +195,16 @@ public class ThirstyCalc {
             categoryDatabase.save("categories.json");
 
             logger.log("finished saving databases");
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             System.out.println("Could not save users");
         }
     }
 
-    public void load() {
-        try {
+    public void load()
+    {
+        try
+        {
             logger.log("loading databases");
 
             logger.log("loading users.json");
@@ -198,44 +221,49 @@ public class ThirstyCalc {
 
             logger.log("finished loading databases");
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             System.out.println("Could not load users, accounts, categories or drinks!");
             createGenericAdminUser();
         }
 
         // If the database loaded but is empty, create an admin user
-        if (userDatabase.getUsers().length == 0) {
+        if (userDatabase.getUsers().length == 0)
+        {
             createGenericAdminUser();
         }
     }
-    
+
     /**
      * Creates a generic admin user when no user database is detected or when database is empty.
      * This ensures there's always at least one user with admin rights to manage the system.
      */
-    private void createGenericAdminUser() {
-        try {
+    private void createGenericAdminUser()
+    {
+        try
+        {
             // Create username and password objects
             Username adminUsername = new Username("admin");
             Password adminPassword = new Password("Admin123@");
-            
+
             // Create new admin user
             User adminUser = new User();
             adminUser.setUsername(adminUsername);
             adminUser.setPassword(adminPassword);
-            
+
             // Add all admin rights
             new AdminRights().giveTo(adminUser);
-            
+
             // Add user to database and create account
             userDatabase.registerNewUser(adminUser);
             accountDatabase.createAccount(adminUser);
-            
+
             System.out.println("Created generic admin user. Username: admin, Password: Admin123@");
-            
+
             // Save the user database to persist the admin user
             save();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             System.out.println("Error creating generic admin user: " + e.getMessage());
         }
     }

@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class LogWriterLoggerAdapterTest {
+public class LogWriterLoggerAdapterTest
+{
 
     @Test
-    public void itAdapts() {
+    public void itAdapts()
+    {
         String msg = "test";
 
         LogWriterMock mock = new LogWriterMock();

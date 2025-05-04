@@ -1,6 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 
-public class DrinkCategory {
+public class DrinkCategory
+{
 
     private DrinkOption drinkOption;
     private CategoryName colorName;
@@ -10,19 +11,23 @@ public class DrinkCategory {
         this.colorName = colorName;
     }
 
-    public DrinkOption getDrinkOption() {
+    public DrinkOption getDrinkOption()
+    {
         return drinkOption;
     }
 
-    public void setDrinkOption(DrinkOption drinkOption) {
+    public void setDrinkOption(DrinkOption drinkOption)
+    {
         this.drinkOption = drinkOption;
     }
 
-    public CategoryName getColorName() {
+    public CategoryName getColorName()
+    {
         return colorName;
     }
 
-    public void setColor(CategoryName colorName) {
+    public void setColor(CategoryName colorName)
+    {
         this.colorName = colorName;
     }
 

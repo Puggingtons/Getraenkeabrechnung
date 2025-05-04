@@ -15,9 +15,11 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class AccountDatabaseTest {
+public class AccountDatabaseTest
+{
     @Test
-    public void itSavesAccounts(@TempDir Path tempDir) {
+    public void itSavesAccounts(@TempDir Path tempDir)
+    {
         User user = new User(new Username("Dings"), new Password("bums"));
         Account[] accounts = {new Account(user.getUsername())};
 
@@ -27,14 +29,16 @@ public class AccountDatabaseTest {
         Path filepath = tempDir.resolve("accounts.json");
         Gson gson = new Gson();
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() ->
+        {
             accountDatabase.save(filepath);
             assertEquals(Files.readString(filepath), gson.toJson(accounts));
         });
     }
 
     @Test
-    public void itLoadsAccounts(@TempDir Path tempDir) {
+    public void itLoadsAccounts(@TempDir Path tempDir)
+    {
         User user1 = new User(new Username("Dings"), new Password("dings"));
         User user2 = new User(new Username("Bums"), new Password("bums"));
 
@@ -48,7 +52,8 @@ public class AccountDatabaseTest {
         Path filepath = tempDir.resolve("accounts.json");
         int initLength = accountDatabase.getAccounts().length;
 
-        assertDoesNotThrow(() -> {
+        assertDoesNotThrow(() ->
+        {
             accountDatabase.save(filepath);
             accountDatabase.load(filepath);
 

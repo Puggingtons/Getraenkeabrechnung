@@ -148,6 +148,21 @@ package data {
         }
     } /'end package: data.numbers '/
 
+    package texts {
+        +class Future {
+            + void printFuture(Language language)
+        }
+
+        +class History {
+            + void printHistory(Language language)
+        }
+
+        +enum Language {
+            DE
+            EN
+        }
+    } /' end package: data.texts'/
+
     package users {
         +class User {
             + User(Username username, Password password, String realFirstName, String realLastName, String realName, Email email)
@@ -374,6 +389,12 @@ package io {
             # void execute()
         }
 
+        +class FutureInteraction extends MenuInteraction {
+        }
+
+        +class HistoryInteraction extends MenuInteraction {
+        }
+
         +abstract class Interaction<T> extends event.InteractionEventSource {
             {static} String DEFAULT_PROMPT
             + Interaction()
@@ -425,6 +446,9 @@ package io {
             + void addOption(String key, String option)
             String usage()
             # void execute()
+        }
+
+        +class StoriesInteraction extends MenuInteraction {
         }
 
         +class StringInputInteraction extends Interaction<String> {
@@ -634,6 +658,8 @@ DeleteUserInteraction "2" *-- StringInput
 DeleteUserInteraction "1" o-- ThirstyCalc
 'DeleteUserInteraction --> Username /' usage? no '/
 DeleteUserInteraction --> User /' usage? '/
+FutureInteraction "1" *-- Future
+HistoryInteraction "1" *-- History
 LoggedInUserInteractionFactory "1" o-- ThirstyCalc
 LoggedInUserInteractionFactory "1" *-- MenuInteraction
 LoggedInUserInteractionFactory --> LogoutInteraction /' usage? '/
@@ -644,6 +670,7 @@ LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
 LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
 LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
 LoggedInUserInteractionFactory --> CreateCategoryOptionInteraction /' usage? '/
+LoggedInUserInteractionFactory --> StoriesInteraction /' usage? '/
 LoginInteraction "2" *-- StringInput
 LoginInteraction "1" o-- UserDatabase
 'LoginInteraction --> Username /' usage? no '/
@@ -665,6 +692,8 @@ RegisterUserInteraction --> UsernameValidator /' usage? '/
 RegisterUserInteraction --> PasswordValidator /' usage? '/
 RegisterUserInteraction --> User /'usage? '/
 SelectInteraction "1" *-- StringInput
+StoriesInteraction --> HistoryInteraction
+StoriesInteraction --> FutureInteraction
 StringInputInteraction "1" *-- StringInput
 
 ClassLogger "1" o-- Logger

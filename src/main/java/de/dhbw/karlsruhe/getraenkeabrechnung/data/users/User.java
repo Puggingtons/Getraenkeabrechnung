@@ -13,7 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class User {
+public class User
+{
     private Username username;
     private Password password;
     private String realFirstName;
@@ -24,7 +25,8 @@ public class User {
     private Set<Right> rights;
 
     public User(Username username, Password password, String realFirstName, String realLastName,
-                String realName, Email email) {
+                String realName, Email email)
+    {
 
         this.username = username;
         this.password = password;
@@ -37,115 +39,145 @@ public class User {
     }
 
     // Default constructor
-    public User() {
+    public User()
+    {
         this.rights = new HashSet<>();
     }
 
     // USE THIS CONSTRUCTOR ONLY FOR TESTING PURPOSES
-    public User(Username username, Password password) {
+    public User(Username username, Password password)
+    {
         this.username = username;
         this.password = password;
         this.rights = new HashSet<>();
     }
 
-    public Username getUsername() {
+    public Username getUsername()
+    {
         return username;
     }
 
-    public void setUsername(Username username) {
-        if (UsernameValidator.isValid(username)) {
+    public void setUsername(Username username) throws IllegalArgumentException
+    {
+        if (UsernameValidator.isValid(username))
+        {
             this.username = username;
-        } else {
+        } else
+        {
             throw new IllegalArgumentException("Username not valid!");
         }
     }
 
-    public Password getPassword() {
+    public Password getPassword()
+    {
         return password;
     }
 
-    public void setPassword(Password password) {
-        if (PasswordValidator.isValid(password)) {
+    public void setPassword(Password password) throws IllegalArgumentException
+    {
+        if (PasswordValidator.isValid(password))
+        {
             this.password = password;
             hashAndSetPassword(password);
-        } else {
+        } else
+        {
             throw new IllegalArgumentException("Password not valid!");
         }
     }
 
-    public void nullPassword() {
+    public void nullPassword()
+    {
         password.nullPasswordString();
     }
 
-    private void hashAndSetPassword(Password password) {
-        try {
+    private void hashAndSetPassword(Password password)
+    {
+        try
+        {
             password.hashPassword();
-        } catch (IllegalArgumentException | PasswordManagementException e) {
+        } catch (IllegalArgumentException | PasswordManagementException e)
+        {
             throw new IllegalArgumentException("Password not valid!");
         }
         password.getHashedPassword();
     }
 
-    public boolean verifyPassword(String providedPassword) {
-        try {
+    public boolean verifyPassword(String providedPassword)
+    {
+        try
+        {
             return Password.verifyPassword(providedPassword, password.getHashedPassword(), password.getSalt());
-        } catch (PasswordManagementException e) {
+        } catch (PasswordManagementException e)
+        {
             throw new IllegalArgumentException("Password verification failed!", e);
         }
     }
-    public String getHashedPassword() {
+
+    public String getHashedPassword()
+    {
         return password.getHashedPassword();
     }
 
-    public String getSalt() {
+    public String getSalt()
+    {
         return password.getSalt();
     }
 
-    public String getRealFirstName() {
+    public String getRealFirstName()
+    {
         return realFirstName;
     }
 
-    public void setRealFirstName(String realFirstName) {
+    public void setRealFirstName(String realFirstName)
+    {
         this.realFirstName = realFirstName;
     }
 
-    public String getRealLastName() {
+    public String getRealLastName()
+    {
         return realLastName;
     }
 
-    public void setRealLastName(String realLastName) {
+    public void setRealLastName(String realLastName)
+    {
         this.realLastName = realLastName;
     }
 
-    public String getRealName() {
+    public String getRealName()
+    {
         realName = realFirstName + " " + realLastName;
         return realName;
     }
 
-    public Email getEmail() {
+    public Email getEmail()
+    {
         return email;
     }
 
-    public void setEmail(Email email) {
+    public void setEmail(Email email)
+    {
         this.email = email;
     }
 
-    public void addRights(Collection<Right> rights) {
+    public void addRights(Collection<Right> rights)
+    {
         this.rights.addAll(rights);
     }
-    
+
     /**
      * Checks if the user has a specific right.
      *
      * @param right The right to check
      * @return true if the user has the right, false otherwise
      */
-    public boolean hasRight(Right right) {
+    public boolean hasRight(Right right)
+    {
         return rights != null && rights.contains(right);
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Username: " + this.getUsername().toString();
     }
 

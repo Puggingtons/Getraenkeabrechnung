@@ -1,20 +1,24 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 
-public class DrinkName {
+public class DrinkName
+{
 
     private final String drinkNameString;
 
-    public DrinkName(String drinkName) {
+    public DrinkName(String drinkName)
+    {
         this.drinkNameString = drinkName;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return this.drinkNameString;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DrinkName drinkName = (DrinkName) o;

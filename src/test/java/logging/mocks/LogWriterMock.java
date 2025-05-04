@@ -2,16 +2,19 @@ package logging.mocks;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriter;
 
-public class LogWriterMock implements LogWriter {
+public class LogWriterMock implements LogWriter
+{
 
     private String lastLine;
 
-    public String getLastLine() {
+    public String getLastLine()
+    {
         return lastLine;
     }
 
     @Override
-    public void write(String message) {
+    public void write(String message)
+    {
         lastLine = message;
     }
 }
