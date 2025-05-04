@@ -3,23 +3,23 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 public class Position
 {
 
-    private DrinkCategory drinkCategory;
+    private DrinkOption drinkOption;
     private int amount;
 
-    public Position(DrinkCategory drinkCategory, int amount)
+    public Position(DrinkOption drinkOption, int amount)
     {
-        this.drinkCategory = drinkCategory;
+        this.drinkOption = drinkOption;
         this.amount = amount;
     }
 
-    public DrinkCategory getDrinkCategory()
+    public DrinkOption getDrinkOption()
     {
-        return drinkCategory;
+        return drinkOption;
     }
 
-    public void setDrink(DrinkCategory drinkCategory)
+    public void setDrink(DrinkOption drinkOption)
     {
-        this.drinkCategory = drinkCategory;
+        this.drinkOption = drinkOption;
     }
 
     public int getAmount()
