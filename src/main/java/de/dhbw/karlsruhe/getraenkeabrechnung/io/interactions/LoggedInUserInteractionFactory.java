@@ -58,7 +58,7 @@ public class LoggedInUserInteractionFactory
             }
 
             if(loggedInUser.hasRight(Right.CAN_VIEW_STORIES)) {
-                addStoriesInteration();
+                addStoriesInteraction();
             }
         }
     }
@@ -144,7 +144,7 @@ public class LoggedInUserInteractionFactory
         menuInteraction.addInteraction("add-rights", "Assign rights to a user", interaction);
     }
 
-    private void addStoriesInteration() {
+    private void addStoriesInteraction() {
         StoriesInteraction interaction = new StoriesInteraction();
         menuInteraction.addInteraction("stories", "Stories about ThirstyCalc", interaction);
     }
