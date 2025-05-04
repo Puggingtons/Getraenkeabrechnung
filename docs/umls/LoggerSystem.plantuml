@@ -69,7 +69,7 @@ LoggerFactory --> UserLogger
 LoggerFactory --> TimeLogger
 LoggerFactory --> LogWriterLoggerAdapter
 LoggerFactory --> PrintStreamLogWriter
-LogWriterLoggerAdapter "1" o-- Logger
+LogWriterLoggerAdapter --> LogWriter
 TimeLogger "1" o-- Logger
 UserLogger "1" o-- Logger
 
