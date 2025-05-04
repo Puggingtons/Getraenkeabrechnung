@@ -66,26 +66,37 @@ package data {
     } /' end package: data.banking '/
 
     package drinks {
-        +class Color {
-            + Color(ColorName colorName, double colorPrice)
-            + ColorName getColorName()
+        +class CategoryDatabase {
+            + CategoryOption[] getCategoryOptions()
+            + void addCategoryOption(CategoryOption categoryOption)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+            + void createNewCategoryOption(CategoryOption categoryOption)
+            + boolean categoryOptionExists(CategoryOption categoryOption)
+        }
+
+        +class CategoryOption {
+            + CategoryOption(CategoryName categoryName, double colorPrice)
+            + CategoryName getCategoryName()
             + double getColorPrice()
-            + void setColorName(ColorName colorName)
+            + void setCategoryName(CategoryName categoryName)
             + void setColorPrice(double colorPrice)
         }
 
-        +class ColorName {
-            + ColorName(String colorName)
+        +class CategoryName {
+            + CategoryName(String categoryName)
             + String toString()
             + boolean equals(Object o)
         }
 
         +class DrinkCategory {
-            + DrinkCategory(DrinkOption drinkOption, ColorName colorName)
+            + DrinkCategory(DrinkOption drinkOption, CategoryName colorName)
             + DrinkOption getDrinkOption()
             + void setDrinkOption(DrinkOption drinkOption)
-            + ColorName getColorName()
-            + void setColor(ColorName colorName)
+            + CategoryName getCategoryName()
+            + void setColor(CategoryName colorName)
         }
 
         +class DrinkDatabase {
@@ -97,7 +108,7 @@ package data {
             + void save(String path)
             + void save(Path path)
             + void createNewDrinkOption(DrinkOption drinkOption)
-            + {static} boolean drinkOptionExists(DrinkName drinkName)
+            + {static} boolean drinkOptionExists(DrinkOption drinkOption)
         }
 
         +class DrinkName {
@@ -107,11 +118,11 @@ package data {
         }
 
         +class DrinkOption {
-            + DrinkOption(DrinkName drinkName, ColorName colorName)
+            + DrinkOption(DrinkName drinkName, CategoryName categoryName)
             + DrinkName getDrinkName()
             + void setDrinkName(DrinkName drinkName)
-            + ColorName getColorName()
-            + void setColorName(ColorName colorName)
+            + CategoryName getColorName()
+            + void setColorName(CategoryName categoryName)
         }
 
         +class Position {
@@ -284,6 +295,11 @@ package io {
             Result<Boolean> getResult(String input)
         }
 
+        +class DoubleInput extends Input<Double> {
+            + DoubleInput(String prompt)
+            Result<Double> getResult(String prompt)
+        }
+
         +class FloatInput extends Input<Float> {
             + FloatInput(String prompt)
             Result<Float> getResult(String input)
@@ -340,6 +356,12 @@ package io {
 
         +class CheckBalanceInteraction extends Interaction<Money> {
             + CheckBalanceInteraction(Account account)
+            String usage()
+            # void execute()
+        }
+
+        +class CreateCategoryOptionInteraction extends Interaction<CategoryOption> {
+            + CreateCategoryOptionInteraction(ThirstyCalc thirstyCalc)
             String usage()
             # void execute()
         }
@@ -531,6 +553,7 @@ package rights {
         CAN_SELF_INVOICE
         CAN_DELETE_USER
         CAN_CREATE_DRINK
+        CAN_CREATE_CATEGORY
         CAN_ADD_RIGHTS
     }
 
@@ -592,6 +615,9 @@ UserDatabase --> UserDoesNotExistException : <<throws>>
 'UserDatabase --> Username /' usage? no '/
 UserDatabase "1" *-- Savable
 
+CategoryDatabase "n" *-- CategoryOption
+CategoryDatabase "1" *-- Savable
+
 Result "1" *-- ResultState
 'BooleanInput --> Result /' usage? no '/
 'FloatInput --> Result /' usage? no '/
@@ -613,11 +639,14 @@ ChangePasswordInteraction "1" o-- User
 ChangePasswordInteraction "1" o-- UserDatabase
 ChangePasswordInteraction --> Password
 CheckBalanceInteraction "1" o-- Account
+CreateCategoryOptionInteraction "1" *-- StringInput
+CreateCategoryOptionInteraction "1" *-- DoubleInput
+CreateCategoryOptionInteraction "1" o-- ThirstyCalc
 CreateDrinkOptionInteraction "2" *-- StringInput
 CreateDrinkOptionInteraction "1" o-- ThirstyCalc
 'CreateDrinkOptionInteraction --> DrinkName /' usage? no '/
 CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
-'CreateDrinkOptionInteraction --> ColorName /' usage? no '/
+'CreateDrinkOptionInteraction --> CategoryName /' usage? no '/
 CreateUserInteraction "3" *-- StringInput
 CreateUserInteraction "1" *-- BooleanInput
 CreateUserInteraction "1" o-- UserDatabase
@@ -640,6 +669,7 @@ LoggedInUserInteractionFactory --> CreateUserInteraction /' usage? '/
 LoggedInUserInteractionFactory --> CreateDrinkOptionInteraction /' usage? '/
 LoggedInUserInteractionFactory --> DeleteUserInteraction /' usage? '/
 LoggedInUserInteractionFactory --> AddRightsInteraction /' usage? '/
+LoggedInUserInteractionFactory --> CreateCategoryOptionInteraction /' usage? '/
 LoggedInUserInteractionFactory --> StoriesInteraction /' usage? '/
 LoginInteraction "2" *-- StringInput
 LoginInteraction "1" o-- UserDatabase
@@ -689,11 +719,11 @@ EmailValidator --> Validatable /' usage? '/
 PasswordValidator --> Validatable /' usage? '/
 UsernameValidator --> Validatable /' usage? '/
 
-Color "1" o-- ColorName
+CategoryOption "1" o-- CategoryName
 DrinkCategory "1" o-- DrinkOption
-DrinkCategory "1" o-- ColorName
+DrinkCategory "1" o-- CategoryName
 DrinkOption "1" o-- DrinkName
-DrinkOption "1" o-- ColorName
+DrinkOption "1" o-- CategoryName
 
 Main -->  ThirstyCalc
 Main --> MainInteraction
@@ -704,8 +734,10 @@ Position "1" o-- DrinkCategory
 ThirstyCalc "1" *-- UserDatabase
 ThirstyCalc "1" *-- AccountDatabase
 ThirstyCalc "1" *-- DrinkDatabase
+ThirstyCalc "1" *-- CategoryDatabase
 ThirstyCalc "1" *-- ApplicationState
 ThirstyCalc "1" *-- Logger
+
 ThirstyCalc --> LoggerFactory
 'ThirstyCalc --> Username /' usage? '/
 'ThirstyCalc --> Password /' usage? '/

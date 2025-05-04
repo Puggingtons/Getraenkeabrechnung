@@ -56,7 +56,7 @@ public class DrinkDatabase
     {
         for (DrinkOption d : drinkOptionList.get())
         {
-            if (d.getDrinkName().equals(drinkOption.getDrinkName()))
+            if (d.getDrinkName().equals(drinkOption) && d.getColorName().equals(drinkOption))
             {
                 // If the drink option already exists, we don't need to add it again
                 return;
@@ -72,11 +72,11 @@ public class DrinkDatabase
      * @param drinkOption the drink option to check
      * @return true if the drink option exists, false otherwise
      */
-    public static boolean drinkOptionExists(DrinkName drinkName)
+    public static boolean drinkOptionExists(DrinkOption drinkOption)
     {
         for (DrinkOption d : drinkOptionList.get())
         {
-            if (d.getDrinkName().equals(drinkName))
+            if (d.getDrinkName().equals(drinkOption) && d.getColorName().equals(drinkOption))
             {
                 return true;
             }

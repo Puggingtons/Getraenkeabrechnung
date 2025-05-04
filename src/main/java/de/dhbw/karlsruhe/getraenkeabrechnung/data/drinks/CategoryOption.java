@@ -1,18 +1,18 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 
-public class Color
+public class CategoryOption
 {
 
-    private ColorName colorName;
+    private CategoryName colorName;
     private double colorPrice;
 
-    public Color(ColorName colorName, double colorPrice)
+    public CategoryOption(CategoryName colorName, double colorPrice)
     {
         this.colorName = colorName;
         this.colorPrice = colorPrice;
     }
 
-    public ColorName getColorName()
+    public CategoryName getColorName()
     {
         return colorName;
     }
@@ -22,7 +22,7 @@ public class Color
         return colorPrice;
     }
 
-    public void setColorName(ColorName colorName)
+    public void setColorName(CategoryName colorName)
     {
         this.colorName = colorName;
     }

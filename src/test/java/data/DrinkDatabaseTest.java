@@ -11,7 +11,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import com.google.gson.Gson;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.ColorName;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkDatabase;
@@ -22,7 +22,7 @@ public class DrinkDatabaseTest
     @Test
     public void itSavesDrinkOption(@TempDir Path tempDir)
     {
-        DrinkOption[] drinkOptions = {new DrinkOption(new DrinkName("beer"), new ColorName("yellow"))};
+        DrinkOption[] drinkOptions = {new DrinkOption(new DrinkName("beer"), new CategoryName("yellow"))};
 
         DrinkDatabase drinkDatabase = new DrinkDatabase();
         for (DrinkOption drinkOption : drinkOptions)
@@ -43,8 +43,8 @@ public class DrinkDatabaseTest
     @Test
     public void itLoadsDrinkOptions(@TempDir Path tempDir)
     {
-        DrinkOption drinkOption = new DrinkOption(new DrinkName("beer"), new ColorName("yellow"));
-        DrinkOption drinkOption2 = new DrinkOption(new DrinkName("water"), new ColorName("blue"));
+        DrinkOption drinkOption = new DrinkOption(new DrinkName("beer"), new CategoryName("yellow"));
+        DrinkOption drinkOption2 = new DrinkOption(new DrinkName("water"), new CategoryName("blue"));
 
         DrinkDatabase drinkDatabase = new DrinkDatabase();
         drinkDatabase.addDrinkOption(drinkOption);

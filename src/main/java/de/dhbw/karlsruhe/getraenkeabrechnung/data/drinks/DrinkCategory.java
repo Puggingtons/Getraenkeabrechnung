@@ -4,10 +4,9 @@ public class DrinkCategory
 {
 
     private DrinkOption drinkOption;
-    private ColorName colorName;
+    private CategoryName colorName;
 
-    public DrinkCategory(DrinkOption drinkOption, ColorName colorName)
-    {
+    public DrinkCategory(DrinkOption drinkOption, CategoryName colorName) {
         this.drinkOption = drinkOption;
         this.colorName = colorName;
     }
@@ -22,12 +21,12 @@ public class DrinkCategory
         this.drinkOption = drinkOption;
     }
 
-    public ColorName getColorName()
+    public CategoryName getColorName()
     {
         return colorName;
     }
 
-    public void setColor(ColorName colorName)
+    public void setColor(CategoryName colorName)
     {
         this.colorName = colorName;
     }

@@ -26,12 +26,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
-// Set Java compatibility to Java 23
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(23)) // For compatibility with JaCoCo
-    }
-}
 
 tasks.jar {
     manifest {

@@ -2,14 +2,22 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.AccountDatabase;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
+
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryName;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryOption;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryDatabase;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.Logger;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.LoggerFactory;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.UserLogger;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.AdminRights;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
@@ -22,6 +30,7 @@ public class ThirstyCalc
     private final UserDatabase userDatabase;
     private final AccountDatabase accountDatabase;
     private final DrinkDatabase drinkDatabase;
+    private final CategoryDatabase categoryDatabase;
 
     private final ApplicationState applicationState;
 
@@ -39,6 +48,7 @@ public class ThirstyCalc
         userDatabase = new UserDatabase();
         accountDatabase = new AccountDatabase();
 
+        categoryDatabase = new CategoryDatabase();
         drinkDatabase = new DrinkDatabase();
 
         applicationState = new ApplicationState();
@@ -112,18 +122,28 @@ public class ThirstyCalc
         System.out.println("Changed password for user: " + user.getUsername());
     }
 
-    public void createNewDrinkOption(DrinkOption drinkOption)
+    public void createNewCategoryOption(CategoryOption categoryOption)
     {
+        logger.log("creating new category option " + categoryOption.getColorName() + " with price " + categoryOption.getColorPrice());
+        categoryDatabase.createNewCategoryOption(categoryOption);
+        System.out.println("Creating a new category option: " + categoryOption.getColorName());
+    }
+
+    public boolean categoryOptionExists(CategoryOption categoryOption)
+    {
+        return categoryDatabase.categoryOptionExists(categoryOption);
+    }
+
+    public void createNewDrinkOption(DrinkOption drinkOption) {
         logger.log("creating new drink option " + drinkOption.getDrinkName() + " with color " + drinkOption.getColorName());
         drinkDatabase.createNewDrinkOption(drinkOption);
-        System.out.println("Creating a new drink option: " + drinkOption);
+        System.out.println("Creating a new drink option: " + drinkOption.getDrinkName());
     }
 
-    public boolean drinkOptionExists(DrinkName drinkName)
-    {
-        return drinkDatabase.drinkOptionExists(drinkName);
+    public boolean drinkOptionExists(DrinkOption drinkOption) {
+        return drinkDatabase.drinkOptionExists(drinkOption);
     }
-
+    
 
     public void deleteUser(User user)
     {
@@ -170,6 +190,10 @@ public class ThirstyCalc
             System.out.println("Saving drinks.json");
             drinkDatabase.save("drinks.json");
 
+            logger.log("saving categories.json");
+            System.out.println("Saving categories.json");
+            categoryDatabase.save("categories.json");
+
             logger.log("finished saving databases");
         } catch (IOException e)
         {
@@ -192,11 +216,14 @@ public class ThirstyCalc
             logger.log("loading drinks.json");
             drinkDatabase.load("drinks.json");
 
+            logger.log("loading categories.json");
+            categoryDatabase.load("categories.json");
+
             logger.log("finished loading databases");
 
         } catch (IOException e)
         {
-            System.out.println("Could not load users, accounts or drinks!");
+            System.out.println("Could not load users, accounts, categories or drinks!");
             createGenericAdminUser();
         }
 

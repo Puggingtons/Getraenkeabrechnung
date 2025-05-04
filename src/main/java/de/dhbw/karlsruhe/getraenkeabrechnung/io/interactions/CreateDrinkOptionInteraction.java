@@ -1,6 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.ColorName;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkName;
@@ -17,11 +17,10 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption>
 
     public CreateDrinkOptionInteraction(ThirstyCalc thirstyCalc)
     {
-
         this.thirstyCalc = thirstyCalc;
 
-        drinkNameInput = new StringInput("Drinkname: ");
-        colorNameInput = new StringInput("Drinkcolor: ");
+        drinkNameInput = new StringInput("Drink name: ");
+        colorNameInput = new StringInput("Color of drinks category: ");
     }
 
     @Override
@@ -36,15 +35,16 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption>
         String drinkName = getValidInput(drinkNameInput);
         String colorName = getValidInput(colorNameInput);
 
-        if (thirstyCalc.drinkOptionExists(new DrinkName(drinkName)))
+        DrinkOption drinkOption = new DrinkOption(new DrinkName(drinkName), new CategoryName(colorName));
+
+        if (thirstyCalc.drinkOptionExists(drinkOption))
         {
             // If the drink option already exists, we don't need to add it again
-            System.out.println("Drink already exists!");
+            System.out.println("Drink with that name already exists in that category!");
             failure();
             return;
         }
 
-        DrinkOption drinkOption = new DrinkOption(new DrinkName(drinkName), new ColorName(colorName));
 
         success(drinkOption);
     }

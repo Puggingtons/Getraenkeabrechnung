@@ -23,6 +23,9 @@ public class LoggedInUserInteractionFactory
         addRoleDefinedInteractions();
         addCheckBalanceInteraction();
 
+        addCreateCategoryOptionInteraction();
+        addCreateDrinkOptionInteraction();
+
         return menuInteraction;
     }
 
@@ -52,12 +55,19 @@ public class LoggedInUserInteractionFactory
             {
                 addCreateUserInteraction();
             }
+
+            if (loggedInUser.hasRight(Right.CAN_CREATE_CATEGORY))
+            {
+                addCreateCategoryOptionInteraction();
+            }
+
             if (loggedInUser.hasRight(Right.CAN_ADD_RIGHTS))
             {
                 addAddRightsInteraction();
             }
 
-            if(loggedInUser.hasRight(Right.CAN_VIEW_STORIES)) {
+            if(loggedInUser.hasRight(Right.CAN_VIEW_STORIES))
+            {
                 addStoriesInteraction();
             }
         }
@@ -125,6 +135,17 @@ public class LoggedInUserInteractionFactory
             System.out.println("You deleted the user: " + deleteUser.getUsername().toString() + ".");
         });
         menuInteraction.addInteraction("delete-user", "Delete a user", interaction);
+    }
+
+    private void addCreateCategoryOptionInteraction()
+    {
+        CreateCategoryOptionInteraction interaction = new CreateCategoryOptionInteraction(thirstyCalc);
+        interaction.onSuccess((categoryOption) ->
+        {
+            thirstyCalc.createNewCategoryOption(categoryOption);
+            System.out.println("You created: " + categoryOption.getColorName().toString() + ", its price is: " + categoryOption.getColorPrice() + ".");
+        });
+        menuInteraction.addInteraction("create-category", "Create a new category option.", interaction);
     }
 
     private void addAddRightsInteraction()

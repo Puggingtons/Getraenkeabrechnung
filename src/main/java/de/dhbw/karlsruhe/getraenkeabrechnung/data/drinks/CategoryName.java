@@ -1,11 +1,11 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 
-public class ColorName
+public class CategoryName
 {
 
     private final String colorNameString;
 
-    public ColorName(String colorName)
+    public CategoryName(String colorName)
     {
         this.colorNameString = colorName;
     }
@@ -21,7 +21,7 @@ public class ColorName
     {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ColorName colorName = (ColorName) o;
+        CategoryName colorName = (CategoryName) o;
         return colorNameString.equals(colorName.colorNameString);
     }
 
