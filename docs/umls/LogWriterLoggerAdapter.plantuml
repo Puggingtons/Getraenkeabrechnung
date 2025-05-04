@@ -33,5 +33,5 @@ package logging {
 LoggerFactory --> LogWriter /' usage? '/
 LoggerFactory --> LogWriterLoggerAdapter
 LoggerFactory --> PrintStreamLogWriter
-LogWriterLoggerAdapter "1" o-- Logger
+LogWriterLoggerAdapter --> LogWriter
 @enduml
