@@ -2,13 +2,15 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.data.texts;
 
 public class Future
 {
-    public Future() {
+    public Future()
+    {
 
     }
 
     public void printFuture(Language language)
     {
-        switch (language){
+        switch (language)
+        {
             case DE:
                 printFutureDE();
                 break;
@@ -19,7 +21,8 @@ public class Future
         }
     }
 
-    private void printFutureDE() {
+    private void printFutureDE()
+    {
         System.out.println("ThirstyCalc – Die Nächsten Jahrhunderte: Von Hyper-Personalisierung zur Hydrations-Harmonie");
         System.out.println("");
         System.out.println("");
@@ -257,7 +260,8 @@ public class Future
         System.out.println("Kellermeisters von Ebermund weiter.");
     }
 
-    private void printFutureEN() {
+    private void printFutureEN()
+    {
         System.out.println("ThirstyCalc – The Next Centuries: From Hyper-Personalization to Hydration Harmony");
         System.out.println("");
         System.out.println("");

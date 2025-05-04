@@ -134,16 +134,18 @@ public class ThirstyCalc
         return categoryDatabase.categoryOptionExists(categoryOption);
     }
 
-    public void createNewDrinkOption(DrinkOption drinkOption) {
+    public void createNewDrinkOption(DrinkOption drinkOption)
+    {
         logger.log("creating new drink option " + drinkOption.getDrinkName() + " with color " + drinkOption.getColorName());
         drinkDatabase.createNewDrinkOption(drinkOption);
         System.out.println("Creating a new drink option: " + drinkOption.getDrinkName());
     }
 
-    public boolean drinkOptionExists(DrinkOption drinkOption) {
+    public boolean drinkOptionExists(DrinkOption drinkOption)
+    {
         return drinkDatabase.drinkOptionExists(drinkOption);
     }
-    
+
 
     public void deleteUser(User user)
     {
