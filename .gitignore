@@ -7,6 +7,7 @@ build/
 users.json
 accounts.json
 drinks.json
+categories.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
