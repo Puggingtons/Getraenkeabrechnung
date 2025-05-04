@@ -190,6 +190,7 @@ Eine Lösung ist das Interface `Logger` in zwei Interfaces zu teilen.
 Jetzt muss die Klasse `LogWriterLoggerAdapter` nicht mehr die Methode `getInnerLogger()` implementieren und somit ist der unerwünschte Nebeneffekt behoben.
 
 ![lsp_negative_solution.png](solid/lsp_negative_solution.png)
+
 ---
 
 ## Kapitel 4: Weitere Prinzipien (8P)
@@ -211,6 +212,7 @@ Da für diese Funktionalität nicht relevant ist, welche Art von Objekt behandel
 Somit können mehrere Objekttypen durch die gleiche Klasse verarbeitet werden (hier `List<Account`, `List<User>`, `List<DrinkOption>`).
 
 ![polymorphism.png](grasp/polymorphism.png)
+
 ### DRY (2P)
 [ein Commit angeben, bei dem duplizierter Code/duplizierte Logik aufgelöst wurde; Code-Beispiele (vorher/nachher) einfügen; begründen und Auswirkung beschreiben – ggf. UML zum Verständnis ergänzen]
 
