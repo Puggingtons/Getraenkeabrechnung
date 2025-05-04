@@ -8,56 +8,69 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.PrintStreamLogWri
 import java.io.File;
 import java.io.IOException;
 
-public class LoggerFactory {
+public class LoggerFactory
+{
     private Logger logger;
 
-    public LoggerFactory() {
+    public LoggerFactory()
+    {
         setBaseLogger();
     }
 
-    private void setBaseLogger() {
-        try {
+    private void setBaseLogger()
+    {
+        try
+        {
             logger = new LogWriterLoggerAdapter(new FileLogWriter(new File("log.txt")));
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             logger = new LogWriterLoggerAdapter(new PrintStreamLogWriter(System.out));
         }
     }
 
-    public LoggerFactory(LogWriter logWriter) {
+    public LoggerFactory(LogWriter logWriter)
+    {
         this.logger = new LogWriterLoggerAdapter(logWriter);
     }
 
-    public LoggerFactory(Logger logger) {
+    public LoggerFactory(Logger logger)
+    {
         this.logger = logger;
     }
 
-    public LoggerFactory addUserLogger(User user) {
+    public LoggerFactory addUserLogger(User user)
+    {
         this.logger = new UserLogger(user, this.logger);
 
         return this;
     }
 
-    public LoggerFactory addTimeLogger() {
+    public LoggerFactory addTimeLogger()
+    {
         this.logger = new TimeLogger(this.logger);
 
         return this;
     }
 
-    public LoggerFactory addClassLogger(Class<?> clazz) {
+    public LoggerFactory addClassLogger(Class<?> clazz)
+    {
         this.logger = new ClassLogger(clazz, this.logger);
 
         return this;
     }
 
-    public Logger build() {
+    public Logger build()
+    {
         return logger;
     }
 
-    public Logger defaultUserLogger(User user) {
+    public Logger defaultUserLogger(User user)
+    {
         return new TimeLogger(new UserLogger(user, this.logger));
     }
 
-    public Logger defaultTimeLogger() {
+    public Logger defaultTimeLogger()
+    {
         return new TimeLogger(this.logger);
     }
 }

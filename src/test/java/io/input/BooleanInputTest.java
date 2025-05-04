@@ -10,18 +10,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class BooleanInputTest {
+public class BooleanInputTest
+{
     private InputReaderMock readerMock;
     private OutputWriterMock writerMock;
 
     @BeforeEach
-    public void setup() {
+    public void setup()
+    {
         readerMock = new InputReaderMock();
         writerMock = new OutputWriterMock();
     }
 
     @Test
-    public void itPrintsPrompt() {
+    public void itPrintsPrompt()
+    {
         String prompt = "Prompt";
 
         BooleanInput input = new BooleanInput(prompt);
@@ -34,7 +37,8 @@ public class BooleanInputTest {
     }
 
     @Test
-    public void itReturnsTrue1() {
+    public void itReturnsTrue1()
+    {
         BooleanInput input = new BooleanInput("");
         input.setReader(readerMock);
         input.setWriter(writerMock);
@@ -46,7 +50,8 @@ public class BooleanInputTest {
     }
 
     @Test
-    public void itReturnsTrue2() {
+    public void itReturnsTrue2()
+    {
         BooleanInput input = new BooleanInput("");
         input.setReader(readerMock);
         input.setWriter(writerMock);
@@ -58,7 +63,8 @@ public class BooleanInputTest {
     }
 
     @Test
-    public void itReturnsFalse1() {
+    public void itReturnsFalse1()
+    {
         BooleanInput input = new BooleanInput("");
         input.setReader(readerMock);
         input.setWriter(writerMock);
@@ -70,7 +76,8 @@ public class BooleanInputTest {
     }
 
     @Test
-    public void itReturnsFalse2() {
+    public void itReturnsFalse2()
+    {
         BooleanInput input = new BooleanInput("");
         input.setReader(readerMock);
         input.setWriter(writerMock);
@@ -82,7 +89,8 @@ public class BooleanInputTest {
     }
 
     @Test
-    public void itReturnsHelp() {
+    public void itReturnsHelp()
+    {
         BooleanInput input = new BooleanInput("");
         input.setReader(readerMock);
         input.setWriter(writerMock);
@@ -94,7 +102,8 @@ public class BooleanInputTest {
     }
 
     @Test
-    public void itReturnsNone1() {
+    public void itReturnsNone1()
+    {
         BooleanInput input = new BooleanInput("");
         input.setReader(readerMock);
         input.setWriter(writerMock);
@@ -106,7 +115,8 @@ public class BooleanInputTest {
     }
 
     @Test
-    public void itReturnsNone2() {
+    public void itReturnsNone2()
+    {
         BooleanInput input = new BooleanInput("");
         input.setReader(readerMock);
         input.setWriter(writerMock);

@@ -8,40 +8,48 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.Passwo
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PasswordValidatorTest {
-    
+class PasswordValidatorTest
+{
+
     @Test
-    void isValidPasswordShouldReturnTrue() {
+    void isValidPasswordShouldReturnTrue()
+    {
         assertTrue(PasswordValidator.isValid(new Password("goodPassword=1")));
     }
 
     @Test
-    void isValidPasswordWithNoLowerShouldReturnFalse() {
+    void isValidPasswordWithNoLowerShouldReturnFalse()
+    {
         assertFalse(PasswordValidator.isValid(new Password("noNumber#")));
     }
 
     @Test
-    void isValidPasswordTooShortShouldReturnFalse() {
+    void isValidPasswordTooShortShouldReturnFalse()
+    {
         assertFalse(PasswordValidator.isValid(new Password("Short3@")));
     }
 
     @Test
-    void isValidPasswordNoSpecialCharShouldReturnFalse() {
+    void isValidPasswordNoSpecialCharShouldReturnFalse()
+    {
         assertFalse(PasswordValidator.isValid(new Password("no!SpeChar1")));
     }
 
     @Test
-    void isValidPasswordNoLowerCharShouldReturnFalse() {
+    void isValidPasswordNoLowerCharShouldReturnFalse()
+    {
         assertFalse(PasswordValidator.isValid(new Password("NOLOWER#1")));
     }
 
     @Test
-    void isValidPasswordNoUpperCharShouldReturnFalse() {
+    void isValidPasswordNoUpperCharShouldReturnFalse()
+    {
         assertFalse(PasswordValidator.isValid(new Password("noupper#2")));
     }
 
     @Test
-    void isPasswordHashedCorrectlyShouldReturnTrue() throws PasswordManagementException {
+    void isPasswordHashedCorrectlyShouldReturnTrue() throws PasswordManagementException
+    {
         Password password = new Password("goodPassword=1");
         password.hashPassword();
         assertTrue(password.verifyPassword("goodPassword=1", password.getHashedPassword(), password.getSalt()));

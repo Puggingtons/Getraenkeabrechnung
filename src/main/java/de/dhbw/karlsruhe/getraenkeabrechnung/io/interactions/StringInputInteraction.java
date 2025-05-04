@@ -3,17 +3,20 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
-public class StringInputInteraction extends Interaction<String> {
+public class StringInputInteraction extends Interaction<String>
+{
 
     private final String message;
     private final String prompt;
     private final StringInput input;
 
-    public StringInputInteraction(String msg) {
+    public StringInputInteraction(String msg)
+    {
         this(msg, DEFAULT_PROMPT);
     }
 
-    public StringInputInteraction(String msg, String prompt) {
+    public StringInputInteraction(String msg, String prompt)
+    {
         this.message = msg;
         this.prompt = prompt;
 
@@ -21,20 +24,24 @@ public class StringInputInteraction extends Interaction<String> {
     }
 
     @Override
-    String usage() {
+    String usage()
+    {
         return message;
     }
 
     @Override
-    protected void execute() {
+    protected void execute()
+    {
         Result<String> result = input.prompt();
 
-        if (result.isHelp()) {
+        if (result.isHelp())
+        {
             explain();
             return;
         }
 
-        if (result.isNone()) {
+        if (result.isNone())
+        {
             System.out.println("Invalid input!");
             failure();
             return;

@@ -6,109 +6,127 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
-public class DeleteUserInteraction extends Interaction<User>{
+public class DeleteUserInteraction extends Interaction<User>
+{
     private final StringInput usernameInput;
     private final StringInput usernameVerificationInput;
     private final ThirstyCalc thirstyCalc;
 
-    public DeleteUserInteraction(ThirstyCalc thirstyCalc) {
+    public DeleteUserInteraction(ThirstyCalc thirstyCalc)
+    {
         usernameInput = new StringInput("Username: ");
         usernameVerificationInput = new StringInput("Confirm Username (WARNING: THIS CANNOT BE UNDONE): ");
         this.thirstyCalc = thirstyCalc;
     }
 
     @Override
-    String usage() {
+    String usage()
+    {
         return "Please enter the username of the user you want to delete.";
     }
 
     @Override
-    protected void execute() {
+    protected void execute()
+    {
         String username = getValidInput(usernameInput);
         String usernameVerification = getValidInput(usernameVerificationInput);
         thirstyCalc.getUserDatabase().getUsers();
         thirstyCalc.getAccountDatabase().getAccounts();
         Username usernameObj = new Username(username);
 
-        if (!username.equals(usernameVerification)) {
+        if (!username.equals(usernameVerification))
+        {
             System.out.println(
-                "Usernames do not match!"
-                );
+                    "Usernames do not match!"
+            );
             failure();
             return;
         }
 
         // Check if user exists
-        if (!thirstyCalc.getUserDatabase().userExists(usernameObj)) {
+        if (!thirstyCalc.getUserDatabase().userExists(usernameObj))
+        {
             System.out.println(
-                "User does not exist!"
-                );
+                    "User does not exist!"
+            );
             failure();
             return;
         }
 
         // Check if user is trying to delete themselves
         User loggedInUser = thirstyCalc.getApplicationState().getLoggedInUser();
-        if (loggedInUser != null && loggedInUser.getUsername().equals(usernameObj)) {
+        if (loggedInUser != null && loggedInUser.getUsername().equals(usernameObj))
+        {
             System.out.println(
-                "You cannot delete yourself!"
-                );
+                    "You cannot delete yourself!"
+            );
             failure();
             return;
         }
 
         // Check balance of the user
         User user = null;
-        for (User u : thirstyCalc.getUserDatabase().getUsers()) {
-            if (u.getUsername().equals(usernameObj)) {
+        for (User u : thirstyCalc.getUserDatabase().getUsers())
+        {
+            if (u.getUsername().equals(usernameObj))
+            {
                 user = u;
                 break;
             }
         }
-        if (user != null && !thirstyCalc.getAccountDatabase().checkIfAccountBalanceIsZero(user)) {
+        if (user != null && !thirstyCalc.getAccountDatabase().checkIfAccountBalanceIsZero(user))
+        {
             System.out.println(
-                "User has a positive balance. Please settle the balance before deleting the user."
-                );
+                    "User has a positive balance. Please settle the balance before deleting the user."
+            );
             failure();
             return;
         }
 
         // Find the user in the database
         User foundUser = null;
-        for (User u : thirstyCalc.getUserDatabase().getUsers()) {
-            if (u.getUsername().equals(usernameObj)) {
+        for (User u : thirstyCalc.getUserDatabase().getUsers())
+        {
+            if (u.getUsername().equals(usernameObj))
+            {
                 foundUser = user;
                 break;
             }
         }
 
         // Delete the user
-        if (foundUser != null) {
+        if (foundUser != null)
+        {
             System.out.println(
-                "User deleted successfully!"
-                );
+                    "User deleted successfully!"
+            );
             success(foundUser);
-        } else {
+        } else
+        {
             System.out.println(
-                "User not found"
-                );
+                    "User not found"
+            );
             failure();
         }
     }
 
-    private String getValidInput(StringInput input) {
-        while (true) {
+    private String getValidInput(StringInput input)
+    {
+        while (true)
+        {
             Result<String> result = input.prompt();
 
-            if (result.isHelp()) {
+            if (result.isHelp())
+            {
                 explain();
                 continue;
             }
 
-            if (result.isNone()) {
+            if (result.isNone())
+            {
                 System.out.println(
-                    "Invalid input!"
-                    );
+                        "Invalid input!"
+                );
                 continue;
             }
 

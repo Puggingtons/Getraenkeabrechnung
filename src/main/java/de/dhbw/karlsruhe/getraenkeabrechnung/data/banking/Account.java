@@ -3,29 +3,36 @@ package de.dhbw.karlsruhe.getraenkeabrechnung.data.banking;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Username;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.numbers.Money;
 
-public class Account {
+public class Account
+{
     private final Username username;
     private Money balance;
 
-    public Account(Username username) {
+    public Account(Username username)
+    {
         this.username = username;
         this.balance = new Money("0.00");
     }
 
-    public Username getUsername() {
+    public Username getUsername()
+    {
         return username;
     }
 
-    public Money getBalance() {
+    public Money getBalance()
+    {
         return balance;
     }
 
-    public void deposit(Money amount) {
+    public void deposit(Money amount)
+    {
         balance = balance.add(amount);
     }
 
-    public Money charge(Money amount) throws NotEnoughMoneyException {
-        if (amount.getAmount().compareTo(balance.getAmount()) > 0) {
+    public Money charge(Money amount) throws NotEnoughMoneyException
+    {
+        if (amount.getAmount().compareTo(balance.getAmount()) > 0)
+        {
             throw new NotEnoughMoneyException("Not enough money in account! (available: " + balance + ", charged: " + amount + ")");
         }
 
@@ -33,14 +40,16 @@ public class Account {
         return amount;
     }
 
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
         return balance.getAmount().compareTo(
-            new Money("0.00").getAmount()
-            ) == 0;
+                new Money("0.00").getAmount()
+        ) == 0;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 

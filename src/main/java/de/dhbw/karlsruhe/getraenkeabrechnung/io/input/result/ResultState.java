@@ -1,6 +1,7 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result;
 
-enum ResultState {
+enum ResultState
+{
     Value,
     Abort,
     Help

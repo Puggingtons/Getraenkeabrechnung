@@ -12,39 +12,46 @@ import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FileLogWriterTest {
+public class FileLogWriterTest
+{
 
     @Test
-    public void itWrites(@TempDir Path tempDir) {
+    public void itWrites(@TempDir Path tempDir)
+    {
         File tmpFile = tempDir.resolve("log.txt").toFile();
         String msg = "test";
 
-        try {
+        try
+        {
             FileLogWriter fileLogWriter = new FileLogWriter(tmpFile);
             fileLogWriter.write(msg);
 
             assertEquals(msg + "\n", Files.readString(tmpFile.toPath()));
 
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             Assertions.fail("Could not create file log writer: " + e.getMessage());
         }
     }
 
     @Test
-    public void itAppends(@TempDir Path tempDir) {
+    public void itAppends(@TempDir Path tempDir)
+    {
         File tmpFile = tempDir.resolve("log.txt").toFile();
 
         String oldMsg = "old\n";
         String msg = "new";
 
-        try {
+        try
+        {
             Files.writeString(tmpFile.toPath(), oldMsg);
 
             FileLogWriter fileLogWriter = new FileLogWriter(tmpFile);
             fileLogWriter.write(msg);
 
             assertEquals(oldMsg + msg + "\n", Files.readString(tmpFile.toPath()));
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             Assertions.fail("Could not create file log writer: " + e.getMessage());
         }
     }

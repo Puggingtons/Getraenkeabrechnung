@@ -7,18 +7,22 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class Savable<T> {
+public class Savable<T>
+{
     private T t;
 
-    public Savable(T t) {
+    public Savable(T t)
+    {
         this.t = t;
     }
 
-    public T get() {
+    public T get()
+    {
         return t;
     }
 
-    public void load(String path, TypeToken<T> typeToken) throws IOException {
+    public void load(String path, TypeToken<T> typeToken) throws IOException
+    {
         load(Path.of(path), typeToken);
     }
 
@@ -31,17 +35,20 @@ public class Savable<T> {
      * @param typeToken the type of the parsed data
      * @throws IOException is thrown when the file cannot be read
      */
-    public void load(Path path, TypeToken<T> typeToken) throws IOException {
+    public void load(Path path, TypeToken<T> typeToken) throws IOException
+    {
         Gson gson = new Gson();
 
         t = gson.fromJson(Files.readString(path), typeToken.getType());
     }
 
-    public void save(String path) throws IOException {
+    public void save(String path) throws IOException
+    {
         save(Path.of(path));
     }
 
-    public void save(Path path) throws IOException {
+    public void save(Path path) throws IOException
+    {
         String serialized = new Gson().toJson(t);
 
         Files.writeString(path, serialized);

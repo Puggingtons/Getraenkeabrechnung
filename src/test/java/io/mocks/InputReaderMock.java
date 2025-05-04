@@ -2,22 +2,26 @@ package io.mocks;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.reader.Reader;
 
-public class InputReaderMock implements Reader {
+public class InputReaderMock implements Reader
+{
 
     private String input;
     private boolean hasBeenRead;
 
-    public InputReaderMock() {
+    public InputReaderMock()
+    {
         this.input = "";
         this.hasBeenRead = false;
     }
 
-    public void setNextInput(String input) {
+    public void setNextInput(String input)
+    {
         this.input = input;
     }
 
     @Override
-    public String readLine() {
+    public String readLine()
+    {
         this.hasBeenRead = true;
         String ret = input;
 
@@ -26,7 +30,8 @@ public class InputReaderMock implements Reader {
         return ret;
     }
 
-    public boolean hasBeenRead() {
+    public boolean hasBeenRead()
+    {
         return hasBeenRead;
     }
 }

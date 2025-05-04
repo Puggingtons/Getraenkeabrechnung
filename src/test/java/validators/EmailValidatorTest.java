@@ -7,55 +7,66 @@ import org.junit.jupiter.api.Test;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Email;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.validators.EmailValidator;
 
-class EmailValidatorTest {
+class EmailValidatorTest
+{
 
     @Test
-    void isValidEmailShouldReturnTrue() {
+    void isValidEmailShouldReturnTrue()
+    {
         assertTrue(EmailValidator.isValid(new Email("mbw42233@jioso.com")));
     }
-    
+
     @Test
-    void isValidEmailWithSpecialCharactersShouldReturnTrue() {
+    void isValidEmailWithSpecialCharactersShouldReturnTrue()
+    {
         assertTrue(EmailValidator.isValid(new Email("x.wm73-806@jioso.com")));
     }
 
     @Test
-    void isValidEmailWithFourCharTLDShouldReturnTrue() {
+    void isValidEmailWithFourCharTLDShouldReturnTrue()
+    {
         assertTrue(EmailValidator.isValid(new Email("3@j.ocom")));
     }
 
     @Test
-    void isValidEmailWithNoAtShouldReturnFalse() {
+    void isValidEmailWithNoAtShouldReturnFalse()
+    {
         assertFalse(EmailValidator.isValid(new Email("mbw42233jioso.com")));
     }
 
     @Test
-    void isValidEmailWithNoDotShouldReturnFalse() {
+    void isValidEmailWithNoDotShouldReturnFalse()
+    {
         assertFalse(EmailValidator.isValid(new Email("mbw42233@jiosocom")));
     }
 
     @Test
-    void isValidEmailWithNoAtAndNoDotShouldReturnFalse() {
+    void isValidEmailWithNoAtAndNoDotShouldReturnFalse()
+    {
         assertFalse(EmailValidator.isValid(new Email("mbw42233jiosocom")));
     }
 
     @Test
-    void isValidEmailWithNoTLDShouldReturnFalse() {
+    void isValidEmailWithNoTLDShouldReturnFalse()
+    {
         assertFalse(EmailValidator.isValid(new Email("mbw42233@jioso")));
     }
 
     @Test
-    void isValidEmailWithNoUsernameShouldReturnFalse() {
+    void isValidEmailWithNoUsernameShouldReturnFalse()
+    {
         assertFalse(EmailValidator.isValid(new Email("@jioso.com")));
     }
 
     @Test
-    void isValidEmailWithNoDomainShouldReturnFalse() {
+    void isValidEmailWithNoDomainShouldReturnFalse()
+    {
         assertFalse(EmailValidator.isValid(new Email("mbw42233@.com")));
     }
 
     @Test
-    void isValidEmailWithSpaceCharShouldReturnFalse() {
+    void isValidEmailWithSpaceCharShouldReturnFalse()
+    {
         assertFalse(EmailValidator.isValid(new Email("mail@jio so.com")));
     }
 

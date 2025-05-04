@@ -10,10 +10,12 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TimeLoggerTest {
+public class TimeLoggerTest
+{
 
     @Test
-    public void itLogsTime() {
+    public void itLogsTime()
+    {
         LocalDateTime now = LocalDateTime.now();
         String dateString = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(now);
         String msg = "test";

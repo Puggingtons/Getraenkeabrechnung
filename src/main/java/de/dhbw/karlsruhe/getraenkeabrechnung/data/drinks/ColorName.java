@@ -1,20 +1,24 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks;
 
-public class ColorName {
+public class ColorName
+{
 
     private final String colorNameString;
 
-    public ColorName(String colorName) {
+    public ColorName(String colorName)
+    {
         this.colorNameString = colorName;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return this.colorNameString;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(Object o)
+    {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ColorName colorName = (ColorName) o;

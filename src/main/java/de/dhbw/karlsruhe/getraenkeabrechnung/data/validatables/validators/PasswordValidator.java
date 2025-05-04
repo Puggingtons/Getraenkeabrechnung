@@ -5,7 +5,8 @@ import java.util.Optional;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Validatable;
 
-public class PasswordValidator {
+public class PasswordValidator
+{
 
     // credits: https://stackoverflow.com/questions/3802192/regexp-java-for-password-validation
 
@@ -20,14 +21,17 @@ public class PasswordValidator {
 
     private static final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
 
-    public static boolean isValid(Validatable password) {
-        if (!(password instanceof Password)) {
+    public static boolean isValid(Validatable password)
+    {
+        if (!(password instanceof Password))
+        {
             return false;
         }
 
         boolean validPassword = password.isValid(Optional.of(PASSWORD_PATTERN));
 
-        if (!validPassword) {
+        if (!validPassword)
+        {
             System.out.println("Password does not match pattern! The password must be at least 8 characters long, contain a number, an upper and lower case letter and a special character (@#$%^&+=).");
         }
 

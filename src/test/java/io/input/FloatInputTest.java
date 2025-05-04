@@ -10,18 +10,21 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class FloatInputTest {
+public class FloatInputTest
+{
     private InputReaderMock readerMock;
     private OutputWriterMock writerMock;
 
     @BeforeEach
-    public void setup() {
+    public void setup()
+    {
         readerMock = new InputReaderMock();
         writerMock = new OutputWriterMock();
     }
 
     @Test
-    public void itPrintsPrompt() {
+    public void itPrintsPrompt()
+    {
         String prompt = "Prompt";
         FloatInput input = new FloatInput(prompt);
 
@@ -34,7 +37,8 @@ public class FloatInputTest {
     }
 
     @Test
-    public void itReturnsNumber() {
+    public void itReturnsNumber()
+    {
         float in = 1.0f;
         FloatInput input = new FloatInput("");
 
@@ -51,7 +55,8 @@ public class FloatInputTest {
     }
 
     @Test
-    public void itReturnsHelp() {
+    public void itReturnsHelp()
+    {
         FloatInput input = new FloatInput("");
 
         input.setReader(readerMock);
@@ -66,7 +71,8 @@ public class FloatInputTest {
     }
 
     @Test
-    public void itReturnsNoValue() {
+    public void itReturnsNoValue()
+    {
         FloatInput input = new FloatInput("");
 
         input.setReader(readerMock);
@@ -80,6 +86,6 @@ public class FloatInputTest {
         assertTrue(res.isNone());
     }
 
-//    todo: test unhappy paths
+    //    todo: test unhappy paths
 }
 

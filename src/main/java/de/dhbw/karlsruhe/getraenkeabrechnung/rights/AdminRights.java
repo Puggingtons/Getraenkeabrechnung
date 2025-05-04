@@ -5,10 +5,12 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AdminRights {
+public class AdminRights
+{
     private Set<Right> rights;
 
-    public AdminRights() {
+    public AdminRights()
+    {
         rights = new HashSet<>();
         rights.add(Right.CAN_SELF_INVOICE);
         rights.add(Right.CAN_CREATE_NEW_USER);
@@ -17,7 +19,8 @@ public class AdminRights {
         rights.add(Right.CAN_ADD_RIGHTS);
     }
 
-    public void giveTo(User user) {
+    public void giveTo(User user)
+    {
         user.addRights(rights);
     }
 }

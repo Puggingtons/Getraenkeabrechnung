@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PrintStreamLogWriterTest {
+public class PrintStreamLogWriterTest
+{
 
     @Test
-    public void itWrites() {
+    public void itWrites()
+    {
         String msg = "test";
 
         PrintStreamMock mock = new PrintStreamMock();
