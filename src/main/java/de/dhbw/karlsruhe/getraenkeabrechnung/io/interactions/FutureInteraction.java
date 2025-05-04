@@ -46,7 +46,8 @@ public class FutureInteraction extends MenuInteraction
             }
         });
 
-        this.addInteraction("return", "go back", new Interaction<Void>() {
+        this.addInteraction("return", "go back", new Interaction<Void>()
+        {
             @Override
             String usage()
             {
@@ -62,7 +63,8 @@ public class FutureInteraction extends MenuInteraction
         });
     }
 
-    private void stopHistory() {
+    private void stopHistory()
+    {
         success(null);
         stop();
     }

@@ -7,14 +7,16 @@ import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.DoubleInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.StringInput;
 import de.dhbw.karlsruhe.getraenkeabrechnung.io.input.result.Result;
 
-public class CreateCategoryOptionInteraction extends Interaction<CategoryOption> {
+public class CreateCategoryOptionInteraction extends Interaction<CategoryOption>
+{
 
     private final ThirstyCalc thirstyCalc;
 
     private final StringInput colorNameInput;
     private final DoubleInput colorPriceInput;
 
-    public CreateCategoryOptionInteraction(ThirstyCalc thirstyCalc) {
+    public CreateCategoryOptionInteraction(ThirstyCalc thirstyCalc)
+    {
 
         this.thirstyCalc = thirstyCalc;
 
@@ -23,18 +25,21 @@ public class CreateCategoryOptionInteraction extends Interaction<CategoryOption>
     }
 
     @Override
-    String usage() {
+    String usage()
+    {
         return "Creates a new category option.";
     }
 
     @Override
-    protected void execute() {
+    protected void execute()
+    {
         String colorName = getValidInput(colorNameInput);
         double colorPrice = getValidInput(colorPriceInput);
 
         CategoryOption categoryOption = new CategoryOption(new CategoryName(colorName), colorPrice);
 
-        if (thirstyCalc.categoryOptionExists(categoryOption)) {
+        if (thirstyCalc.categoryOptionExists(categoryOption))
+        {
             // If the category option already exists, we don't need to add it again
             System.out.println("Category with that color and that price already exists!");
             failure();
@@ -44,16 +49,20 @@ public class CreateCategoryOptionInteraction extends Interaction<CategoryOption>
         success(categoryOption);
     }
 
-    private String getValidInput(StringInput input) {
-        while (true) {
+    private String getValidInput(StringInput input)
+    {
+        while (true)
+        {
             Result<String> result = input.prompt();
 
-            if (result.isHelp()) {
+            if (result.isHelp())
+            {
                 explain();
                 continue;
             }
 
-            if (result.isNone()) {
+            if (result.isNone())
+            {
                 System.out.println("Invalid input!");
                 continue;
             }
@@ -62,16 +71,20 @@ public class CreateCategoryOptionInteraction extends Interaction<CategoryOption>
         }
     }
 
-    private double getValidInput(DoubleInput input) {
-        while (true) {
+    private double getValidInput(DoubleInput input)
+    {
+        while (true)
+        {
             Result<Double> result = input.prompt();
 
-            if (result.isHelp()) {
+            if (result.isHelp())
+            {
                 explain();
                 continue;
             }
 
-            if (result.isNone()) {
+            if (result.isNone())
+            {
                 System.out.println("Invalid input!");
                 continue;
             }
@@ -79,5 +92,5 @@ public class CreateCategoryOptionInteraction extends Interaction<CategoryOption>
             return result.getValue();
         }
     }
-    
+
 }
