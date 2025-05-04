@@ -18,8 +18,8 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
 
         this.thirstyCalc = thirstyCalc;
 
-        drinkNameInput = new StringInput("Drinkname: ");
-        colorNameInput = new StringInput("Drinkcolor: ");
+        drinkNameInput = new StringInput("Drink name: ");
+        colorNameInput = new StringInput("Color of drinks category: ");
     }
 
     @Override
