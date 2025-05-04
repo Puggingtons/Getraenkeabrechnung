@@ -20,6 +20,9 @@ public class LoggedInUserInteractionFactory {
         addRoleDefinedInteractions();
         addCheckBalanceInteraction();
 
+        addCreateCategoryOptionInteraction();
+        addCreateDrinkOptionInteraction();
+
         return menuInteraction;
     }
 
