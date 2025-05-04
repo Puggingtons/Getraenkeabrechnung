@@ -114,21 +114,21 @@ public class ThirstyCalc {
     public void createNewCategoryOption(CategoryOption categoryOption) {
         logger.log("creating new category option " + categoryOption.getColorName() + " with price " + categoryOption.getColorPrice());
         categoryDatabase.createNewCategoryOption(categoryOption);
-        System.out.println("Creating a new category option: " + categoryOption);
+        System.out.println("Creating a new category option: " + categoryOption.getColorName());
     }
 
-    public boolean categoryOptionExists(CategoryName categoryName) {
-        return categoryDatabase.categoryOptionExists(categoryName);
+    public boolean categoryOptionExists(CategoryOption categoryOption) {
+        return categoryDatabase.categoryOptionExists(categoryOption);
     }
 
     public void createNewDrinkOption(DrinkOption drinkOption) {
         logger.log("creating new drink option " + drinkOption.getDrinkName() + " with color " + drinkOption.getColorName());
         drinkDatabase.createNewDrinkOption(drinkOption);
-        System.out.println("Creating a new drink option: " + drinkOption);
+        System.out.println("Creating a new drink option: " + drinkOption.getDrinkName());
     }
 
-    public boolean drinkOptionExists(DrinkName drinkName) {
-        return drinkDatabase.drinkOptionExists(drinkName);
+    public boolean drinkOptionExists(DrinkOption drinkOption) {
+        return drinkDatabase.drinkOptionExists(drinkOption);
     }
     
 
@@ -170,6 +170,10 @@ public class ThirstyCalc {
             System.out.println("Saving drinks.json");
             drinkDatabase.save("drinks.json");
 
+            logger.log("saving categories.json");
+            System.out.println("Saving categories.json");
+            categoryDatabase.save("categories.json");
+
             logger.log("finished saving databases");
         } catch (IOException e) {
             System.out.println("Could not save users");
@@ -189,10 +193,13 @@ public class ThirstyCalc {
             logger.log("loading drinks.json");
             drinkDatabase.load("drinks.json");
 
+            logger.log("loading categories.json");
+            categoryDatabase.load("categories.json");
+
             logger.log("finished loading databases");
 
         } catch (IOException e) {
-            System.out.println("Could not load users, accounts or drinks!");
+            System.out.println("Could not load users, accounts, categories or drinks!");
             createGenericAdminUser();
         }
 

@@ -32,14 +32,15 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
         String drinkName = getValidInput(drinkNameInput);
         String colorName = getValidInput(colorNameInput);
 
-        if (thirstyCalc.drinkOptionExists(new DrinkName(drinkName))) {
+        DrinkOption drinkOption = new DrinkOption(new DrinkName(drinkName), new CategoryName(colorName));
+
+        if (thirstyCalc.drinkOptionExists(drinkOption)) {
             // If the drink option already exists, we don't need to add it again
-            System.out.println("Drink already exists!");
+            System.out.println("Drink with that name already exists in that category!");
             failure();
             return;
         }
 
-        DrinkOption drinkOption = new DrinkOption(new DrinkName(drinkName), new CategoryName(colorName));
 
         success(drinkOption);
     }

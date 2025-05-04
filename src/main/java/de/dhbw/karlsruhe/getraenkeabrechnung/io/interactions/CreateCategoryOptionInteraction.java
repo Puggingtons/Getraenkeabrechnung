@@ -32,14 +32,14 @@ public class CreateCategoryOptionInteraction extends Interaction<CategoryOption>
         String colorName = getValidInput(colorNameInput);
         double colorPrice = getValidInput(colorPriceInput);
 
-        if (thirstyCalc.categoryOptionExists(new CategoryName(colorName))) {
+        CategoryOption categoryOption = new CategoryOption(new CategoryName(colorName), colorPrice);
+
+        if (thirstyCalc.categoryOptionExists(categoryOption)) {
             // If the category option already exists, we don't need to add it again
-            System.out.println("Category already exists!");
+            System.out.println("Category with that color and that price already exists!");
             failure();
             return;
         }
-
-        CategoryOption categoryOption = new CategoryOption(new CategoryName(colorName), colorPrice);
 
         success(categoryOption);
     }

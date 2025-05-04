@@ -66,9 +66,9 @@ public class CategoryDatabase {
      * @param categoryOption the category option to check
      * @return true if the category option already exists, false otherwise
      */
-    public boolean categoryOptionExists(CategoryName categoryName) {
+    public boolean categoryOptionExists(CategoryOption categoryOption) {
         for (CategoryOption c : categoryOptionList.get()) {
-            if (c.getColorName().equals(categoryName)) {
+            if (c.getColorName().equals(categoryOption.getColorName()) && c.getColorPrice() == categoryOption.getColorPrice()) {
                 return true;
             }
         }
