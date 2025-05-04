@@ -13,7 +13,7 @@ public class DoubleInput extends Input<Double> {
         try {
             return Result.some(Double.parseDouble(input));
         } catch (NumberFormatException e) {
-            return Result.none("Invalid number format");
+            return Result.none();
         }
     }
     
