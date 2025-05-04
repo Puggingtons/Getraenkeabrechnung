@@ -1,0 +1,45 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Interfaces
+interface Reader {
+    +readLine(): String
+}
+
+' Produktionsimplementierungen
+class InputReader {
+    -scanner: Scanner
+    +readLine(): String
+}
+
+' Mock-Implementierungen
+class InputReaderMock {
+    -input: String
+    -hasBeenRead: boolean
+    +setNextInput(input: String)
+    +readLine(): String
+    +hasBeenRead(): boolean
+}
+
+' Anwendungsklassen
+class BooleanInput {
+    -reader: Reader
+    +prompt(): Result
+    +setReader(reader: Reader)
+}
+
+' Testklassen
+class BooleanInputTest {
+    -readerMock: InputReaderMock
+    +test methods...
+}
+
+' Beziehungen
+Reader <|.. InputReader
+Reader <|.. InputReaderMock
+
+BooleanInput --> Reader
+BooleanInputTest --> BooleanInput
+BooleanInputTest --> InputReaderMock
+
+@enduml

@@ -1,0 +1,51 @@
+@startuml
+
+package data {
+    package drinks {
+        +class DrinkDatabase {
+            + DrinkDatabase()
+            + DrinkOption[] getDrinkOptions()
+            + void addDrinkOption(DrinkOption drinkOption)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+            + void createNewDrinkOption(DrinkOption drinkOption)
+            + {static} boolean drinkOptionExists(DrinkName drinkName)
+        }
+
+        +class DrinkOption {
+            + DrinkOption(DrinkName drinkName, ColorName colorName)
+            + DrinkName getDrinkName()
+            + void setDrinkName(DrinkName drinkName)
+            + ColorName getColorName()
+            + void setColorName(ColorName colorName)
+        }
+    }
+
+    +class Savable<T> {
+        + Savable(T t)
+        + T get()
+        + void load(String path, TypeToken<T> typeToken)
+        + void load(Path path, TypeToken<T> typeToken)
+        + void save(String path)
+        + void save(Path path)
+    }
+}
+
++class ThirstyCalc {
+    + ThirstyCalc()
+    + ThirstyCalc(Logger logger)
+    + void createNewDrinkOption(DrinkOption drinkOption)
+    + boolean drinkOptionExists(DrinkName drinkName)
+    + DrinkDatabase getDrinkDatabase()
+    + void save()
+    + void load()
+}
+
+' Relations
+DrinkDatabase "n" *-- DrinkOption
+DrinkDatabase "1" *-- Savable
+ThirstyCalc "1" *-- DrinkDatabase
+
+@enduml

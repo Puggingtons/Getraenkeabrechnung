@@ -1,0 +1,49 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' Interfaces
+interface Writer {
+    +writeLine(line: String)
+    +write(str: String)
+}
+
+' Produktionsimplementierungen
+class OutputWriter {
+    -out: PrintStream
+    +writeLine(line: String)
+    +write(str: String)
+}
+
+' Mock-Implementierungen
+class OutputWriterMock {
+    -output: String
+    +writeLine(line: String)
+    +write(str: String)
+    +getOutput(): String
+}
+
+' Anwendungsklassen
+class StringInput {
+    -writer: Writer
+    +prompt(): Result
+    +setWriter(writer: Writer)
+}
+
+
+' Testklassen
+class StringInputTest {
+    -writerMock: OutputWriterMock
+    +test methods...
+}
+
+
+
+' Beziehungen
+Writer <|.. OutputWriter
+Writer <|.. OutputWriterMock
+
+StringInput --> Writer
+StringInputTest --> StringInput
+StringInputTest --> OutputWriterMock
+
+@enduml

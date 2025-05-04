@@ -1,0 +1,138 @@
+@startuml uml
+'left to right direction
+'!pragma layout smetana
+/'
+Ein paar Plantuml-Beispiele, die der UML Norm nach Wikipedia entsprechen :)
+https://de.wikipedia.org/wiki/Klassendiagramm
+
+# Relationen:
+
+Dings <|-- Bumms
+  Bumms implementiert das Interface Dings
+
+Kunde <|.. Privatkunde
+  Privatkunde spezialisiert Kunde
+
+User *-- Right
+  Komposition: Right existiert nicht ohne User. User hat beliebig viele Rights
+
+User o-- Right
+  Aggregation: Right existiert auch ohne User. User hat beliebig viele Rights
+
+# Klassenattribute:
+
+-String name
+  private String name
++String name
+  public String name
+#String name
+  protected String name
+~String name
+  package String name
+'/
+
+package data {
+
+    package drinks {
+        +class Color {
+            + Color(ColorName colorName, double colorPrice)
+            + ColorName getColorName()
+            + double getColorPrice()
+            + void setColorName(ColorName colorName)
+            + void setColorPrice(double colorPrice)
+        }
+
+        +class ColorName {
+            + ColorName(String colorName)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +class DrinkCategory {
+            + DrinkCategory(DrinkOption drinkOption, ColorName colorName)
+            + DrinkOption getDrinkOption()
+            + void setDrinkOption(DrinkOption drinkOption)
+            + ColorName getColorName()
+            + void setColor(ColorName colorName)
+        }
+
+        +class DrinkDatabase {
+            + DrinkDatabase()
+            + DrinkOption[] getDrinkOptions()
+            + void addDrinkOption(DrinkOption drinkOption)
+            + void load(String path)
+            + void load(Path path)
+            + void save(String path)
+            + void save(Path path)
+            + void createNewDrinkOption(DrinkOption drinkOption)
+            + {static} boolean drinkOptionExists(DrinkName drinkName)
+        }
+
+        +class DrinkName {
+            + DrinkName(String drinkName)
+            + String toString()
+            + boolean equals(Object o)
+        }
+
+        +class DrinkOption {
+            + DrinkOption(DrinkName drinkName, ColorName colorName)
+            + DrinkName getDrinkName()
+            + void setDrinkName(DrinkName drinkName)
+            + ColorName getColorName()
+            + void setColorName(ColorName colorName)
+        }
+
+    } /' end package: data.drinks '/
+
+} /' end package: data '/
+
++class Main {
+    + {static} void main(String[] args)
+}
+
++class ThirstyCalc {
+    + ThirstyCalc()
+    + ThirstyCalc(Logger logger)
+    + void login(User user)
+    + void logout()
+    + void createNewUser(User user)
+    + void registerNewUser(User user)
+    + void changePassword(User user)
+    + void createNewDrinkOption(DrinkOption drinkOption)
+    + boolean drinkOptionExists(DrinkName drinkName)
+    + void deleteUser(User user)
+    + ApplicationState getApplicationState()
+    + UserDatabase getUserDatabase()
+    + AccountDatabase getAccountDatabase()
+    + Account getAccountOfLoggedInUser()
+    + void save()
+    + void load()
+}
+
+/'#########################################################################'/
+/'#                               Relations                               #'/
+/'#########################################################################'/
+
+DrinkDatabase "n" *-- DrinkOption
+'DrinkDatabase --> DrinkName /' usage? no '/
+DrinkDatabase "1" *-- Savable
+
+CreateDrinkOptionInteraction "1" o-- ThirstyCalc
+'CreateDrinkOptionInteraction --> DrinkName /' usage? no '/
+CreateDrinkOptionInteraction --> DrinkOption /' usage? '/
+'CreateDrinkOptionInteraction --> ColorName /' usage? no '/
+
+MainInteraction "1" o-- ThirstyCalc
+
+
+Color "1" o-- ColorName
+DrinkCategory "1" o-- DrinkOption
+DrinkCategory "1" o-- ColorName
+DrinkOption "1" o-- DrinkName
+DrinkOption "1" o-- ColorName
+
+Main -->  ThirstyCalc
+Main --> MainInteraction
+
+ThirstyCalc "1" *-- DrinkDatabase
+@enduml

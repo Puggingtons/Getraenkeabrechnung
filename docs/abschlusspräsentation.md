@@ -22,19 +22,27 @@ Paul Bader, Sarah Ficht & Kayra Güler
 
 ### Übersicht
 
-- [ ] Übersicht über die Applikation **(1 P.)**
+- Getränkeabrechnung
+- Mit eigenem Nutzerprofil und jeweiligem Guthaben lassen sich Getränke abrechnen
+- Zweck ist vereinfachte Abrechnung von gemeinschaftlichen Getränkevorräten durch digitales System
 
 --
 
 ### Starten der Applikation
 
-- [ ] Übersicht über die Applikation **(1 P.)**
+- git clone https://github.com/Puggingtons/Getraenkeabrechnung.git
+- ./gradlew shadowJar
+- Die gebaute .jar ist dann in build/libs zu finden.
 
 --
 
 ### Technischer Überblick
 
-- [ ] Übersicht über die Applikation **(1 P.)**
+- Java (21+)
+- Gradle mit Kotlin DSL (lauffähige Version der Software)
+- SonarCloud (für statische Codeanalyse -> Qualität)
+- Github Actions (Cloc, Tests, Sonar)
+
 
 
 ---
@@ -100,11 +108,15 @@ Paul Bader, Sarah Ficht & Kayra Güler
 
 --
 
-### ATRIP
+### Unit Tests 1/2 Username
 
-- ATRIP: Automatic, Thorough und Professional (2P)
-[je Begründung/Erläuterung, wie ‘Automatic’, ‘Thorough’ und ‘Professional’ realisiert wurde – bei
-‘Thorough’ zusätzlich Analyse und Bewertung zur Testabdeckung]
+![UnitTestUsernameValidator](./Abgabe_Protokoll/5Unittest/UnitTestUsernameValidator.png)
+
+--
+
+### Unit Tests 2/2 Password
+
+![UnitTestPasswordValidator](./Abgabe_Protokoll/5Unittest/UnitTestPasswordValidator.png)
 
 --
 
@@ -123,9 +135,23 @@ Paul Bader, Sarah Ficht & Kayra Güler
 
 --
 
+#### Code Coverage
+
+![SonarCodeCoverage](./Abgabe_Protokoll/5Unittest/codeCoverage.png)
+
+--
+
 ### Professional
-- [1 positves Beispiel zu ‘Professional’; Code-Beispiel, Analyse und Begründung, was professionell ist]
-- Arrange-Act-Assert Pattern: Durch Branchabdeckung werden Randfälle aufgedeckt
+- [1 positives Beispiel zu ‘Professional’; Code-Beispiel, Analyse und Begründung, was professionell ist]
+- Arrange-Act-Assert Pattern: (BooleanInputTest.java)
+    gleicher Aufbau von Tests erhöht Übersichtlichkeit und Verständnis von Code 
+
+--
+
+### Professional: BooleanInputTest
+ 
+ ![Diagrammbeschreibung](./Abgabe_Protokoll/5Unittest/BooleanInputTest.png)
+
 
 --
 
@@ -137,6 +163,68 @@ Paul Bader, Sarah Ficht & Kayra Güler
 - Zeigen der Implementierung und Nutzung; zusätzlich jeweils UML Diagramm mit
 Beziehungen zwischen Mock, zu mockender Klasse und Aufrufer des Mocks]
 
+--
+
+### Mock: InputReaderMock
+
+- Analyse: Eingabesystem des CLI schwer generisch testbar, daher Mock vorteilhaft.
+
+--
+
+#### Implementierung
+
+![InputReaderMock.java](./Abgabe_Protokoll/5Unittest/InputReaderMock.png)
+
+--
+
+#### Nutzung
+
+![InputReaderMock.java references](./Abgabe_Protokoll/5Unittest/IRMreferences.png)
+
+--
+
+#### Nutzung
+
+![Diagrammbeschreibung](./Abgabe_Protokoll/5Unittest/BooleanInputTest.png)
+
+
+--
+
+#### UML für Beziehung
+
+![UMLinputReaderMock](./Abgabe_Protokoll/5Unittest/IRmockUML.png)
+
+--
+
+
+### Mock: OutputWriterMock
+
+- Analyse: Ausgabesystem des CLI schwer generisch testbar, daher Mock vorteilhaft.
+
+--
+
+#### Implementierung
+
+![OutputWriterMock.java](./Abgabe_Protokoll/5Unittest/OutputWriterMock.png)
+
+--
+
+#### Nutzung
+
+![OutputWriterMock.java references](./Abgabe_Protokoll/5Unittest/OWMreferences.png)
+
+--
+
+#### Nutzung
+
+![StringInputTest.java](./Abgabe_Protokoll/5Unittest/OWMnutzung.png)
+
+
+--
+
+#### UML für Beziehung
+
+![UMLoutputWriterMock](./Abgabe_Protokoll/5Unittest/OWmockUML.png)
 
 ---
 
@@ -159,10 +247,19 @@ Beziehungen zwischen Mock, zu mockender Klasse und Aufrufer des Mocks]
 
 --
 
+| Bezeichnung | Bedeutung | Begründung |
+|-------------|-----------|------------|
+| User        | Beschreibt interagierenden Anwender | Domänenexperte wird mehrere Menschen haben, die das System bedienen (Privilegien).  |
+| Balance       | Beschreibt Guthaben des Anwenders | Guthaben ist aufgrund Sinn des Programms auch für Domänenexperte relevant. |
 
-- Bezeichnung
-- Bedeutung
-- Begründung
+--
+
+| Bezeichnung | Bedeutung | Begründung |
+|-------------|-----------|------------|
+| Drink       | Beschreibt Produkteigenschaften (Name, Kategorie) | Beschreibt aus der Domäne stammende Produkt, für die die Software entwickelt wurde. |
+| Category    | Beschreibt Eigenschaften der Kategorie (Name, Preis) | Dient zur Repräsentation des aus der Domäne stammenden Preismodell. |
+
+
 
 --
 
@@ -172,13 +269,16 @@ Beziehungen zwischen Mock, zu mockender Klasse und Aufrufer des Mocks]
 vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist – NICHT,
 warum es nicht implementiert wurde]
 
+-  Schnittstelle zwischen der Domäne und der Persistenzschicht (z. B. Datenbank). Es kümmert sich darum, Aggregate (oder manchmal auch Entitäten) zu speichern, zu laden und zu entfernen, ohne dass die Domänenlogik direkt mit der Datenbank oder technischen Details interagieren muss.
+
+
 --
 
-### Aggregates
 
-- [UML, Beschreibung und Begründung des Einsatzes eines Aggregates; falls kein Aggregate
-vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist– NICHT,
-warum es nicht implementiert wurde]
+### DrinkDatabase -> DrinkRepository
+
+ ![Diagrammbeschreibung](./Abgabe_Protokoll/5Unittest/repository.png)
+
 
 --
 
@@ -188,6 +288,14 @@ warum es nicht implementiert wurde]
 ausführliche Begründung, warum es keine geben kann/hier nicht sinnvoll ist– NICHT, warum es nicht
 implementiert wurde]
 
+- Entity: Hat ID & ist veränderbar
+
+--
+
+### Entity: DrinkName
+
+ ![Diagrammbeschreibung](./Abgabe_Protokoll/5Unittest/drinkName.png)
+
 --
 
 ### Value Objects
@@ -195,6 +303,31 @@ implementiert wurde]
 - [UML, Beschreibung und Begründung des Einsatzes eines Value Objects; falls kein Value Object
 vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist– NICHT,
 warum es nicht implementiert wurde]
+
+- Value Object: Hat keine ID & ist nicht veränderbar
+
+--
+
+### Value Object: CategoryPrice
+
+ ![Diagrammbeschreibung](./Abgabe_Protokoll/5Unittest/CategoryPrice.png)
+
+--
+
+### Aggregates
+
+- [UML, Beschreibung und Begründung des Einsatzes eines Aggregates; falls kein Aggregate
+vorhanden: ausführliche Begründung, warum es keines geben kann/hier nicht sinnvoll ist– NICHT,
+warum es nicht implementiert wurde]
+
+- Aggregate: Zusammengesetzt aus Entities sowie Value Objects.
+
+--
+
+### Aggregate: DrinkOption
+
+ ![Diagrammbeschreibung](./Abgabe_Protokoll/5Unittest/drinkOption.png)
+
 
 ---
 
