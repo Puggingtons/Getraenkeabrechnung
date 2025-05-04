@@ -16,8 +16,8 @@ public class CategoryDatabase {
         this.categoryOptionList = new Savable<>( new ArrayList<>());
     }
     
-    public CategoryDatabase[] getCategoryOptions() {
-        return categoryOptionList.get().toArray(new CategoryDatabase[0]);
+    public CategoryOption[] getCategoryOptions() {
+        return categoryOptionList.get().toArray(new CategoryOption[0]);
     }
 
     public void addCategoryOption(CategoryOption categoryOption) {
