@@ -28,7 +28,7 @@ public class PasswordValidator {
         boolean validPassword = password.isValid(Optional.of(PASSWORD_PATTERN));
 
         if (!validPassword) {
-            System.out.println("Password does not match pattern! The password must be 8 characters long, contain a number, an upper and lower case letter and a special character (@#$%^&+=).");
+            System.out.println("Password does not match pattern! The password must be at least 8 characters long, contain a number, an upper and lower case letter and a special character (@#$%^&+=).");
         }
 
         return validPassword;
