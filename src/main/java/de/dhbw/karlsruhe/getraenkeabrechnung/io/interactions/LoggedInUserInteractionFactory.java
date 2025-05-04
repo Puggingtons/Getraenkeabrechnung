@@ -43,6 +43,11 @@ public class LoggedInUserInteractionFactory {
             if (loggedInUser.hasRight(Right.CAN_CREATE_NEW_USER)) {
                 addCreateUserInteraction();
             }
+
+            if (loggedInUser.hasRight(Right.CAN_CREATE_CATEGORY)) {
+                addCreateCategoryOptionInteraction();
+            }
+
             if (loggedInUser.hasRight(Right.CAN_ADD_RIGHTS)) {
                 addAddRightsInteraction();
             }
@@ -83,6 +88,15 @@ public class LoggedInUserInteractionFactory {
         menuInteraction.addInteraction("create-user", "Create a user and grant him rights.", interaction);
     }
 
+    private void addDeleteUserInteraction() {
+        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstyCalc);
+        interaction.onSuccess((deleteUser) -> {
+            thirstyCalc.deleteUser(deleteUser);
+            System.out.println("You deleted the user: " + deleteUser.getUsername().toString() + ".");
+        });
+        menuInteraction.addInteraction("delete-user", "Delete a user", interaction);
+    }
+
     private void addCreateDrinkOptionInteraction() {
         CreateDrinkOptionInteraction interaction = new CreateDrinkOptionInteraction(thirstyCalc);
         interaction.onSuccess((drinkOption) -> {
@@ -92,13 +106,13 @@ public class LoggedInUserInteractionFactory {
         menuInteraction.addInteraction("create-drink", "Create a new drink option.", interaction);
     }
 
-    private void addDeleteUserInteraction() {
-        DeleteUserInteraction interaction = new DeleteUserInteraction(thirstyCalc);
-        interaction.onSuccess((deleteUser) -> {
-            thirstyCalc.deleteUser(deleteUser);
-            System.out.println("You deleted the user: " + deleteUser.getUsername().toString() + ".");
+    private void addCreateCategoryOptionInteraction() {
+        CreateCategoryOptionInteraction interaction = new CreateCategoryOptionInteraction(thirstyCalc);
+        interaction.onSuccess((categoryOption) -> {
+            thirstyCalc.createNewCategoryOption(categoryOption);
+            System.out.println("You created: " + categoryOption.getColorName().toString() + ", its price is: " + categoryOption.getColorPrice() + ".");
         });
-        menuInteraction.addInteraction("delete-user", "Delete a user", interaction);
+        menuInteraction.addInteraction("create-category", "Create a new category option.", interaction);
     }
     
     private void addAddRightsInteraction() {

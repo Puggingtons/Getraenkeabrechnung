@@ -2,14 +2,22 @@ package de.dhbw.karlsruhe.getraenkeabrechnung;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.Account;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.banking.AccountDatabase;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkDatabase;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
+
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryName;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryOption;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryDatabase;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.UserDatabase;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.Logger;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.LoggerFactory;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.UserLogger;
+
 import de.dhbw.karlsruhe.getraenkeabrechnung.rights.AdminRights;
 import de.dhbw.karlsruhe.getraenkeabrechnung.state.ApplicationState;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.validatables.Password;
@@ -21,6 +29,7 @@ public class ThirstyCalc {
     private final UserDatabase userDatabase;
     private final AccountDatabase accountDatabase;
     private final DrinkDatabase drinkDatabase;
+    private final CategoryDatabase categoryDatabase;
 
     private final ApplicationState applicationState;
 
@@ -36,6 +45,7 @@ public class ThirstyCalc {
         userDatabase = new UserDatabase();
         accountDatabase = new AccountDatabase();
 
+        categoryDatabase = new CategoryDatabase();
         drinkDatabase = new DrinkDatabase();
 
         applicationState = new ApplicationState();
@@ -99,6 +109,16 @@ public class ThirstyCalc {
     public void changePassword(User user) {
         userDatabase.updateUser(user);
         System.out.println("Changed password for user: " + user.getUsername());
+    }
+
+    public void createNewCategoryOption(CategoryOption categoryOption) {
+        logger.log("creating new category option " + categoryOption.getColorName() + " with price " + categoryOption.getColorPrice());
+        categoryDatabase.createNewCategoryOption(categoryOption);
+        System.out.println("Creating a new category option: " + categoryOption);
+    }
+
+    public boolean categoryOptionExists(CategoryName categoryName) {
+        return categoryDatabase.categoryOptionExists(categoryName);
     }
 
     public void createNewDrinkOption(DrinkOption drinkOption) {
