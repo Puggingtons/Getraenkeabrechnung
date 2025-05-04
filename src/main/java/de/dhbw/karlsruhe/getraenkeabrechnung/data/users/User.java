@@ -52,7 +52,7 @@ public class User {
         return username;
     }
 
-    public void setUsername(Username username) {
+    public void setUsername(Username username) throws IllegalArgumentException {
         if (UsernameValidator.isValid(username)) {
             this.username = username;
         } else {
@@ -64,7 +64,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(Password password) {
+    public void setPassword(Password password) throws IllegalArgumentException {
         if (PasswordValidator.isValid(password)) {
             this.password = password;
             hashAndSetPassword(password);

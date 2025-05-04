@@ -52,8 +52,13 @@ public class RegisterUserInteraction extends Interaction<User> {
             return;
         }
 
-        user.setUsername(usernameObj);
-        user.setPassword(passwordObj);
+        try {
+            user.setUsername(usernameObj);
+            user.setPassword(passwordObj);
+        } catch (IllegalArgumentException e) {
+            failure();
+        }
+
 
         if (!UsernameValidator.isValid(user.getUsername()) || !PasswordValidator.isValid(user.getPassword())) {
             failure();
