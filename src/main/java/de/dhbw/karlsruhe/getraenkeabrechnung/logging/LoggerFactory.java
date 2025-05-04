@@ -1,14 +1,26 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.logging;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.users.User;
+import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.FileLogWriter;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.LogWriter;
 import de.dhbw.karlsruhe.getraenkeabrechnung.logging.logwriter.PrintStreamLogWriter;
+
+import java.io.File;
+import java.io.IOException;
 
 public class LoggerFactory {
     private Logger logger;
 
     public LoggerFactory() {
-        this.logger = new LogWriterLoggerAdapter(new PrintStreamLogWriter(System.err));
+        setBaseLogger();
+    }
+
+    private void setBaseLogger() {
+        try {
+            logger = new LogWriterLoggerAdapter(new FileLogWriter(new File("log.txt")));
+        } catch (IOException e) {
+            logger = new LogWriterLoggerAdapter(new PrintStreamLogWriter(System.out));
+        }
     }
 
     public LoggerFactory(LogWriter logWriter) {
