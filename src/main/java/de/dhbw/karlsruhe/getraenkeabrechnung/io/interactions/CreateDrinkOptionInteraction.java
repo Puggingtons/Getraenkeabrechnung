@@ -1,5 +1,6 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.ColorName;
+
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.CategoryName;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
 import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkName;
@@ -14,9 +15,9 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
     private final StringInput colorNameInput;
 
     public CreateDrinkOptionInteraction(ThirstyCalc thirstyCalc) {
-        
+
         this.thirstyCalc = thirstyCalc;
-        
+
         drinkNameInput = new StringInput("Drinkname: ");
         colorNameInput = new StringInput("Drinkcolor: ");
     }
@@ -38,29 +39,28 @@ public class CreateDrinkOptionInteraction extends Interaction<DrinkOption> {
             return;
         }
 
-        DrinkOption drinkOption = new DrinkOption(new DrinkName(drinkName), new ColorName(colorName));
+        DrinkOption drinkOption = new DrinkOption(new DrinkName(drinkName), new CategoryName(colorName));
 
         success(drinkOption);
     }
 
     private String getValidInput(StringInput input) {
-    while (true) {
-        Result<String> result = input.prompt();
+        while (true) {
+            Result<String> result = input.prompt();
 
-        if (result.isHelp()) {
-            explain();
-            continue;
+            if (result.isHelp()) {
+                explain();
+                continue;
+            }
+
+            if (result.isNone()) {
+                System.out.println("Invalid input!");
+                continue;
+            }
+
+            return result.getValue();
         }
 
-        if (result.isNone()) {
-            System.out.println("Invalid input!");
-            continue;
-        }
-
-        return result.getValue();
-        }
-    
     }
 
 }
-
