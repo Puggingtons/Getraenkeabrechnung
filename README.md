@@ -6,14 +6,14 @@ https://sonarcloud.io/summary/overall?id=Puggingtons_Getraenkeabrechnung&branch=
 ## cloc Ausgabe
 
 <!-- CLOC-REPORT-START -->
-cloc|github.com/AlDanial/cloc v 1.96  T=0.17 s (437.6 files/s, 28892.8 lines/s)
+cloc|github.com/AlDanial/cloc v 1.96  T=0.18 s (421.6 files/s, 28093.5 lines/s)
 --- | ---
 
 Language|files|blank|comment|code
 :-------|-------:|-------:|-------:|-------:
-Java|75|748|132|4072
+Java|75|748|132|4118
 --------|--------|--------|--------|--------
-SUM:|75|748|132|4072
+SUM:|75|748|132|4118
 <!-- CLOC-REPORT-END -->
 
 ## Jar bauen
