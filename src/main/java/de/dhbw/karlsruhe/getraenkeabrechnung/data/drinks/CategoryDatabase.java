@@ -89,4 +89,16 @@ public class CategoryDatabase
         return false;
     }
 
+    public CategoryOption getCategoryOptionByCategoryName(CategoryName categoryName)
+    {
+        for (CategoryOption c : categoryOptionList.get())
+        {
+            if (c.getColorName().equals(categoryName))
+            {
+                return c;
+            }
+        }
+        return null;
+    }
+
 }

@@ -169,6 +169,16 @@ public class ThirstyCalc
         return accountDatabase;
     }
 
+    public CategoryDatabase getCategoryDatabase()
+    {
+        return categoryDatabase;
+    }
+
+    public DrinkDatabase getDrinkDatabase()
+    {
+        return drinkDatabase;
+    }
+
     public Account getAccountOfLoggedInUser()
     {
         return accountDatabase.getAccountOfUser(applicationState.getLoggedInUser());

@@ -1,29 +1,40 @@
 package de.dhbw.karlsruhe.getraenkeabrechnung.io.interactions;
 
 import de.dhbw.karlsruhe.getraenkeabrechnung.ThirstyCalc;
-import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.Position;
+import de.dhbw.karlsruhe.getraenkeabrechnung.data.drinks.DrinkOption;
 
-public class PurchaseInteraction extends Interaction<Position>
+public class PurchaseInteraction extends SelectInteraction
 {
 
-    public CreatePurchaseInteraction(ThirstyCalc thirstyCalc)
+    private final ThirstyCalc thirstyCalc;
+
+    public PurchaseInteraction(ThirstyCalc thirstyCalc)
     {
         this.thirstyCalc = thirstyCalc;
-
-        positionInput = new StringInput("Position name: ");
     }
 
     @Override
     String usage()
     {
-        return "Purchase a drink.";
+        return "Select a drink by index from the following list:\n" + super.usage();
     }
 
     @Override
     protected void execute()
     {
-        String position
+        updateOptions();
+        this.explain();
+        super.execute();
     }
 
+    private void updateOptions()
+    {
+        clearOptions();
+        DrinkOption[] drinkOptions = thirstyCalc.getDrinkDatabase().getDrinkOptions();
 
+        for (DrinkOption d : drinkOptions)
+        {
+            this.pushOption(String.format("%s - %s", d.getColorName(), d.getDrinkName()));
+        }
+    }
 }

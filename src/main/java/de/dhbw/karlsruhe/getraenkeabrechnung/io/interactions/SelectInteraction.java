@@ -75,4 +75,9 @@ public class SelectInteraction extends Interaction<String>
 
         success(key);
     }
+
+    protected void clearOptions()
+    {
+        this.options.clear();
+    }
 }
